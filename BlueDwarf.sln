@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf", "BlueDwarf\BlueDwarf.csproj", "{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A7DB477-41AA-40D9-80C3-FC9BF20D9286}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Debug|x86.ActiveCfg = Debug|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Debug|x86.Build.0 = Debug|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Release|Any CPU.ActiveCfg = Release|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Release|x86.ActiveCfg = Release|x86
+		{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35
+	EndGlobalSection
+EndGlobal
