@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Blue Dwarf" Width="400"
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
-        xmlns:view="clr-namespace:BlueDwarf.View" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Height" >
+        xmlns:view="clr-namespace:BlueDwarf.View" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Height" Icon="/BlueDwarf;component/Resources/key.ico">
     <Window.DataContext>
         <viewModel:ConfigurationViewModel/>
     </Window.DataContext>
