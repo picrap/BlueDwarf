@@ -12,7 +12,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="/Resources/passe300.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Source="/Resources/passe100.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="Fant"/>
         <StackPanel Grid.Column="1" Orientation="Vertical" >
             <Expander IsExpanded="true">
                 <Expander.Header>
@@ -75,7 +75,8 @@
                      Text="{Binding KeepAlive1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="Refresh interval:" />
-                            <TextBox Style="{DynamicResource DialogTextBox}" Text="{Binding KeepAlive1Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" />
+                            <TextBox Style="{DynamicResource DialogInnerTextBox}" 
+                                     Text="{Binding KeepAlive1Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" />
                             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="s" />
                         </StackPanel>
                     </StackPanel>
@@ -86,7 +87,8 @@
                      Text="{Binding KeepAlive2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="Refresh interval:" />
-                            <TextBox Style="{DynamicResource DialogTextBox}" Text="{Binding KeepAlive2Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" />
+                            <TextBox Style="{DynamicResource DialogInnerTextBox}" 
+                                     Text="{Binding KeepAlive2Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" />
                             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="s" />
                         </StackPanel>
                     </StackPanel>

@@ -215,10 +215,13 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\passe300.png" />
+    <None Include="Resources\passe300.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\key.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\passe100.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
