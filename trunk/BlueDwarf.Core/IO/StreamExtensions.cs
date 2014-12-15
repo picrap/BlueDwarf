@@ -3,8 +3,19 @@ using System.Text;
 
 namespace BlueDwarf.IO
 {
+    /// <summary>
+    /// Exntensions to Stream
+    /// </summary>
     public static class StreamExtensions
     {
+        /// <summary>
+        /// Reads all available data.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="offset">The offset.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         public static int ReadAll(this Stream stream, byte[] buffer, int offset, int count)
         {
             var totalRead = 0;
@@ -21,7 +32,12 @@ namespace BlueDwarf.IO
             return totalRead;
         }
 
-        public static string ReadLineASCII(this Stream stream)
+        /// <summary>
+        /// Reads the line as ASCII.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
+        public static string ReadLineAscii(this Stream stream)
         {
             var lineBuilder = new StringBuilder();
             for (; ; )

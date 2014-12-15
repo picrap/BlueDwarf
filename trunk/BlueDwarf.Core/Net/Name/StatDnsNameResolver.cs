@@ -4,12 +4,17 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using BlueDwarf.Annotations;
 using BlueDwarf.Net.Http;
 using BlueDwarf.Net.Proxy.Client;
 
 namespace BlueDwarf.Net.Name
 {
-    public class StatDnsNameResolver : INameResolver
+    /// <summary>
+    /// DNS resolution using the excellent statdns.com resolution
+    /// </summary>
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    internal class StatDnsNameResolver : INameResolver
     {
         [DataContract]
         public class Question
@@ -52,7 +57,13 @@ namespace BlueDwarf.Net.Name
 
         private readonly IDictionary<string, Tuple<IPAddress, DateTime>> _entries = new Dictionary<string, Tuple<IPAddress, DateTime>>();
 
-        public IPAddress Resolve(string name, IProxyClient proxyClient, ProxyRoute route)
+        /// <summary>
+        /// Resolves the specified name using the given route.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="route">The route.</param>
+        /// <returns></returns>
+        public IPAddress Resolve(string name, ProxyRoute route)
         {
             IPAddress address;
             if (IPAddress.TryParse(name, out address))
@@ -68,14 +79,14 @@ namespace BlueDwarf.Net.Name
                         return entry.Item1;
                 }
 
-                var resolvedAddress = DoResolve(name, route);
+                var resolvedAddress = RequestionResolution(name, route);
                 entry = Tuple.Create(resolvedAddress.Item1, now + TimeSpan.FromSeconds(resolvedAddress.Item2));
                 _entries[name] = entry;
                 return entry.Item1;
             }
         }
 
-        private static Tuple<IPAddress, int> DoResolve(string name, ProxyRoute route)
+        private static Tuple<IPAddress, int> RequestionResolution(string name, ProxyRoute route)
         {
             for (int hop = 0; hop < 100; hop++)
             {
@@ -92,13 +103,20 @@ namespace BlueDwarf.Net.Name
             return null;
         }
 
+        /// <summary>
+        /// Query to .
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="route">The route.</param>
+        /// <returns></returns>
         private static Answer Ask(string name, string type, ProxyRoute route)
         {
             const string host = "api.statdns.com";
             using (var stream = route.Connect(host, 80, false))
             {
                 new HttpRequest("GET", string.Format("/{0}/{1}", name, type.ToLower())).AddHeader("Host", host).Write(stream);
-                var contentBytes = new HttpResponse().Read(stream).ReadContent(stream);
+                var contentBytes = HttpResponse.FromStream(stream).ReadContent(stream);
                 using (var memoryStream = new MemoryStream(contentBytes))
                 {
                     var serializer = new DataContractJsonSerializer(typeof(Response));

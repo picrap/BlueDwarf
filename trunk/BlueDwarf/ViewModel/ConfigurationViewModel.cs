@@ -11,6 +11,10 @@ using Microsoft.Practices.Unity;
 
 namespace BlueDwarf.ViewModel
 {
+    /// <summary>
+    /// Configuration view-model.
+    /// This is the main view
+    /// </summary>
     [DataContract]
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ConfigurationViewModel : ViewModel
@@ -56,6 +60,9 @@ namespace BlueDwarf.ViewModel
         private readonly Preferences _preferences = new Preferences();
         private readonly ObjectReader _objectReader = new ObjectReader();
 
+        /// <summary>
+        /// Loads preferences and intializes proxy from them.
+        /// </summary>
         public void Load()
         {
             _serializer.Deserialize(_preferences, BlueDwarfKey);
@@ -70,6 +77,9 @@ namespace BlueDwarf.ViewModel
             CheckProxy();
         }
 
+        /// <summary>
+        /// Updates the preferences.
+        /// </summary>
         private void UpdatePreferences()
         {
             _serializer.Deserialize(_preferences, BlueDwarfKey);
@@ -93,21 +103,6 @@ namespace BlueDwarf.ViewModel
                         ProxyServer.ProxyRoute = route;
                     _proxyChecker = null;
                 });
-        }
-
-        private Uri GetSafeUri(string literalUri)
-        {
-            try
-            {
-                return new Uri(literalUri);
-            }
-            catch (ArgumentNullException)
-            {
-            }
-            catch (UriFormatException)
-            {
-            }
-            return null;
         }
     }
 }

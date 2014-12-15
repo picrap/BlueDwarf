@@ -7,6 +7,10 @@ using BlueDwarf.IO;
 
 namespace BlueDwarf.Net.Http
 {
+    /// <summary>
+    /// Simple HTTP response
+    /// (because using the one from the framework was too difficult too)
+    /// </summary>
     public class HttpResponse
     {
         // "HTTP/1.1 200 Connection established"
@@ -24,6 +28,13 @@ namespace BlueDwarf.Net.Http
         public int StatusCode { get { return int.Parse(Header[1]); } }
 
         private IDictionary<string, string> _headers;
+
+        /// <summary>
+        /// Gets the headers.
+        /// </summary>
+        /// <value>
+        /// The headers.
+        /// </value>
         public IDictionary<string, string> Headers
         {
             get
@@ -46,13 +57,18 @@ namespace BlueDwarf.Net.Http
             Lines = new List<string>();
         }
 
+        /// <summary>
+        /// Reads the response from stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
         public HttpResponse Read(Stream stream)
         {
             Lines.Clear();
             _header = null;
             for (; ; )
             {
-                var responseLine = stream.ReadLineASCII();
+                var responseLine = stream.ReadLineAscii();
                 if (responseLine == "")
                     break;
 
@@ -60,6 +76,16 @@ namespace BlueDwarf.Net.Http
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Returns a new response read from stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
+        public static HttpResponse FromStream(Stream stream)
+        {
+            return new HttpResponse().Read(stream);
         }
 
         public byte[] ReadContent(Stream stream)

@@ -106,7 +106,6 @@
     <Compile Include="View\WebBrowserView.xaml.cs">
       <DependentUpon>WebBrowserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\WebBrowserUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIConfiguration.cs" />

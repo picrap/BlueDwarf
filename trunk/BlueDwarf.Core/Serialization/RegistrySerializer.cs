@@ -5,10 +5,18 @@ using Microsoft.Win32;
 
 namespace BlueDwarf.Serialization
 {
+    /// <summary>
+    /// Serializes data from and to registry
+    /// </summary>
     public class RegistrySerializer
     {
         private readonly ObjectReader _reader = new ObjectReader();
 
+        /// <summary>
+        /// Serializes the specified object.
+        /// </summary>
+        /// <param name="o">The object.</param>
+        /// <param name="node">The registry node (under HKCU/Sofware).</param>
         public void Serialize(object o, string node)
         {
             var data = _reader.Read(o);
@@ -22,6 +30,11 @@ namespace BlueDwarf.Serialization
             }
         }
 
+        /// <summary>
+        /// Deserializes the specified object.
+        /// </summary>
+        /// <param name="o">The object.</param>
+        /// <param name="node">The node.</param>
         public void Deserialize(object o, string node)
         {
             using (var r = Registry.CurrentUser.CreateSubKey(@"Software\" + node))
@@ -38,7 +51,7 @@ namespace BlueDwarf.Serialization
             return r.GetValue(n);
         }
 
-        private Tuple<object, RegistryValueKind> GetValue(object o)
+        private static Tuple<object, RegistryValueKind> GetValue(object o)
         {
             if (o == null)
                 return Tuple.Create<object, RegistryValueKind>(null, RegistryValueKind.None);
@@ -46,7 +59,7 @@ namespace BlueDwarf.Serialization
             return GetValue(o, t);
         }
 
-        private Tuple<object, RegistryValueKind> GetValue(object o, Type t)
+        private static Tuple<object, RegistryValueKind> GetValue(object o, Type t)
         {
             if (t.IsNullable())
                 return GetValue(o, t.GetNullabled());

@@ -9,7 +9,9 @@ using Org.Mentalis.Proxy;
 
 namespace BlueDwarf.Net.Proxy.Server
 {
-    ///<summary>Relays HTTP data between a remote host and a local client.</summary>
+    ///<summary>Relays HTTP data between a remote host and a local client.
+    /// Shamelessly stolen from mentalis.org
+    /// </summary>
     ///<remarks>This class supports both HTTP and HTTPS.</remarks>
     public sealed class HttpProxyClient : Org.Mentalis.Proxy.Client
     {
@@ -18,33 +20,22 @@ namespace BlueDwarf.Net.Proxy.Server
         ///<summary>Initializes a new instance of the HttpClient class.</summary>
         ///<param name="ClientSocket">The <see cref ="Socket">Socket</see> connection between this proxy server and the local client.</param>
         ///<param name="Destroyer">The callback method to be called when this Client object disconnects from the local client and the remote server.</param>
-        public HttpProxyClient(Socket ClientSocket, DestroyDelegate Destroyer) : base(ClientSocket, Destroyer) { }
+        public HttpProxyClient(Socket ClientSocket, DestroyDelegate Destroyer) : base(ClientSocket, Destroyer)
+        {
+            RequestedPath = null;
+            HttpRequestType = "";
+            HttpVersion = "";
+            HeaderFields = null;
+        }
+
         ///<summary>Gets or sets a StringDictionary that stores the header fields.</summary>
         ///<value>A StringDictionary that stores the header fields.</value>
-        private StringDictionary HeaderFields
-        {
-            get
-            {
-                return m_HeaderFields;
-            }
-            set
-            {
-                m_HeaderFields = value;
-            }
-        }
+        private StringDictionary HeaderFields { get; set; }
+
         ///<summary>Gets or sets the HTTP version the client uses.</summary>
         ///<value>A string representing the requested HTTP version.</value>
-        private string HttpVersion
-        {
-            get
-            {
-                return m_HttpVersion;
-            }
-            set
-            {
-                m_HttpVersion = value;
-            }
-        }
+        private string HttpVersion { get; set; }
+
         ///<summary>Gets or sets the HTTP request type.</summary>
         ///<remarks>
         ///Usually, this string is set to one of the three following values:
@@ -55,43 +46,25 @@ namespace BlueDwarf.Net.Proxy.Server
         ///</list>
         ///</remarks>
         ///<value>A string representing the HTTP request type.</value>
-        private string HttpRequestType
-        {
-            get
-            {
-                return m_HttpRequestType;
-            }
-            set
-            {
-                m_HttpRequestType = value;
-            }
-        }
+        private string HttpRequestType { get; set; }
+
         ///<summary>Gets or sets the requested path.</summary>
         ///<value>A string representing the requested path.</value>
-        public string RequestedPath
-        {
-            get
-            {
-                return m_RequestedPath;
-            }
-            set
-            {
-                m_RequestedPath = value;
-            }
-        }
+        public string RequestedPath { get; set; }
+
         ///<summary>Gets or sets the query string, received from the client.</summary>
         ///<value>A string representing the HTTP query string.</value>
         private string HttpQuery
         {
             get
             {
-                return m_HttpQuery;
+                return _HttpQuery;
             }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException();
-                m_HttpQuery = value;
+                _HttpQuery = value;
             }
         }
         ///<summary>Starts receiving data from the client connection.</summary>
@@ -107,20 +80,20 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
         ///<summary>Checks whether a specified string is a valid HTTP query string.</summary>
-        ///<param name="Query">The query to check.</param>
+        ///<param name="query">The query to check.</param>
         ///<returns>True if the specified string is a valid HTTP query, false otherwise.</returns>
-        private bool IsValidQuery(string Query)
+        private bool IsValidQuery(string query)
         {
-            int index = Query.IndexOf("\r\n\r\n");
+            int index = query.IndexOf("\r\n\r\n");
             if (index == -1)
                 return false;
-            HeaderFields = ParseQuery(Query);
+            HeaderFields = ParseQuery(query);
             if (HttpRequestType.ToUpper().Equals("POST"))
             {
                 try
                 {
                     int length = int.Parse((string)HeaderFields["Content-Length"]);
-                    return Query.Length >= index + 6 + length;
+                    return query.Length >= index + 6 + length;
                 }
                 catch
                 {
@@ -134,11 +107,11 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
         ///<summary>Processes a specified query and connects to the requested HTTP web server.</summary>
-        ///<param name="Query">A string containing the query to process.</param>
+        ///<param name="query">A string containing the query to process.</param>
         ///<remarks>If there's an error while processing the HTTP request or when connecting to the remote server, the Proxy sends a "400 - Bad Request" error to the client.</remarks>
-        private void ProcessQuery(string Query)
+        private void ProcessQuery(string query)
         {
-            HeaderFields = ParseQuery(Query);
+            HeaderFields = ParseQuery(query);
             if (HeaderFields == null || !HeaderFields.ContainsKey("Host"))
             {
                 SendBadRequest();
@@ -179,8 +152,8 @@ namespace BlueDwarf.Net.Proxy.Server
                 }
                 if (HttpRequestType.ToUpper().Equals("POST"))
                 {
-                    int index = Query.IndexOf("\r\n\r\n");
-                    m_HttpPost = Query.Substring(index + 4);
+                    int index = query.IndexOf("\r\n\r\n");
+                    _httpPost = query.Substring(index + 4);
                 }
             }
             try
@@ -200,13 +173,13 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
         ///<summary>Parses a specified HTTP query into its header fields.</summary>
-        ///<param name="Query">The HTTP query string to parse.</param>
+        ///<param name="query">The HTTP query string to parse.</param>
         ///<returns>A StringDictionary object containing all the header fields with their data.</returns>
         ///<exception cref="ArgumentNullException">The specified query is null.</exception>
-        private StringDictionary ParseQuery(string Query)
+        private StringDictionary ParseQuery(string query)
         {
             StringDictionary retdict = new StringDictionary();
-            string[] Lines = Query.Replace("\r\n", "\n").Split('\n');
+            string[] Lines = query.Replace("\r\n", "\n").Split('\n');
             int Cnt, Ret;
             //Extract requested URL
             if (Lines.Length > 0)
@@ -279,8 +252,8 @@ namespace BlueDwarf.Net.Proxy.Server
                         ret += System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(sc) + ": " + (string)HeaderFields[sc] + "\r\n";
                 }
                 ret += "\r\n";
-                if (m_HttpPost != null)
-                    ret += m_HttpPost;
+                if (_httpPost != null)
+                    ret += _httpPost;
             }
             return ret;
         }
@@ -292,8 +265,8 @@ namespace BlueDwarf.Net.Proxy.Server
         }
         ///<summary>Returns text information about this HttpClient object.</summary>
         ///<returns>A string representing this HttpClient object.</returns>
-        ///<param name="WithUrl">Specifies whether or not to include information about the requested URL.</param>
-        public string ToString(bool WithUrl)
+        ///<param name="withUrl">Specifies whether or not to include information about the requested URL.</param>
+        public string ToString(bool withUrl)
         {
             string Ret;
             try
@@ -421,16 +394,9 @@ namespace BlueDwarf.Net.Proxy.Server
         }
         // private variables
         /// <summary>Holds the value of the HttpQuery property.</summary>
-        private string m_HttpQuery = "";
-        /// <summary>Holds the value of the RequestedPath property.</summary>
-        private string m_RequestedPath = null;
-        /// <summary>Holds the value of the HeaderFields property.</summary>
-        private StringDictionary m_HeaderFields = null;
-        /// <summary>Holds the value of the HttpVersion property.</summary>
-        private string m_HttpVersion = "";
-        /// <summary>Holds the value of the HttpRequestType property.</summary>
-        private string m_HttpRequestType = "";
+        private string _HttpQuery = "";
+
         /// <summary>Holds the POST data</summary>
-        private string m_HttpPost = null;
+        private string _httpPost = null;
     }
 }

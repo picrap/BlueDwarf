@@ -4,6 +4,11 @@ using System.Runtime.Serialization;
 
 namespace BlueDwarf
 {
+    /// <summary>
+    /// All of this class is serialized to registry
+    /// DataMember Names are used to map the content from this object from and to other objects
+    /// (currently only ConfigurationViewModel uses this)
+    /// </summary>
     [DataContract]
     public class Preferences
     {
@@ -39,6 +44,10 @@ namespace BlueDwarf
         [DataMember(Name = KeepAlive2IntervalKey)]
         public int KeepAlive2Interval { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Preferences"/> class.
+        /// Sets up all default values
+        /// </summary>
         public Preferences()
         {
             TestTarget = new Uri("https://google.com");
