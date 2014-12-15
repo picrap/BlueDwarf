@@ -59,6 +59,12 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\key.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\BlueDwarf.Core\Properties\BlueDwarf.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -97,53 +103,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\DispatcherExtensions.cs" />
-    <Compile Include="Utility\ThreadHelper.cs" />
     <Compile Include="View\WebBrowserView.xaml.cs">
       <DependentUpon>WebBrowserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WebBrowserUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
-    <Compile Include="IO\StreamExtensions.cs" />
-    <Compile Include="Net\Name\DnsNameResolver.cs" />
-    <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
-    <Compile Include="Net\Name\INameResolver.cs" />
-    <Compile Include="Net\Name\StatDnsNameResolver.cs" />
-    <Compile Include="Net\Proxy\Client\TunnelProxyClient.Http.cs" />
-    <Compile Include="Net\Proxy\Client\TunnelProxyClient.Socks.cs" />
-    <Compile Include="Net\Proxy\Server\HttpProxyClient.cs" />
-    <Compile Include="Net\Proxy\Server\HttpProxyListener.cs" />
-    <Compile Include="Net\Proxy\Server\IProxyServer.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\AuthenticationList.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\Client.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\Listener.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\AuthBase.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\AuthNone.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\AuthUserPass.cs" />
-    <Compile Include="Net\Proxy\Server\ProxyServer.cs" />
-    <Compile Include="Net\Proxy\Server\ProxyStream.cs" />
-    <Compile Include="Net\Proxy\Client\TunnelProxyClient.cs" />
-    <Compile Include="Net\Http\HttpRequest.cs" />
-    <Compile Include="Net\Http\HttpResponse.cs" />
-    <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\Socks4Handler.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\Socks5Handler.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\SocksClient.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\SocksHandler.cs" />
-    <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
-    <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
+    <Compile Include="UIConfiguration.cs" />
     <Compile Include="Preferences.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Serialization\ObjectReader.cs" />
-    <Compile Include="Utility\ObjectTypeConverter.cs" />
-    <Compile Include="Serialization\RegistrySerializer.cs" />
-    <Compile Include="Utility\CustomAttributeProviderExtensions.cs" />
-    <Compile Include="Utility\MethodBaseExtensions.cs" />
-    <Compile Include="Utility\ObjectExtensions.cs" />
-    <Compile Include="Utility\StringExtensions.cs" />
-    <Compile Include="Utility\TypeExtensions.cs" />
-    <Compile Include="Utility\UriExtensions.cs" />
     <Compile Include="ViewModel\NotifyPropertyChangedAttribute.cs" />
     <Compile Include="ViewModel\NotifyPropertyChangedBehavior.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
@@ -154,26 +121,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="..\BlueDwarf.Core\Properties\BlueDwarf.snk">
+      <Link>Properties\BlueDwarf.snk</Link>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +174,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\passe100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlueDwarf.Core\BlueDwarf.Core.csproj">
+      <Project>{BBD1E465-0350-44DA-9D4C-485DA9670703}</Project>
+      <Name>BlueDwarf.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

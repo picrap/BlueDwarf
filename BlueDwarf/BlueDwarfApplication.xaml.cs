@@ -1,6 +1,6 @@
 ﻿
 using System.Windows;
-using BlueDwarf.Net.Proxy;
+using BlueDwarf.Core;
 using BlueDwarf.Net.Proxy.Server;
 using BlueDwarf.View;
 using BlueDwarf.ViewModel;
@@ -18,10 +18,11 @@ namespace BlueDwarf
             Startup += OnStartup;
         }
 
-        private void OnStartup(object sender, StartupEventArgs e)
+        private static void OnStartup(object sender, StartupEventArgs e)
         {
             var container = new UnityContainer();
-            Configuration.ConfigureApplication(container);
+            UIConfiguration.Configure(container);
+            CoreConfiguration.Configure(container);
 
             var proxyServer = container.Resolve<IProxyServer>();
             proxyServer.Start();
