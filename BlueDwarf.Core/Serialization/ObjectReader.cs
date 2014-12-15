@@ -8,16 +8,29 @@ using BlueDwarf.Utility;
 
 namespace BlueDwarf.Serialization
 {
+    /// <summary>
+    /// Allows to collect and inject object properties
+    /// </summary>
     public class ObjectReader
     {
         private static readonly object[] NoParameter = new object[0];
 
+        /// <summary>
+        /// Reads all properties from given object.
+        /// </summary>
+        /// <param name="o">The o.</param>
+        /// <returns></returns>
         public IDictionary<string, object> Read(object o)
         {
             var properties = GetSerializableProperties(o);
             return properties.ToDictionary(p => p.Item1, p => p.Item2.GetValue(o, NoParameter));
         }
 
+        /// <summary>
+        /// Writes all properties to given object.
+        /// </summary>
+        /// <param name="o">The o.</param>
+        /// <param name="values">The values.</param>
         public void Write(object o, IDictionary<string, object> values)
         {
             var properties = GetSerializableProperties(o);
@@ -29,6 +42,12 @@ namespace BlueDwarf.Serialization
             }
         }
 
+        /// <summary>
+        /// Converts data type... Most of the time.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <returns></returns>
         private static object SafeConvert(object value, Type targetType)
         {
             try
@@ -40,13 +59,18 @@ namespace BlueDwarf.Serialization
             return ObjectTypeConverter.CreateDefault(targetType);
         }
 
+        /// <summary>
+        /// Copies all common properties from a to b.
+        /// </summary>
+        /// <param name="a">a.</param>
+        /// <param name="b">The b.</param>
         public void Map(object a, object b)
         {
             var data = Read(a);
             Write(b, data);
         }
 
-        private IEnumerable<Tuple<string, PropertyInfo>> GetSerializableProperties(object o)
+        private static IEnumerable<Tuple<string, PropertyInfo>> GetSerializableProperties(object o)
         {
             var allProperties = o.GetType().GetProperties()
                 .Where(p => p.GetIndexParameters().Length == 0).ToArray(); // all public properties without index

@@ -7,6 +7,10 @@ using Org.Mentalis.Proxy.Socks;
 
 namespace BlueDwarf.Net.Proxy.Server
 {
+    /// <summary>
+    /// Socks proxy server
+    /// Was from far the easiest to implement
+    /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class SocksProxyServer : IProxyServer
     {
@@ -17,7 +21,13 @@ namespace BlueDwarf.Net.Proxy.Server
 
         [Dependency]
         public INameResolver NameResolver { get; set; }
-
+        
+        /// <summary>
+        /// Gets or sets the proxy route.
+        /// </summary>
+        /// <value>
+        /// The proxy route.
+        /// </value>
         public ProxyRoute ProxyRoute
         {
             get { return _server.ProxyRoute; }

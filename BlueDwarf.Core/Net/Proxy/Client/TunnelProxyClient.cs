@@ -22,6 +22,12 @@ namespace BlueDwarf.Net.Proxy.Client
             Socks4
         }
 
+        /// <summary>
+        /// Validates and creates a route.
+        /// </summary>
+        /// <param name="testTarget">The test target.</param>
+        /// <param name="proxyServers">The proxy servers.</param>
+        /// <returns></returns>
         public ProxyRoute CreateRoute(Uri testTarget, params Uri[] proxyServers)
         {
             try
@@ -44,6 +50,15 @@ namespace BlueDwarf.Net.Proxy.Client
             return null;
         }
 
+        /// <summary>
+        /// Connects the specified target host+port.
+        /// No exception handling is done here
+        /// </summary>
+        /// <param name="targetHost">The target host.</param>
+        /// <param name="targetPort">The target port.</param>
+        /// <param name="route">The route.</param>
+        /// <param name="overrideDns">if set to <c>true</c> [override DNS].</param>
+        /// <returns></returns>
         private ProxyStream Connect(string targetHost, int targetPort, ProxyRoute route, bool overrideDns)
         {
             Tuple<ProxyStream, ProxyType> stream = null;
@@ -60,6 +75,15 @@ namespace BlueDwarf.Net.Proxy.Client
             return Connect(stream, targetHost, targetPort, route, overrideDns);
         }
 
+        /// <summary>
+        /// Connects to the specified server.
+        /// </summary>
+        /// <param name="stream">The stream and proxy type pair.</param>
+        /// <param name="server">The server.</param>
+        /// <param name="route">The route.</param>
+        /// <param name="overrideDns">if set to <c>true</c> [override DNS].</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">@Unknown proxy type</exception>
         private Tuple<ProxyStream, ProxyType> Connect(Tuple<ProxyStream, ProxyType> stream, Uri server, ProxyRoute route, bool overrideDns)
         {
             var newStream = Connect(stream, server.Host, server.Port, route, overrideDns);
@@ -76,7 +100,7 @@ namespace BlueDwarf.Net.Proxy.Client
         {
             if (overrideDns)
             {
-                var ipAddress = NameResolver.Resolve(targetHost, this, routeUntilHere);
+                var ipAddress = NameResolver.Resolve(targetHost, routeUntilHere);
                 targetHost = ipAddress != null ? ipAddress.ToString() : targetHost;
             }
             if (stream == null)

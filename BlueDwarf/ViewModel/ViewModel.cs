@@ -1,14 +1,19 @@
 ﻿using System.ComponentModel;
-using BlueDwarf.Annotations;
 
 namespace BlueDwarf.ViewModel
 {
+    /// <summary>
+    /// View-model base (in case we write more than one).
+    /// </summary>
     public class ViewModel: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        public virtual void OnPropertyChanged(string propertyName)
+        /// <summary>
+        /// Called when property changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        public void OnPropertyChanged(string propertyName)
         {
             var onPropertyChanged = PropertyChanged;
             if (onPropertyChanged != null) 

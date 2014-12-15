@@ -2,21 +2,22 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Navigation;
 using BlueDwarf.Utility;
 
 namespace BlueDwarf.View
 {
     /// <summary>
-    /// Logique d'interaction pour WebBrowserView.xaml
+    /// Specific code to integrate a WebBrowser.
+    /// Unfortunately the WebBrowser class can not be inherited
     /// </summary>
     public partial class WebBrowserView
     {
+        #region public dependency string Source { get; set; }
+
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
             "Source", typeof(string), typeof(WebBrowserView), new PropertyMetadata(default(string), OnSourceChanged));
 
-        public new string Source
+        public string Source
         {
             get { return (string)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
@@ -27,6 +28,10 @@ namespace BlueDwarf.View
             var rthis = (WebBrowserView)d;
             rthis.Refresh();
         }
+
+        #endregion
+
+        #region public dependency bool AppendRandomQueryParameterProperty { get; set; }
 
         public static readonly DependencyProperty AppendRandomQueryParameterProperty = DependencyProperty.Register(
             "AppendRandomQueryParameter", typeof(bool), typeof(WebBrowserView), new PropertyMetadata(default(bool), OnAppendRandomQueryParameterChanged));
@@ -43,6 +48,10 @@ namespace BlueDwarf.View
             rthis.Refresh();
         }
 
+        #endregion
+
+        #region public dependency int WebBrowserView { get; set; }
+
         public static readonly DependencyProperty RefreshIntervalProperty = DependencyProperty.Register(
             "RefreshInterval", typeof(int), typeof(WebBrowserView), new PropertyMetadata(default(int)));
 
@@ -51,6 +60,8 @@ namespace BlueDwarf.View
             get { return (int)GetValue(RefreshIntervalProperty); }
             set { SetValue(RefreshIntervalProperty, value); }
         }
+
+        #endregion
 
         public WebBrowserView()
         {
@@ -66,8 +77,7 @@ namespace BlueDwarf.View
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _refreshThread = new Thread(BackgroundRefresh) { IsBackground = true };
-            _refreshThread.Start();
+            _refreshThread = ThreadHelper.Create(BackgroundRefresh);
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
@@ -75,6 +85,11 @@ namespace BlueDwarf.View
             _refreshThread.Abort();
         }
 
+        /// <summary>
+        /// Background thread worker.
+        /// Refreshes the browser content.
+        /// Note this has to be done in UI thread (hence the Dispatcher.Invoke)
+        /// </summary>
         private void BackgroundRefresh()
         {
             for (; ; )
@@ -91,6 +106,9 @@ namespace BlueDwarf.View
             }
         }
 
+        /// <summary>
+        /// Refreshes the browser content.
+        /// </summary>
         private void Refresh()
         {
             var uri = GetUri();
@@ -100,6 +118,10 @@ namespace BlueDwarf.View
 
         private int _randomValue = 0;
 
+        /// <summary>
+        /// Gets the URI, optionnally appended with a random value.
+        /// </summary>
+        /// <returns></returns>
         private Uri GetUri()
         {
             if (Source == null)

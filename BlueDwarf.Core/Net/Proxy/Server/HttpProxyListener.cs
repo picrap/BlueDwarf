@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Net.Sockets;
 using BlueDwarf.Net.Proxy.Client;
 using Microsoft.Practices.Unity;
 using Org.Mentalis.Proxy;
@@ -16,33 +15,33 @@ namespace BlueDwarf.Net.Proxy.Server
         public ProxyRoute ProxyRoute { get; set; }
 
         ///<summary>Initializes a new instance of the HttpListener class.</summary>
-        ///<param name="Port">The port to listen on.</param>
+        ///<param name="port">The port to listen on.</param>
         ///<remarks>The HttpListener will start listening on all installed network cards.</remarks>
-        public HttpProxyListener(int Port) : this(IPAddress.Any, Port) { }
+        public HttpProxyListener(int port) : this(IPAddress.Any, port) { }
         ///<summary>Initializes a new instance of the HttpListener class.</summary>
-        ///<param name="Port">The port to listen on.</param>
-        ///<param name="Address">The address to listen on. You can specify IPAddress.Any to listen on all installed network cards.</param>
+        ///<param name="port">The port to listen on.</param>
+        ///<param name="address">The address to listen on. You can specify IPAddress.Any to listen on all installed network cards.</param>
         ///<remarks>For the security of your server, try to avoid to listen on every network card (IPAddress.Any). Listening on a local IP address is usually sufficient and much more secure.</remarks>
-        public HttpProxyListener(IPAddress Address, int Port) : base(Port, Address) { }
+        public HttpProxyListener(IPAddress address, int port) : base(port, address) { }
         ///<summary>Called when there's an incoming client connection waiting to be accepted.</summary>
         ///<param name="ar">The result of the asynchronous operation.</param>
         public override void OnAccept(IAsyncResult ar)
         {
             try
             {
-                Socket NewSocket = ListenSocket.EndAccept(ar);
-                if (NewSocket != null)
+                var newSocket = ListenSocket.EndAccept(ar);
+                if (newSocket != null)
                 {
-                    var NewClient = new HttpProxyClient(NewSocket, new DestroyDelegate(this.RemoveClient)) { Listener = this };
-                    AddClient(NewClient);
-                    NewClient.StartHandshake();
+                    var newClient = new HttpProxyClient(newSocket, RemoveClient) { Listener = this };
+                    AddClient(newClient);
+                    newClient.StartHandshake();
                 }
             }
             catch { }
             try
             {
                 //Restart Listening
-                ListenSocket.BeginAccept(new AsyncCallback(this.OnAccept), ListenSocket);
+                ListenSocket.BeginAccept(OnAccept, ListenSocket);
             }
             catch
             {

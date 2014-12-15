@@ -87,7 +87,6 @@
     <Compile Include="Net\Proxy\Server\Mentalis\SocksClient.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksHandler.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
-    <Compile Include="Net\Proxy\Server\ProxyServer.cs" />
     <Compile Include="Net\Proxy\Server\ProxyStream.cs" />
     <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
     <Compile Include="Properties\Annotations.cs" />

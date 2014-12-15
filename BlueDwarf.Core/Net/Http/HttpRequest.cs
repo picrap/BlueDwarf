@@ -4,6 +4,10 @@ using System.Text;
 
 namespace BlueDwarf.Net.Http
 {
+    /// <summary>
+    /// Simple HTTP request
+    /// (because using the one from the framework was too difficult)
+    /// </summary>
     public class HttpRequest
     {
         public string Verb { get; set; }
