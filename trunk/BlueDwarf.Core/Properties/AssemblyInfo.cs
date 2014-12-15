@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("BlueDwarf")]
+[assembly: AssemblyTitle("BlueDwarf.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("BlueDwarf")]
+[assembly: AssemblyProduct("BlueDwarf.Core")]
 [assembly: AssemblyCopyright("Copyright © None Corp. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
