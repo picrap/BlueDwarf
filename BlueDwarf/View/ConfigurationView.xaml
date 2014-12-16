@@ -3,16 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Blue Dwarf" Width="400"
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
-        xmlns:view="clr-namespace:BlueDwarf.View" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Height" Icon="/BlueDwarf;component/Resources/key.ico">
-    <Window.DataContext>
-        <viewModel:ConfigurationViewModel/>
-    </Window.DataContext>
+        xmlns:view="clr-namespace:BlueDwarf.View"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Height" Icon="/BlueDwarf;component/Resources/key.ico"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=false}" WindowStyle="ToolWindow">
     <Grid Margin="8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="/Resources/passe100.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="Fant"/>
+
+        <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{view:Command {Binding Restore}}">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Configure" Command="{view:Command {Binding Restore}}" FontWeight="Bold" />
+                    <MenuItem Header="Exit" Command="{view:Command {Binding Exit}}" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+            </tb:TaskbarIcon>
+        <view:CloseButton Command="{view:Command {Binding Minimize}}" />
+        <view:Hider Hide="{Binding Hide, Mode=OneWay}" />
+        <Image Grid.Column="0" Grid.Row="0" Source="/Resources/passe100.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="Fant"/>
         <StackPanel Grid.Column="1" Orientation="Vertical" >
             <Expander IsExpanded="true">
                 <Expander.Header>

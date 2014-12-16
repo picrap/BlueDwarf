@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading;
 using BlueDwarf.Annotations;
@@ -19,6 +18,15 @@ namespace BlueDwarf.ViewModel
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ConfigurationViewModel : ViewModel
     {
+        [Dependency]
+        public IProxyClient ProxyClient { get; set; }
+
+        [Dependency]
+        public IProxyServer ProxyServer { get; set; }
+
+        [Dependency]
+        public INavigator Navigator { get; set; }
+
         private const string BlueDwarfKey = "BlueDwarf";
 
         [DataMember(Name = Preferences.LocalProxyKey)]
@@ -49,11 +57,8 @@ namespace BlueDwarf.ViewModel
         [NotifyPropertyChanged]
         public virtual int KeepAlive2Interval { get; set; }
 
-        [Dependency]
-        public IProxyClient ProxyClient { get; set; }
-
-        [Dependency]
-        public IProxyServer ProxyServer { get; set; }
+        [NotifyPropertyChanged]
+        public virtual bool Hide { get; set; }
 
         private readonly RegistrySerializer _serializer = new RegistrySerializer();
 
@@ -95,7 +100,7 @@ namespace BlueDwarf.ViewModel
             if (proxyChecker != null)
                 _proxyChecker.Abort();
 
-            _proxyChecker = ThreadHelper.Create(
+            _proxyChecker = ThreadHelper.CreateBackground(
                 delegate
                 {
                     var route = ProxyClient.CreateRoute(_preferences.TestTarget, _preferences.LocalProxy, _preferences.RemoteProxy);
@@ -103,6 +108,21 @@ namespace BlueDwarf.ViewModel
                         ProxyServer.ProxyRoute = route;
                     _proxyChecker = null;
                 });
+        }
+
+        public void Minimize()
+        {
+            Hide = true;
+        }
+
+        public void Restore()
+        {
+            Hide = false;
+        }
+
+        public void Exit()
+        {
+            Navigator.Exit();
         }
     }
 }

@@ -77,7 +77,7 @@ namespace BlueDwarf.View
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _refreshThread = ThreadHelper.Create(BackgroundRefresh);
+            _refreshThread = ThreadHelper.CreateBackground(BackgroundRefresh);
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)

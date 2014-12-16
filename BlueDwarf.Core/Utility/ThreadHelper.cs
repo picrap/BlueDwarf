@@ -6,7 +6,12 @@ namespace BlueDwarf.Utility
 {
     public static class ThreadHelper
     {
-        public static Thread Create(Action action)
+        /// <summary>
+        /// Thread for dummies (like me).
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        public static Thread CreateBackground(Action action)
         {
             ThreadStart threadStart = () => action();
             var thread = new Thread(threadStart) { IsBackground = true };
