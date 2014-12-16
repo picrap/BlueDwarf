@@ -3,7 +3,7 @@ using BlueDwarf.Net.Proxy.Client;
 using BlueDwarf.Net.Proxy.Server;
 using Microsoft.Practices.Unity;
 
-namespace BlueDwarf.Core
+namespace BlueDwarf
 {
     public class CoreConfiguration
     {

@@ -66,6 +66,9 @@
     <AssemblyOriginatorKeyFile>..\BlueDwarf.Core\Properties\BlueDwarf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net40-client\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -102,7 +105,13 @@
       <DependentUpon>BlueDwarfApplication.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="INavigator.cs" />
     <Compile Include="Utility\DispatcherExtensions.cs" />
+    <Compile Include="Utility\ServiceProviderExtensions.cs" />
+    <Compile Include="Utility\UIElementExtensions.cs" />
+    <Compile Include="View\CloseButton.cs" />
+    <Compile Include="View\CommandExtension.cs" />
+    <Compile Include="View\Hider.cs" />
     <Compile Include="View\WebBrowserView.xaml.cs">
       <DependentUpon>WebBrowserView.xaml</DependentUpon>
     </Compile>

@@ -31,7 +31,7 @@ namespace BlueDwarf
         public static void Configure(IUnityContainer container)
         {
             container.AddNewExtension<Interception>();
-            container.RegisterType<ConfigurationViewModel, ConfigurationViewModel>(AsSingleton(), AsViewModel());
+            container.RegisterType<ConfigurationViewModel, ConfigurationViewModel>(AsViewModel());
         }
     }
 }
