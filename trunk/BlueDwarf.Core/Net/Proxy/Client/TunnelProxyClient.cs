@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net.Sockets;
-using System.Threading;
 using BlueDwarf.Annotations;
 using BlueDwarf.Net.Name;
 using BlueDwarf.Net.Proxy.Server;
@@ -120,24 +118,7 @@ namespace BlueDwarf.Net.Proxy.Client
 
         private ProxyStream DirectConnect(ProxyStream stream, string targetHost, int targetPort, ProxyRoute routeUntilHere)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                try
-                {
-                    var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    socket.Connect(targetHost, targetPort);
-                    var newStream = new ProxyStream(socket, true);
-                    return newStream;
-                }
-                catch (SocketException)
-                {
-                }
-                catch (IOException)
-                {
-                }
-                Thread.Sleep(1000);
-            }
-            return null;
+            return Net.Connect.To(targetHost, targetPort);
         }
     }
 }
