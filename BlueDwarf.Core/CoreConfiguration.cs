@@ -1,11 +1,12 @@
 ﻿using BlueDwarf.Net.Name;
 using BlueDwarf.Net.Proxy.Client;
+using BlueDwarf.Net.Proxy.Client.Diagnostic;
 using BlueDwarf.Net.Proxy.Server;
 using Microsoft.Practices.Unity;
 
 namespace BlueDwarf
 {
-    public class CoreConfiguration
+    public static class CoreConfiguration
     {
         private static LifetimeManager AsSingleton()
         {
@@ -17,6 +18,7 @@ namespace BlueDwarf
             container.RegisterType<IProxyClient, TunnelProxyClient>(AsSingleton());
             container.RegisterType<IProxyServer, SocksProxyServer>(AsSingleton());
             container.RegisterType<INameResolver, StatDnsNameResolver>(AsSingleton());
+            container.RegisterType<IProxyAnalyzer, ProxyAnalyzer>(AsSingleton());
         }
     }
 }
