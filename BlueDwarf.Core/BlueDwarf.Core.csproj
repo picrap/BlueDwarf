@@ -63,11 +63,17 @@
   <ItemGroup>
     <Compile Include="CoreConfiguration.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
+    <Compile Include="Net\Connect.cs" />
     <Compile Include="Net\Http\HttpRequest.cs" />
     <Compile Include="Net\Http\HttpResponse.cs" />
     <Compile Include="Net\Name\DnsNameResolver.cs" />
     <Compile Include="Net\Name\INameResolver.cs" />
     <Compile Include="Net\Name\StatDnsNameResolver.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\AnalysisParameters.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\IProxyAnalyzer.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\ProxyAnalyzer.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\ProxyDiagnostic.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\RouteStatus.cs" />
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.cs" />

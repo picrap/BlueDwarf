@@ -1,5 +1,8 @@
 ﻿
+using System;
+using System.Net;
 using System.Windows;
+using BlueDwarf.Net.Proxy.Client.Diagnostic;
 using BlueDwarf.Net.Proxy.Server;
 using BlueDwarf.View;
 using BlueDwarf.ViewModel;
@@ -10,7 +13,7 @@ namespace BlueDwarf
     /// <summary>
     /// Application
     /// </summary>
-    public partial class BlueDwarfApplication: INavigator
+    public partial class BlueDwarfApplication : INavigator
     {
         private ConfigurationView _view;
 
