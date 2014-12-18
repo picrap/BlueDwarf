@@ -1,4 +1,7 @@
-﻿using BlueDwarf.ViewModel;
+﻿using BlueDwarf.Annotations;
+using BlueDwarf.Navigation;
+using BlueDwarf.View;
+using BlueDwarf.ViewModel;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
@@ -31,7 +34,15 @@ namespace BlueDwarf
         public static void Configure(IUnityContainer container)
         {
             container.AddNewExtension<Interception>();
-            container.RegisterType<ConfigurationViewModel, ConfigurationViewModel>(AsViewModel());
+            container.RegisterType<INavigator, Navigator>(AsSingleton());
+            ConfigureViews(container);
+        }
+
+        private static void ConfigureViews(IUnityContainer container)
+        {
+            var navigator = container.Resolve<INavigator>();
+            navigator.Configure<ConfigurationViewModel, ConfigurationView>();
+            navigator.Configure<ProxyAnalysisViewModel, ProxyAnalysisView>();
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using BlueDwarf.Utility;
 
-namespace BlueDwarf.View
+namespace BlueDwarf.Controls
 {
     public class Hider : FrameworkElement
     {

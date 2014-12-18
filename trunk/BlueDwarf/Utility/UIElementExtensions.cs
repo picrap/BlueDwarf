@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using BlueDwarf.Controls;
 using BlueDwarf.View;
 
 namespace BlueDwarf.Utility

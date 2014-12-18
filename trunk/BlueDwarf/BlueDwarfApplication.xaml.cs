@@ -1,8 +1,5 @@
-﻿
-using System;
-using System.Net;
-using System.Windows;
-using BlueDwarf.Net.Proxy.Client.Diagnostic;
+﻿using System.Windows;
+using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Server;
 using BlueDwarf.View;
 using BlueDwarf.ViewModel;
@@ -13,10 +10,8 @@ namespace BlueDwarf
     /// <summary>
     /// Application
     /// </summary>
-    public partial class BlueDwarfApplication : INavigator
+    public partial class BlueDwarfApplication
     {
-        private ConfigurationView _view;
-
         /// <summary>
         /// Application startup code.
         /// Creates and configures container
@@ -30,21 +25,12 @@ namespace BlueDwarf
             var container = new UnityContainer();
             UIConfiguration.Configure(container);
             CoreConfiguration.Configure(container);
-            container.RegisterInstance(typeof (INavigator), this);
 
             var proxyServer = container.Resolve<IProxyServer>();
             proxyServer.Start();
 
-            _view = container.Resolve<ConfigurationView>();
-            var viewModel = container.Resolve<ConfigurationViewModel>();
-            viewModel.Load();
-            _view.DataContext = viewModel;
-            _view.Show();
-        }
-
-        void INavigator.Exit()
-        {
-            Shutdown();
+            var navigator = container.Resolve<INavigator>();
+            navigator.Show<ConfigurationViewModel>();
         }
     }
 }

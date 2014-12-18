@@ -33,25 +33,6 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
     </StartupObject>
@@ -64,6 +45,26 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\BlueDwarf.Core\Properties\BlueDwarf.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification">
@@ -105,15 +106,25 @@
       <DependentUpon>BlueDwarfApplication.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="INavigator.cs" />
+    <Compile Include="Controls\ResultTextBlock.xaml.cs">
+      <DependentUpon>ResultTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\INavigator.cs" />
+    <Compile Include="Navigation\Navigator.cs" />
+    <Compile Include="Navigation\NavigatorExtensions.cs" />
     <Compile Include="Utility\DispatcherExtensions.cs" />
     <Compile Include="Utility\ServiceProviderExtensions.cs" />
     <Compile Include="Utility\UIElementExtensions.cs" />
-    <Compile Include="View\CloseButton.cs" />
-    <Compile Include="View\CommandExtension.cs" />
-    <Compile Include="View\Hider.cs" />
-    <Compile Include="View\WebBrowserView.xaml.cs">
-      <DependentUpon>WebBrowserView.xaml</DependentUpon>
+    <Compile Include="ViewModel\ProxyAnalysisViewModel.cs" />
+    <Compile Include="Controls\CloseButton.cs" />
+    <Compile Include="Controls\CommandExtension.cs" />
+    <Compile Include="Controls\Hider.cs" />
+    <Compile Include="View\ProxyAnalysisView.xaml.cs">
+      <DependentUpon>ProxyAnalysisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VisibilityConverter.cs" />
+    <Compile Include="Controls\RefreshWebBrowser.xaml.cs">
+      <DependentUpon>RefreshWebBrowser.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -159,11 +170,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ResultTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\WebBrowserView.xaml">
+    <Page Include="View\ProxyAnalysisView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RefreshWebBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +208,7 @@
       <Name>BlueDwarf.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
