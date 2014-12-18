@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
+using BlueDwarf.Utility;
 
 namespace BlueDwarf.ViewModel
 {
@@ -11,6 +12,9 @@ namespace BlueDwarf.ViewModel
     public class ViewModel : INotifyPropertyChanged, ICommand
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChanged]
+        public virtual bool Loading { get; set; }
 
         /// <summary>
         /// Called when property changed.
@@ -23,6 +27,9 @@ namespace BlueDwarf.ViewModel
                 onPropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Loads data related to this view-model.
+        /// </summary>
         public virtual void Load()
         { }
 
@@ -37,6 +44,10 @@ namespace BlueDwarf.ViewModel
 
         private static readonly object[] NoParameter = new object[0];
 
+        /// <summary>
+        /// Invokes the command.
+        /// </summary>
+        /// <param name="parameter">Optional parameter.</param>
         public void Execute(object parameter)
         {
             var methodBase = parameter as MethodBase;
@@ -44,6 +55,27 @@ namespace BlueDwarf.ViewModel
                 methodBase.Invoke(this, NoParameter);
             else
                 throw new InvalidOperationException("Can not handle simple messages now (and maybe never)");
+        }
+
+        /// <summary>
+        /// Asynchronously invokes the action and shows the wait overlay (assuming view handles it).
+        /// </summary>
+        /// <param name="action">The action.</param>
+        protected void Async(Action action)
+        {
+            ThreadHelper.CreateBackground(delegate
+            {
+                bool loading = Loading;
+                try
+                {
+                    Loading = true;
+                    action();
+                }
+                finally 
+                {
+                    Loading = loading;
+                }
+            });
         }
     }
 }
