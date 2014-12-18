@@ -23,6 +23,9 @@ namespace BlueDwarf.ViewModel
                 onPropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public virtual void Load()
+        { }
+
         // TODO
         public event EventHandler CanExecuteChanged;
 

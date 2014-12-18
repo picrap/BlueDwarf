@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="BlueDwarf.Controls.ResultTextBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="This">
+    <StackPanel Orientation="Horizontal">
+        <TextBlock Text="OK" FontWeight="Black" Foreground="#FF008000" Visibility="{Binding Success, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <TextBlock Text="KO" FontWeight="Black" Foreground="#FFD00000" Visibility="{Binding Success, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='not'}"/>
+        <TextBlock Text="{Binding Text, ElementName=This}" Margin="8,0,0,0"/>
+    </StackPanel>
+</UserControl>

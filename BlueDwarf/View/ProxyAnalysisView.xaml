@@ -1,0 +1,60 @@
+﻿<Window x:Class="BlueDwarf.View.ProxyAnalysisView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Analysis" SizeToContent="WidthAndHeight" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+        xmlns:controls="clr-namespace:BlueDwarf.Controls"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewModel:ProxyAnalysisViewModel, IsDesignTimeCreatable=false}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+
+    <Window.Resources>
+        <Style x:Key="ValidResultTextBlock" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF008000"/>
+        </Style>
+        <Style x:Key="InvalidResultTextBlock" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FFC00000"/>
+        </Style>
+    </Window.Resources>
+    
+    <StackPanel Orientation="Vertical" Margin="8">
+        <TextBlock Visibility="{Binding RequiresProxy, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='not'}"
+                   Text="Your system does not require my services (which is good)"/>
+        <StackPanel Orientation="Vertical" Visibility="{Binding RequiresProxy, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock>
+                <TextBlock>
+                    <Run Text="Your default proxy is "/>
+                    <Run Text="{Binding DefaultProxy}" FontWeight="Bold"/>
+                    <Run Text=":"/>
+                </TextBlock>
+            </TextBlock>
+            <TextBlock Text="The proxy allows sensitive sites" Style="{DynamicResource ValidResultTextBlock}"
+                       Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="The proxy not allow sensitive sites" Style="{DynamicResource InvalidResultTextBlock}" 
+                       Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+            <TextBlock Text="DNS resolves locally" Style="{DynamicResource ValidResultTextBlock}"
+                       Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="DNS does not resolve locally" Style="{DynamicResource InvalidResultTextBlock}" 
+                       Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+            <TextBlock Text="DNS resolves locally sensitive sites" Style="{DynamicResource ValidResultTextBlock}"
+                       Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="DNS does not resolve locally sensitive sites" Style="{DynamicResource InvalidResultTextBlock}" 
+                       Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+            <TextBlock Text="The proxy allows connection to sensitive sites using IP" Style="{DynamicResource ValidResultTextBlock}"
+                       Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="The proxy does no allow connection to sensitive sites using IP" Style="{DynamicResource InvalidResultTextBlock}" 
+                       Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+
+            <TextBlock Text="The application can work only with the local proxy" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock Text="The application can work with the local and a remote proxy (not provider)" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock Text="Sorry, you'll have to figure out your own solution :'(" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+            <Button Style="{DynamicResource DialogButton}" Content="Let's got with this" Command="{controls:Command {Binding Apply}}"/>
+            <Button Style="{DynamicResource DialogButton}" Content="I'll configure it myself, but thanks for the advice" Command="{controls:Command {Binding Cancel}}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

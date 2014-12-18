@@ -4,18 +4,18 @@ using System.Threading;
 using System.Windows;
 using BlueDwarf.Utility;
 
-namespace BlueDwarf.View
+namespace BlueDwarf.Controls
 {
     /// <summary>
     /// Specific code to integrate a WebBrowser.
     /// Unfortunately the WebBrowser class can not be inherited
     /// </summary>
-    public partial class WebBrowserView
+    public partial class RefreshWebBrowser
     {
         #region public dependency string Source { get; set; }
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-            "Source", typeof(string), typeof(WebBrowserView), new PropertyMetadata(default(string), OnSourceChanged));
+            "Source", typeof(string), typeof(RefreshWebBrowser), new PropertyMetadata(default(string), OnSourceChanged));
 
         public string Source
         {
@@ -25,7 +25,7 @@ namespace BlueDwarf.View
 
         private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var rthis = (WebBrowserView)d;
+            var rthis = (RefreshWebBrowser)d;
             rthis.Refresh();
         }
 
@@ -34,7 +34,7 @@ namespace BlueDwarf.View
         #region public dependency bool AppendRandomQueryParameterProperty { get; set; }
 
         public static readonly DependencyProperty AppendRandomQueryParameterProperty = DependencyProperty.Register(
-            "AppendRandomQueryParameter", typeof(bool), typeof(WebBrowserView), new PropertyMetadata(default(bool), OnAppendRandomQueryParameterChanged));
+            "AppendRandomQueryParameter", typeof(bool), typeof(RefreshWebBrowser), new PropertyMetadata(default(bool), OnAppendRandomQueryParameterChanged));
 
         public bool AppendRandomQueryParameter
         {
@@ -44,16 +44,16 @@ namespace BlueDwarf.View
 
         private static void OnAppendRandomQueryParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var rthis = (WebBrowserView)d;
+            var rthis = (RefreshWebBrowser)d;
             rthis.Refresh();
         }
 
         #endregion
 
-        #region public dependency int WebBrowserView { get; set; }
+        #region public dependency int RefreshWebBrowser { get; set; }
 
         public static readonly DependencyProperty RefreshIntervalProperty = DependencyProperty.Register(
-            "RefreshInterval", typeof(int), typeof(WebBrowserView), new PropertyMetadata(default(int)));
+            "RefreshInterval", typeof(int), typeof(RefreshWebBrowser), new PropertyMetadata(default(int)));
 
         public int RefreshInterval
         {
@@ -63,7 +63,7 @@ namespace BlueDwarf.View
 
         #endregion
 
-        public WebBrowserView()
+        public RefreshWebBrowser()
         {
             InitializeComponent();
             if (DesignerProperties.GetIsInDesignMode(this))

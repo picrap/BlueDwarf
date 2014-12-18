@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using System.Threading;
 using BlueDwarf.Annotations;
+using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Client;
 using BlueDwarf.Net.Proxy.Server;
 using BlueDwarf.Serialization;
@@ -68,7 +69,7 @@ namespace BlueDwarf.ViewModel
         /// <summary>
         /// Loads preferences and intializes proxy from them.
         /// </summary>
-        public void Load()
+        public override void Load()
         {
             _serializer.Deserialize(_preferences, BlueDwarfKey);
             _objectReader.Map(_preferences, this);
@@ -110,6 +111,13 @@ namespace BlueDwarf.ViewModel
                 });
         }
 
+        public void AnalyzeProxy()
+        {
+            var analysis = Navigator.Show<ProxyAnalysisViewModel>();
+            if (analysis != null)
+                LocalProxy = analysis.DefaultProxy.ToString();
+        }
+
         public void Minimize()
         {
             Hide = true;
@@ -122,7 +130,7 @@ namespace BlueDwarf.ViewModel
 
         public void Exit()
         {
-            Navigator.Exit();
+            Navigator.Exit(true);
         }
     }
 }
