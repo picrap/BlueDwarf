@@ -20,6 +20,9 @@ namespace BlueDwarf.ViewModel
         public virtual bool RequiresProxy { get; set; }
 
         [NotifyPropertyChanged]
+        public virtual bool DoesNotRequireProxy { get; set; }
+
+        [NotifyPropertyChanged]
         public virtual Uri DefaultProxy { get; set; }
 
         [NotifyPropertyChanged]
@@ -45,8 +48,17 @@ namespace BlueDwarf.ViewModel
 
         public override void Load()
         {
+            Async(LoadAsync);
+        }
+
+        /// <summary>
+        /// Analyses proxy status, asynchronously.
+        /// </summary>
+        private void LoadAsync()
+        {
             var d = ProxyAnalyzer.Diagnose();
             RequiresProxy = d.DefaultProxy != null;
+            DoesNotRequireProxy = !RequiresProxy;
             DefaultProxy = d.DefaultProxy;
             ProxyAllowsSensitiveSites = d.SensitiveHttpGetRoute.HasFlag(RouteStatus.ProxyAcceptsName)
                                         && d.SensitiveHttpsConnectRoute.HasFlag(RouteStatus.ProxyAcceptsName)
@@ -64,11 +76,17 @@ namespace BlueDwarf.ViewModel
                 WorkWithSomethingElse = true;
         }
 
+        /// <summary>
+        /// Asks to apply recommandations
+        /// </summary>
         public void Apply()
         {
             Navigator.Exit(true);
         }
 
+        /// <summary>
+        /// Asks not to apply th recommandations.
+        /// </summary>
         public void Cancel()
         {
             Navigator.Exit(false);

@@ -111,23 +111,35 @@ namespace BlueDwarf.ViewModel
                 });
         }
 
+        /// <summary>
+        /// Invokes the proxy analysis wizard (sort of).
+        /// </summary>
         public void AnalyzeProxy()
         {
             var analysis = Navigator.Show<ProxyAnalysisViewModel>();
-            if (analysis != null)
+            if (analysis != null && analysis.DefaultProxy != null)
                 LocalProxy = analysis.DefaultProxy.ToString();
         }
 
+        /// <summary>
+        /// Minimizes to tray.
+        /// </summary>
         public void Minimize()
         {
             Hide = true;
         }
 
+        /// <summary>
+        /// Restores from tray.
+        /// </summary>
         public void Restore()
         {
             Hide = false;
         }
 
+        /// <summary>
+        /// Exits the application.
+        /// </summary>
         public void Exit()
         {
             Navigator.Exit(true);

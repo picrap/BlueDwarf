@@ -33,7 +33,7 @@
                     <Expander.Header>
                         <TextBlock Text="Configuration" Style="{DynamicResource SectionTitleTextBlock}"/>
                     </Expander.Header>
-                    <Grid>
+                    <Grid Margin="0,4,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -70,7 +70,7 @@
                 <Expander.Header>
                     <TextBlock Text="Keepalive" Style="{DynamicResource SectionTitleTextBlock}"/>
                 </Expander.Header>
-                <Grid>
+                <Grid Margin="0,4,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
