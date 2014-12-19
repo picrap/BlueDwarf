@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Threading;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Server;
 using BlueDwarf.ViewModel;
@@ -50,7 +49,7 @@ namespace BlueDwarf
                           }
                       });
 #if DEBUG
-            //viewModel.Show = true;
+            viewModel.Show = true;
 #endif
         }
     }

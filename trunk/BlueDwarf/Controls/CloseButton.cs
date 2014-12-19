@@ -19,7 +19,7 @@ namespace BlueDwarf.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var parent = this.GetSelfAndParents().OfType<Window>().FirstOrDefault();
+            var parent = this.GetVisualSelfAndParents().OfType<Window>().FirstOrDefault();
             if (parent != null)
                 parent.Closing += OnParentClosing;
         }

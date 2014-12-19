@@ -33,11 +33,11 @@ namespace BlueDwarf.Controls
 
         private void ShowHide()
         {
-            var parentWindow = this.GetSelfAndParents().OfType<Window>().FirstOrDefault();
+            var parentWindow = this.GetLogicalSelfAndParents().OfType<Window>().FirstOrDefault();
             if (parentWindow == null)
                 return;
 
-            parentWindow.Visibility = Show ? Visibility.Visible : Visibility.Collapsed;
+            parentWindow.Visibility = Show ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }

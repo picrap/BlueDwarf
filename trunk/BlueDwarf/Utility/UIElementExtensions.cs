@@ -14,12 +14,21 @@ namespace BlueDwarf.Utility
 {
     public static class UIElementExtensions
     {
-        public static IEnumerable<UIElement> GetSelfAndParents(this UIElement uiElement)
+        public static IEnumerable<UIElement> GetVisualSelfAndParents(this UIElement uiElement)
         {
             while (uiElement != null)
             {
                 yield return uiElement;
                 uiElement = (UIElement)VisualTreeHelper.GetParent(uiElement);
+            }
+        }
+
+        public static IEnumerable<UIElement> GetLogicalSelfAndParents(this UIElement uiElement)
+        {
+            while (uiElement != null)
+            {
+                yield return uiElement;
+                uiElement = (UIElement)LogicalTreeHelper.GetParent(uiElement);
             }
         }
 
