@@ -16,6 +16,19 @@ namespace BlueDwarf.Navigation
         [Dependency]
         public IUnityContainer UnityContainer { get; set; }
 
+        public static readonly DependencyProperty WasShownProperty = DependencyProperty.RegisterAttached(
+            "WasShown", typeof(bool), typeof(Navigator), new PropertyMetadata(default(bool)));
+
+        public static void SetWasShown(Window element, bool value)
+        {
+            element.SetValue(WasShownProperty, value);
+        }
+
+        public static bool GetWasShown(Window element)
+        {
+            return (bool)element.GetValue(WasShownProperty);
+        }
+
         private readonly IDictionary<Type, Type> _viewByViewModel = new Dictionary<Type, Type>();
 
         private readonly Stack<Window> _windows = new Stack<Window>();
@@ -65,9 +78,24 @@ namespace BlueDwarf.Navigation
         private object ShowMain(Window window, ViewModel.ViewModel viewModel)
         {
             _windows.Push(window);
-            window.Show();
-            window.Activate();
+            if (window.IsVisible)
+            {
+                window.Show();
+                window.Activate();
+            }
+            window.IsVisibleChanged += OnVisibleChanged;
             return viewModel;
+        }
+
+        private void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (Window)sender;
+            if (!GetWasShown(window) && window.IsVisible)
+            {
+                SetWasShown(window, true);
+                window.Show();
+                window.Activate();
+            }
         }
 
         public void Exit(bool validate)
