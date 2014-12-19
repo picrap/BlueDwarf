@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading;
 using BlueDwarf.Annotations;
@@ -30,33 +31,52 @@ namespace BlueDwarf.ViewModel
 
         private const string BlueDwarfKey = "BlueDwarf";
 
+        public enum Category
+        {
+            None = 0,
+            ProxyTunnel,
+            ProxyServer,
+            ProxyKeepalive,
+        }
+
         [DataMember(Name = Preferences.LocalProxyKey)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public virtual string LocalProxy { get; set; }
 
         [DataMember(Name = Preferences.RemoteProxyKey)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public virtual string RemoteProxy { get; set; }
 
         [DataMember(Name = Preferences.TestTargetKey)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public virtual string TestTarget { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive1Key)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public virtual string KeepAlive1 { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive1IntervalKey)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public virtual int KeepAlive1Interval { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive2Key)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public virtual string KeepAlive2 { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive2IntervalKey)]
-        [NotifyPropertyChanged]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public virtual int KeepAlive2Interval { get; set; }
+
+        [NotifyPropertyChanged(Category = Category.ProxyServer)]
+        public virtual int SocksListeningPort { get; set; }
+
+        private bool _canSetSocksListeningPort = true;
+        [NotifyPropertyChanged]
+        public virtual bool CanSetSocksListeningPort
+        {
+            get { return _canSetSocksListeningPort; }
+            set { _canSetSocksListeningPort = value; }
+        }
 
         [NotifyPropertyChanged]
         public virtual bool Hide { get; set; }
@@ -73,14 +93,27 @@ namespace BlueDwarf.ViewModel
         {
             _serializer.Deserialize(_preferences, BlueDwarfKey);
             _objectReader.Map(_preferences, this);
+            if (CanSetSocksListeningPort)
+                SocksListeningPort = _preferences.SocksListeningPort;
             PropertyChanged += OnPropertyChanged;
-            CheckProxy();
+            CheckProxyTunnel();
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             UpdatePreferences();
-            CheckProxy();
+            switch (this.GetCategory<Category>(e.PropertyName))
+            {
+                case Category.ProxyTunnel:
+                    CheckProxyTunnel();
+                    break;
+                case Category.ProxyServer:
+                    break;
+                case Category.ProxyKeepalive:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -90,12 +123,14 @@ namespace BlueDwarf.ViewModel
         {
             _serializer.Deserialize(_preferences, BlueDwarfKey);
             _objectReader.Map(this, _preferences);
+            if (CanSetSocksListeningPort)
+                _preferences.SocksListeningPort = SocksListeningPort;
             _serializer.Serialize(_preferences, BlueDwarfKey);
         }
 
         private Thread _proxyChecker;
 
-        private void CheckProxy()
+        private void CheckProxyTunnel()
         {
             var proxyChecker = _proxyChecker;
             if (proxyChecker != null)

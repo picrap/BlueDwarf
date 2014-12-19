@@ -54,7 +54,7 @@ namespace BlueDwarf
             KeepAlive1 = new Uri("https://google.com");
             KeepAlive1Interval = 120;
             KeepAlive2Interval = 120;
-            SocksListeningPort = 3128;
+            SocksListeningPort = 1080;
         }
     }
 }

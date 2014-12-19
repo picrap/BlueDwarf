@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -13,10 +14,11 @@ namespace BlueDwarf.Navigation
             navigator.Configure(typeof(TViewModel), typeof(TView));
         }
 
-        public static TViewModel Show<TViewModel>(this INavigator navigator)
+        public static TViewModel Show<TViewModel>(this INavigator navigator, Action<TViewModel> initializer = null)
             where TViewModel : ViewModel.ViewModel
         {
-            return (TViewModel)navigator.Show(typeof(TViewModel));
+            var objectInitializer = initializer != null ? delegate(object o) { initializer((TViewModel)o); } : (Action<object>)null;
+            return (TViewModel)navigator.Show(typeof(TViewModel), objectInitializer);
         }
     }
 }
