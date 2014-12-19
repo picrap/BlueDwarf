@@ -79,7 +79,7 @@ namespace BlueDwarf.ViewModel
         }
 
         [NotifyPropertyChanged]
-        public virtual bool Hide { get; set; }
+        public virtual bool Show { get; set; }
 
         private readonly RegistrySerializer _serializer = new RegistrySerializer();
 
@@ -97,6 +97,7 @@ namespace BlueDwarf.ViewModel
                 SocksListeningPort = _preferences.SocksListeningPort;
             PropertyChanged += OnPropertyChanged;
             CheckProxyTunnel();
+            SetupProxyServer();
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -108,11 +109,10 @@ namespace BlueDwarf.ViewModel
                     CheckProxyTunnel();
                     break;
                 case Category.ProxyServer:
+                    SetupProxyServer();
                     break;
                 case Category.ProxyKeepalive:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -146,6 +146,11 @@ namespace BlueDwarf.ViewModel
                 });
         }
 
+        private void SetupProxyServer()
+        {
+            ProxyServer.Port = SocksListeningPort;
+        }
+
         /// <summary>
         /// Invokes the proxy analysis wizard (sort of).
         /// </summary>
@@ -161,7 +166,7 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         public void Minimize()
         {
-            Hide = true;
+            Show = false;
         }
 
         /// <summary>
@@ -169,7 +174,7 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         public void Restore()
         {
-            Hide = false;
+            Show = true;
         }
 
         /// <summary>

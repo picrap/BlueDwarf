@@ -6,19 +6,29 @@ namespace BlueDwarf.Controls
 {
     public class Hider : FrameworkElement
     {
-        public static readonly DependencyProperty HideProperty = DependencyProperty.Register(
-            "Hide", typeof(bool), typeof(Hider), new PropertyMetadata(default(bool), OnHideChanged));
+        public static readonly DependencyProperty ShowProperty = DependencyProperty.Register(
+            "Show", typeof(bool), typeof(Hider), new PropertyMetadata(default(bool), OnShowChanged));
 
-        public bool Hide
+        public bool Show
         {
-            get { return (bool)GetValue(HideProperty); }
-            set { SetValue(HideProperty, value); }
+            get { return (bool)GetValue(ShowProperty); }
+            set { SetValue(ShowProperty, value); }
         }
 
-        private static void OnHideChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnShowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var @this = (Hider)d;
             @this.ShowHide();
+        }
+
+        public Hider()
+        {
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ShowHide();
         }
 
         private void ShowHide()
@@ -27,7 +37,7 @@ namespace BlueDwarf.Controls
             if (parentWindow == null)
                 return;
 
-            parentWindow.Visibility = Hide ? Visibility.Hidden : Visibility.Visible;
+            parentWindow.Visibility = Show ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

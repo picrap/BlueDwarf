@@ -9,7 +9,8 @@
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=false}" WindowStyle="ToolWindow">
+        d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=false}" WindowStyle="ToolWindow"
+        Visibility="Collapsed">
     <Grid Margin="8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -25,7 +26,7 @@
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
         <controls:CloseButton Command="{controls:Command {Binding Minimize}}" />
-        <controls:Hider Hide="{Binding Hide, Mode=OneWay}" />
+        <controls:Hider Show="{Binding Show, Mode=OneWay}" />
         <Image Grid.Column="0" Grid.Row="0" Source="/Resources/passe100.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="Fant"/>
         <StackPanel Grid.Column="1" Orientation="Vertical" >
             <Grid>
@@ -67,7 +68,7 @@
                         </Grid>
                     </StackPanel>
                 </Expander>
-                <Button Content="Bring the wizard!" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{controls:Command {Binding AnalyzeProxy}}" />
+                <Button Content="Summon the wizard!" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{controls:Command {Binding AnalyzeProxy}}" />
             </Grid>
             <Expander IsExpanded="false">
                 <Expander.Header>

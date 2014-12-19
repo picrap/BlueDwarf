@@ -15,7 +15,7 @@ namespace BlueDwarf.Net.Proxy.Server
     public class SocksProxyServer : IProxyServer
     {
         private SocksListener _server;
-        private int _port = 1080;
+        private int _port = 0;
 
         [Dependency]
         public IProxyClient ProxyClient { get; set; }
@@ -36,6 +36,8 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
 
+        private ProxyRoute _proxyRoute;
+
         /// <summary>
         /// Gets or sets the proxy route.
         /// </summary>
@@ -44,13 +46,13 @@ namespace BlueDwarf.Net.Proxy.Server
         /// </value>
         public ProxyRoute ProxyRoute
         {
-            get { return _server.ProxyRoute; }
-            set { _server.ProxyRoute = value; }
-        }
-
-        public SocksProxyServer()
-        {
-            _server = new SocksListener(1080);
+            get { return _proxyRoute; }
+            set
+            {
+                if (_server != null)
+                    _server.ProxyRoute = value;
+                _proxyRoute = value;
+            }
         }
 
         public void Start()
@@ -61,9 +63,15 @@ namespace BlueDwarf.Net.Proxy.Server
         private void ConfigureServer()
         {
             if (_server != null)
+            {
                 _server.Dispose();
-            _server = new SocksListener(Port) { ProxyClient = ProxyClient, NameResolver = NameResolver };
-            _server.Start();
+                _server = null;
+            }
+            if (Port > 0)
+            {
+                _server = new SocksListener(Port) { ProxyClient = ProxyClient, NameResolver = NameResolver, ProxyRoute = _proxyRoute };
+                _server.Start();
+            }
         }
     }
 }
