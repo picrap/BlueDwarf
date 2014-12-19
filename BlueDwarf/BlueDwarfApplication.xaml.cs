@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Threading;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Server;
 using BlueDwarf.ViewModel;
@@ -39,15 +40,18 @@ namespace BlueDwarf
             proxyServer.Start();
 
             var navigator = container.Resolve<INavigator>();
-            navigator.Show<ConfigurationViewModel>(
-                delegate(ConfigurationViewModel viewModel)
-                {
-                    if (options.Value.ProxyPort > 0)
-                    {
-                        viewModel.CanSetSocksListeningPort = false;
-                        viewModel.SocksListeningPort = options.Value.ProxyPort;
-                    }
-                });
+            var viewModel = navigator.Show<ConfigurationViewModel>(
+                      delegate(ConfigurationViewModel vm)
+                      {
+                          if (options.Value.ProxyPort > 0)
+                          {
+                              vm.CanSetSocksListeningPort = false;
+                              vm.SocksListeningPort = options.Value.ProxyPort;
+                          }
+                      });
+#if DEBUG
+            //viewModel.Show = true;
+#endif
         }
     }
 }

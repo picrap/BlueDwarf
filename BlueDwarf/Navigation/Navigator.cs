@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Threading;
 using BlueDwarf.Annotations;
 using BlueDwarf.ViewModel;
 using Microsoft.Practices.Unity;
@@ -45,7 +46,7 @@ namespace BlueDwarf.Navigation
             if (window != null)
             {
                 if (_windows.Count == 0)
-                    return ShowMain(window);
+                    return ShowMain(window, viewModel);
                 return ShowDialog(window, viewModel);
             }
             return null;
@@ -61,21 +62,24 @@ namespace BlueDwarf.Navigation
             return ok ?? (false) ? viewModel : null;
         }
 
-        private object ShowMain(Window window)
+        private object ShowMain(Window window, ViewModel.ViewModel viewModel)
         {
             _windows.Push(window);
-            var oldTopmost = window.Topmost;
-            window.Topmost = true;
-            window.Topmost = oldTopmost;
             window.Show();
-            return null;
+            window.Activate();
+            return viewModel;
         }
 
         public void Exit(bool validate)
         {
             var window = _windows.Pop();
             if (_windows.Count == 0)
+            {
+                // this is not something I'm very proud of
+                // TODO: have a nice exit
+                Application.Current.DispatcherUnhandledException += delegate(object sender, DispatcherUnhandledExceptionEventArgs e) { e.Handled = true; };
                 Application.Current.Shutdown();
+            }
             else
             {
                 window.DialogResult = validate;
