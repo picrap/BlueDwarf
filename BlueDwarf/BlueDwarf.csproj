@@ -67,6 +67,9 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\packages\CommandLineParser20.2.0.0.0\lib\net40\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net40-client\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
     </Reference>
@@ -118,6 +121,7 @@
     <Compile Include="Utility\DispatcherExtensions.cs" />
     <Compile Include="Utility\ServiceProviderExtensions.cs" />
     <Compile Include="Utility\UIElementExtensions.cs" />
+    <Compile Include="ViewModel\NotifyPropertyChangedAttributeExtensions.cs" />
     <Compile Include="ViewModel\ProxyAnalysisViewModel.cs" />
     <Compile Include="Controls\CloseButton.cs" />
     <Compile Include="Controls\CommandExtension.cs" />
@@ -146,7 +150,6 @@
     <None Include="..\BlueDwarf.Core\Properties\BlueDwarf.snk">
       <Link>Properties\BlueDwarf.snk</Link>
     </None>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
@@ -224,6 +227,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

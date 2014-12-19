@@ -8,5 +8,6 @@ namespace BlueDwarf.ViewModel
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class NotifyPropertyChangedAttribute : Attribute
     {
+        public object Category { get; set; }
     }
 }

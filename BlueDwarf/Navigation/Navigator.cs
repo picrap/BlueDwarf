@@ -30,9 +30,13 @@ namespace BlueDwarf.Navigation
             return new InjectionMember[] { new Interceptor<VirtualMethodInterceptor>(), new InterceptionBehavior<NotifyPropertyChangedBehavior>() };
         }
 
-        public object Show(Type viewModelType)
+        public object Show(Type viewModelType, Action<object> initializer = null)
         {
             var viewModel = (ViewModel.ViewModel)UnityContainer.Resolve(viewModelType);
+            // initializer comes first
+            if (initializer != null)
+                initializer(viewModel);
+            // load comes second
             viewModel.Load();
             var viewType = _viewByViewModel[viewModelType];
             var view = (FrameworkElement)Activator.CreateInstance(viewType);

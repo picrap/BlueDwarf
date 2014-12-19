@@ -31,8 +31,50 @@
             <Grid>
                 <Expander IsExpanded="true">
                     <Expander.Header>
-                        <TextBlock Text="Configuration" Style="{DynamicResource SectionTitleTextBlock}"/>
+                        <TextBlock Text="Proxy tunnel configuration" Style="{DynamicResource SectionTitleTextBlock}"/>
                     </Expander.Header>
+                    <StackPanel Orientation="Vertical" Margin="24,0,0,0">
+                        <TextBlock Style="{DynamicResource LegendTextBlock}" Text="This is where you go out"/>
+                        <Grid Margin="0,4,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
+                       Text="Local proxy:" />
+                            <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}"
+                     Text="{Binding LocalProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" 
+                       Text="Remote proxy:" />
+                            <TextBox Grid.Column="1" Grid.Row="1" Style="{DynamicResource DialogTextBox}" 
+                     Text="{Binding RemoteProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" 
+                       Text="Test URL:" />
+                            <TextBox Grid.Column="1" Grid.Row="2" Style="{DynamicResource DialogTextBox}" 
+                     Text="{Binding TestTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+                <Button Content="Bring the wizard!" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{controls:Command {Binding AnalyzeProxy}}" />
+            </Grid>
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <TextBlock Text="Proxy server configuration" Style="{DynamicResource SectionTitleTextBlock}"/>
+                </Expander.Header>
+                <StackPanel Orientation="Vertical" Margin="24,0,0,0">
+                    <TextBlock Style="{DynamicResource LegendTextBlock}" Text="This is where you configure the local proxy for your browser and other applications" TextWrapping="Wrap" />
                     <Grid Margin="0,4,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -48,29 +90,17 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Local proxy:" />
-                        <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}"
-                     Text="{Binding LocalProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                        <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Remote proxy:" />
-                        <TextBox Grid.Column="1" Grid.Row="1" Style="{DynamicResource DialogTextBox}" 
-                     Text="{Binding RemoteProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Test URL:" />
-                        <TextBox Grid.Column="1" Grid.Row="2" Style="{DynamicResource DialogTextBox}" 
-                     Text="{Binding TestTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
+                       Text="SOCKS 4 proxy server port:" />
+                        <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}" IsEnabled="{Binding CanSetSocksListeningPort}"
+                     Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
-                </Expander>
-                <Button Content="Bring the wizard!" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{controls:Command {Binding AnalyzeProxy}}" />
-            </Grid>
+                </StackPanel>
+            </Expander>
             <Expander IsExpanded="false">
                 <Expander.Header>
-                    <TextBlock Text="Keepalive" Style="{DynamicResource SectionTitleTextBlock}"/>
+                    <TextBlock Text="Local proxy keepalive" Style="{DynamicResource SectionTitleTextBlock}"/>
                 </Expander.Header>
-                <Grid Margin="0,4,0,0">
+                <Grid Margin="24,4,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />

@@ -12,13 +12,15 @@ namespace BlueDwarf.Navigation
         /// </summary>
         /// <param name="viewModelType">Type of the view model.</param>
         /// <param name="viewType">Type of the view.</param>
-        void Configure(Type viewModelType,Type viewType);
+        void Configure(Type viewModelType, Type viewType);
+
         /// <summary>
         /// Shows the specified view model type.
         /// </summary>
         /// <param name="viewModelType">Type of the view model.</param>
+        /// <param name="initializer"></param>
         /// <returns>The view model if dialog is OK, null if cancelled</returns>
-        object Show(Type viewModelType);
+        object Show(Type viewModelType, Action<object> initializer = null);
 
         /// <summary>
         /// Exits the view.

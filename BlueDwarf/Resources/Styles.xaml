@@ -9,6 +9,11 @@
         <Setter Property="Margin" Value="0,3,8,4"/>
     </Style>
 
+    <Style x:Key="LegendTextBlock" TargetType="TextBlock" BasedOn="{StaticResource DialogElement}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+    </Style>
+
     <Style x:Key="DialogTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}">
     </Style>
 
