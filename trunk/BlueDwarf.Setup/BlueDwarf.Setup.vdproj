@@ -610,7 +610,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Blue Dwarf"
         "ProductCode" = "8:{2EF17181-9BA8-4EFE-9B8D-AE44C8004FC2}"
-        "PackageCode" = "8:{2A56BAE9-E05D-4AA9-9EE1-C366F5D7E39D}"
+        "PackageCode" = "8:{A842E40E-3474-44FD-9E2F-D7B44D831305}"
         "UpgradeCode" = "8:{891F2636-4959-4236-9D90-13115C9E6EB4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
