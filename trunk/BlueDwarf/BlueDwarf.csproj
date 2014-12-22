@@ -66,6 +66,9 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine">
       <HintPath>..\packages\CommandLineParser20.2.0.0.0\lib\net40\CommandLine.dll</HintPath>
@@ -238,6 +241,9 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == "Release" "$(SolutionDir)\Tools\ILMerge.exe" /out="$(ProjectDir)\bin\BlueDwarf.exe" /target:exe /wildcards /keyfile:"$(SolutionDir)\BlueDwarf.Core\Properties\BlueDwarf.snk" "$(TargetPath)" BlueDwarf.Core.dll CommandLine.dll Hardcodet.Wpf.TaskbarNotification.dll Microsoft.Practices.*.dll /targetplatform:v4,”%25ProgramFiles%25\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client”</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
