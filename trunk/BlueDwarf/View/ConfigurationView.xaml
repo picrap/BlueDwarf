@@ -8,6 +8,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=false}" WindowStyle="ToolWindow"
         Visibility="Hidden">
@@ -50,20 +51,14 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Local proxy:" />
-                            <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}"
-                     Text="{Binding LocalProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="Local proxy:" />
+                            <controls:UrlBox Grid.Column="1" Grid.Row="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
 
-                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Remote proxy:" />
-                            <TextBox Grid.Column="1" Grid.Row="1" Style="{DynamicResource DialogTextBox}" 
-                     Text="{Binding RemoteProxy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" Text="Remote proxy:" />
+                            <controls:UrlBox Grid.Column="1" Grid.Row="1" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
 
-                            <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Test URL:" />
-                            <TextBox Grid.Column="1" Grid.Row="2" Style="{DynamicResource DialogTextBox}" 
-                     Text="{Binding TestTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" Text="Test URL:" />
+                            <TextBox Grid.Column="1" Grid.Row="2" Style="{DynamicResource DialogTextBox}" Text="{Binding TestTarget, Mode=TwoWay}" />
 
                         </Grid>
                     </StackPanel>
@@ -119,8 +114,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" 
                        Text="Keepalive URL 1:" />
                     <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical">
-                        <TextBox Style="{DynamicResource DialogTextBox}" 
-                     Text="{Binding KeepAlive1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <controls:UrlBox Style="{DynamicResource DialogUrlBox}" Uri="{Binding KeepAlive1, Mode=TwoWay}" AllowedSchemes="http;https"/>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="Refresh interval:" />
                             <TextBox Style="{DynamicResource DialogInnerTextBox}" 
@@ -131,8 +125,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="4" Style="{DynamicResource DialogTextBlock}" 
                        Text="Keepalive URL 2:" />
                     <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
-                        <TextBox Style="{DynamicResource DialogTextBox}" 
-                     Text="{Binding KeepAlive2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <controls:UrlBox Style="{DynamicResource DialogUrlBox}" Uri="{Binding KeepAlive2, Mode=TwoWay}" AllowedSchemes="http;https" />
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="Refresh interval:" />
                             <TextBox Style="{DynamicResource DialogInnerTextBox}" 

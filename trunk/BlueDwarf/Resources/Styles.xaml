@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="urn:blue-dwarf/view">
 
     <Style x:Key="DialogElement" TargetType="FrameworkElement">
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -15,6 +16,9 @@
     </Style>
 
     <Style x:Key="DialogTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}">
+    </Style>
+
+    <Style x:Key="DialogUrlBox" TargetType="v:UrlBox" BasedOn="{StaticResource DialogElement}">
     </Style>
 
     <Style x:Key="DialogInnerTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}">

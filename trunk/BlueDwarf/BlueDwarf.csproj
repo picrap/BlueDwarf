@@ -128,9 +128,13 @@
     <Compile Include="Controls\ResultTextBlock.xaml.cs">
       <DependentUpon>ResultTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UrlBox.xaml.cs">
+      <DependentUpon>UrlBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Navigation\INavigator.cs" />
     <Compile Include="Navigation\Navigator.cs" />
     <Compile Include="Navigation\NavigatorExtensions.cs" />
+    <Compile Include="Utility\CollectionExtensions.cs" />
     <Compile Include="Utility\DispatcherExtensions.cs" />
     <Compile Include="Utility\ShellLink\FileIcon.cs" />
     <Compile Include="Utility\ServiceProviderExtensions.cs" />
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ResultTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UrlBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

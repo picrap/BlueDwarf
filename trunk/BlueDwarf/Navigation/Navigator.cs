@@ -41,6 +41,10 @@ namespace BlueDwarf.Navigation
             UnityContainer.RegisterType(viewModelType, viewModelType, AsViewModel());
         }
 
+        /// <summary>
+        /// Adds aspects to view-models.
+        /// </summary>
+        /// <returns></returns>
         private static InjectionMember[] AsViewModel()
         {
             return new InjectionMember[] { new Interceptor<VirtualMethodInterceptor>(), new InterceptionBehavior<NotifyPropertyChangedBehavior>() };
