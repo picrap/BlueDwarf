@@ -41,11 +41,11 @@ namespace BlueDwarf.ViewModel
 
         [DataMember(Name = Preferences.LocalProxyKey)]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
-        public virtual string LocalProxy { get; set; }
+        public virtual Uri LocalProxy { get; set; }
 
         [DataMember(Name = Preferences.RemoteProxyKey)]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
-        public virtual string RemoteProxy { get; set; }
+        public virtual Uri RemoteProxy { get; set; }
 
         [DataMember(Name = Preferences.TestTargetKey)]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
@@ -53,7 +53,7 @@ namespace BlueDwarf.ViewModel
 
         [DataMember(Name = Preferences.KeepAlive1Key)]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
-        public virtual string KeepAlive1 { get; set; }
+        public virtual Uri KeepAlive1 { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive1IntervalKey)]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
@@ -61,7 +61,7 @@ namespace BlueDwarf.ViewModel
 
         [DataMember(Name = Preferences.KeepAlive2Key)]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
-        public virtual string KeepAlive2 { get; set; }
+        public virtual Uri KeepAlive2 { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive2IntervalKey)]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
@@ -158,7 +158,7 @@ namespace BlueDwarf.ViewModel
         {
             var analysis = Navigator.Show<ProxyAnalysisViewModel>();
             if (analysis != null && analysis.DefaultProxy != null)
-                LocalProxy = analysis.DefaultProxy.ToString();
+                LocalProxy = new Uri(analysis.DefaultProxy.ToString());
         }
 
         /// <summary>

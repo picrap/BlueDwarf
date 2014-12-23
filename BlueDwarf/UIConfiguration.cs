@@ -19,15 +19,6 @@ namespace BlueDwarf
         }
 
         /// <summary>
-        /// Creates view-model aspects.
-        /// </summary>
-        /// <returns></returns>
-        private static InjectionMember[] AsViewModel()
-        {
-            return new InjectionMember[] { new Interceptor<VirtualMethodInterceptor>(), new InterceptionBehavior<NotifyPropertyChangedBehavior>() };
-        }
-
-        /// <summary>
         /// Configures the specified container with application instances.
         /// </summary>
         /// <param name="container">The container.</param>
