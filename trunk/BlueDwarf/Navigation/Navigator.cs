@@ -33,6 +33,8 @@ namespace BlueDwarf.Navigation
 
         private readonly Stack<Window> _windows = new Stack<Window>();
 
+        public event EventHandler Exiting;
+
         public void Configure(Type viewModelType, Type viewType)
         {
             _viewByViewModel[viewModelType] = viewType;
@@ -103,6 +105,9 @@ namespace BlueDwarf.Navigation
             var window = _windows.Pop();
             if (_windows.Count == 0)
             {
+                var onExiting = Exiting;
+                if (onExiting != null)
+                    onExiting(this, EventArgs.Empty);
                 // this is not something I'm very proud of
                 // TODO: have a nice exit
                 Application.Current.DispatcherUnhandledException += delegate(object sender, DispatcherUnhandledExceptionEventArgs e) { e.Handled = true; };
