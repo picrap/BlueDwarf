@@ -8,6 +8,11 @@ namespace BlueDwarf.Navigation
     public interface INavigator
     {
         /// <summary>
+        /// Occurs when exiting.
+        /// </summary>
+        event EventHandler Exiting;
+
+        /// <summary>
         /// Configures the specified view model type to be used with view type.
         /// </summary>
         /// <param name="viewModelType">Type of the view model.</param>

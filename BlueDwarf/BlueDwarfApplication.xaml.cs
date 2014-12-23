@@ -2,6 +2,7 @@
 using System.Windows;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Server;
+using BlueDwarf.Utility;
 using BlueDwarf.ViewModel;
 using CommandLine;
 using Microsoft.Practices.Unity;
@@ -13,10 +14,13 @@ namespace BlueDwarf
     /// </summary>
     public partial class BlueDwarfApplication
     {
-        public class Options
+        private class Options
         {
             [Option('p', "proxy-port", Required = true, HelpText = "Sockets proxy server port.")]
             public int ProxyPort { get; set; }
+
+            [Option('m', "minimized", Required = true, HelpText = "Starts minimized.")]
+            public bool Minimized { get; set; }
         }
 
         /// <summary>
@@ -30,6 +34,7 @@ namespace BlueDwarf
         private void OnStartup(object sender, StartupEventArgs e)
         {
             var options = Parser.Default.ParseArguments<Options>(Environment.GetCommandLineArgs());
+            StartupUtility.Register(GetType().Assembly, "-m");
 
             var container = new UnityContainer();
             UIConfiguration.Configure(container);
@@ -39,7 +44,8 @@ namespace BlueDwarf
             proxyServer.Start();
 
             var navigator = container.Resolve<INavigator>();
-            var viewModel = navigator.Show<ConfigurationViewModel>(
+            navigator.Exiting += OnNavigatorExiting;
+            var viewModel = navigator.Show(
                       delegate(ConfigurationViewModel vm)
                       {
                           if (options.Value.ProxyPort > 0)
@@ -48,9 +54,14 @@ namespace BlueDwarf
                               vm.SocksListeningPort = options.Value.ProxyPort;
                           }
                       });
-#if DEBUG
-            viewModel.Show = true;
-#endif
+
+            if (!options.Value.Minimized)
+                viewModel.Show = true;
+        }
+
+        private void OnNavigatorExiting(object sender, EventArgs e)
+        {
+            StartupUtility.Unregister(GetType().Assembly);
         }
     }
 }
