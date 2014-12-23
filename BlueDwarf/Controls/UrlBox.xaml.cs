@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,13 +63,19 @@ namespace BlueDwarf.Controls
 
         private void UpdateAllowedSchemes()
         {
-            var allowedSchemes = AllowedSchemesArray;
-            SchemeComboxBox.Items.Clear();
-            SchemeComboxBox.Items.AddRange(allowedSchemes.Select(s => new ComboBoxItem { Name = s, Content = s }));
-            SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
-            var manySchemes = allowedSchemes.Length > 1;
-            SchemeTextBlock.Visibility = manySchemes ? Visibility.Collapsed : Visibility.Visible;
-            SchemeComboxBox.Visibility = manySchemes ? Visibility.Visible : Visibility.Collapsed;
+            UpdateLock(delegate
+            {
+                var allowedSchemes = AllowedSchemesArray;
+
+                var selectedItem = SchemeComboxBox.SelectedItem;
+                SchemeComboxBox.Items.Clear();
+                SchemeComboxBox.Items.AddRange(allowedSchemes);
+                SchemeComboxBox.SelectedItem = selectedItem;
+                SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
+                var manySchemes = allowedSchemes.Length > 1;
+                SchemeTextBlock.Visibility = manySchemes ? Visibility.Collapsed : Visibility.Visible;
+                SchemeComboxBox.Visibility = manySchemes ? Visibility.Visible : Visibility.Collapsed;
+            });
         }
 
         private void OnSchemeChanged(object sender, SelectionChangedEventArgs e)
@@ -92,24 +99,23 @@ namespace BlueDwarf.Controls
             @this.WriteUri();
         }
 
-        private bool _writing;
+        private bool _updating;
 
         /// <summary>
         /// Writes the URI to inner controls.
         /// </summary>
         private void WriteUri()
         {
-            if (_writing)
+            if (_updating)
                 return;
 
-            try
+            UpdateLock(delegate
             {
-                _writing = true;
                 var uri = Uri;
                 if (uri != null)
                 {
                     SchemeTextBlock.Text = uri.Scheme;
-                    SchemeComboxBox.SelectedValue = uri.Scheme;
+                    SchemeComboxBox.SelectedItem = SchemeComboxBox.Items.OfType<string>().FirstOrDefault(s => s == uri.Scheme);
                     HostTextBox.Text = uri.Host;
                     if (!uri.IsDefaultPort)
                         PortTextBox.Text = uri.Port.ToString();
@@ -118,15 +124,11 @@ namespace BlueDwarf.Controls
                 {
                     var allowedSchemes = AllowedSchemesArray;
                     SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
-                    SchemeComboxBox.SelectedValue = allowedSchemes.FirstOrDefault();
+                    SchemeComboxBox.SelectedIndex = 0;
                     HostTextBox.Text = null;
                     PortTextBox.Text = null;
                 }
-            }
-            finally
-            {
-                _writing = false;
-            }
+            });
         }
 
         /// <summary>
@@ -134,21 +136,19 @@ namespace BlueDwarf.Controls
         /// </summary>
         private void ReadUri()
         {
-            if (_writing)
+            if (_updating)
                 return;
 
-            try
+            UpdateLock(delegate
             {
-                _writing = true;
-
                 if (HostTextBox.Text.IsNullOrEmpty())
                 {
                     Uri = null;
                     return;
                 }
 
-                var selectedItem = SchemeComboxBox.SelectedValue as ComboBoxItem;
-                var scheme = selectedItem != null ? selectedItem.Name : SchemeTextBlock.Text;
+                var selectedItem = SchemeComboxBox.SelectedItem as string;
+                var scheme = selectedItem ?? SchemeTextBlock.Text;
                 if (PortTextBox.Text.IsNullOrEmpty())
                 {
                     var uriString = string.Format("{0}://{1}", scheme, HostTextBox.Text);
@@ -161,10 +161,19 @@ namespace BlueDwarf.Controls
                     return;
                 var uriStringWithPort = string.Format("{0}://{1}:{2}", scheme, HostTextBox.Text, port);
                 Uri = new Uri(uriStringWithPort);
+            });
+        }
+
+        private void UpdateLock(Action action)
+        {
+            try
+            {
+                _updating = true;
+                action();
             }
             finally
             {
-                _writing = false;
+                _updating = false;
             }
         }
     }
