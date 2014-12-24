@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading;
 using BlueDwarf.Annotations;
+using BlueDwarf.Aspects;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Client;
 using BlueDwarf.Net.Proxy.Server;
@@ -40,46 +41,46 @@ namespace BlueDwarf.ViewModel
         }
 
         [DataMember(Name = Preferences.LocalProxyKey)]
-        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
-        public virtual Uri LocalProxy { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        public Uri LocalProxy { get; set; }
 
         [DataMember(Name = Preferences.RemoteProxyKey)]
-        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
-        public virtual Uri RemoteProxy { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        public Uri RemoteProxy { get; set; }
 
         [DataMember(Name = Preferences.TestTargetKey)]
-        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
-        public virtual string TestTarget { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        public string TestTarget { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive1Key)]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
-        public virtual Uri KeepAlive1 { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        public Uri KeepAlive1 { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive1IntervalKey)]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
-        public virtual int KeepAlive1Interval { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        public int KeepAlive1Interval { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive2Key)]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
-        public virtual Uri KeepAlive2 { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        public Uri KeepAlive2 { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive2IntervalKey)]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
-        public virtual int KeepAlive2Interval { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        public int KeepAlive2Interval { get; set; }
 
-        [NotifyPropertyChanged(Category = Category.ProxyServer)]
-        public virtual int SocksListeningPort { get; set; }
+        [AutoNotifyPropertyChanged(Category = Category.ProxyServer)]
+        public int SocksListeningPort { get; set; }
 
         private bool _canSetSocksListeningPort = true;
-        [NotifyPropertyChanged]
-        public virtual bool CanSetSocksListeningPort
+        [AutoNotifyPropertyChanged]
+        public bool CanSetSocksListeningPort
         {
             get { return _canSetSocksListeningPort; }
             set { _canSetSocksListeningPort = value; }
         }
 
-        [NotifyPropertyChanged]
-        public virtual bool Show { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool Show { get; set; }
 
         private readonly RegistrySerializer _serializer = new RegistrySerializer();
 
@@ -103,7 +104,7 @@ namespace BlueDwarf.ViewModel
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             UpdatePreferences();
-            switch (this.GetCategory<Category>(e.PropertyName))
+            switch (this.GetPropertyCategory<Category>(e.PropertyName))
             {
                 case Category.ProxyTunnel:
                     CheckProxyTunnel();

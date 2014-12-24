@@ -39,5 +39,17 @@ namespace BlueDwarf.Utility
                 type = type.BaseType;
             }
         }
+
+        /// <summary>
+        /// Creates a default instance.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static object Default(this Type type)
+        {
+            if (type.IsClass)
+                return null;
+            return Activator.CreateInstance(type);
+        }
     }
 }

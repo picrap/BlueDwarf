@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using BlueDwarf.Aspects;
 
 namespace BlueDwarf.Controls
 {
@@ -8,14 +7,8 @@ namespace BlueDwarf.Controls
     /// </summary>
     public partial class Loading 
     {
-        public static readonly DependencyProperty ShowProperty = DependencyProperty.Register(
-            "Show", typeof (bool), typeof (Loading), new PropertyMetadata(default(bool)));
-
-        public bool Show
-        {
-            get { return (bool) GetValue(ShowProperty); }
-            set { SetValue(ShowProperty, value); }
-        }
+        [AutoDependencyProperty]
+        public bool Show { get; set; }
 
         public Loading()
         {

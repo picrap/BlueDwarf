@@ -34,7 +34,7 @@
             </TextBlock>
                 <TextBlock Text="The proxy allows sensitive sites" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="The proxy not allow sensitive sites" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="The proxy does not allow sensitive sites" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
                 <TextBlock Text="DNS resolves locally" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}}"/>
