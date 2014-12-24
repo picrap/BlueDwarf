@@ -81,7 +81,7 @@ namespace BlueDwarf.Navigation
             return viewModel;
         }
 
-        private void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private static void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var window = (Window)sender;
             if (!GetWasShown(window) && window.IsVisible)
