@@ -1,6 +1,7 @@
 ﻿
 using System;
 using BlueDwarf.Annotations;
+using BlueDwarf.Aspects;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Client.Diagnostic;
 using Microsoft.Practices.Unity;
@@ -16,35 +17,35 @@ namespace BlueDwarf.ViewModel
         [Dependency]
         public IProxyAnalyzer ProxyAnalyzer { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool RequiresProxy { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool RequiresProxy { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool DoesNotRequireProxy { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool DoesNotRequireProxy { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual Uri DefaultProxy { get; set; }
+        [AutoNotifyPropertyChanged]
+        public Uri DefaultProxy { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool ProxyAllowsSensitiveSites { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool ProxyAllowsSensitiveSites { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool DnsResolvesLocal { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool DnsResolvesLocal { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool DnsResolvesSensitiveSites { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool DnsResolvesSensitiveSites { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool ProxyConnectsToSensitiveIP { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool ProxyConnectsToSensitiveIP { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool WorkWithLocalProxy { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool WorkWithLocalProxy { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool WorkWithTwoProxy { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool WorkWithTwoProxy { get; set; }
 
-        [NotifyPropertyChanged]
-        public virtual bool WorkWithSomethingElse { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool WorkWithSomethingElse { get; set; }
 
         public override void Load()
         {

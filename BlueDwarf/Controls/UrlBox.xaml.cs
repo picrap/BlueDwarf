@@ -1,9 +1,9 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using BlueDwarf.Aspects;
 using BlueDwarf.Utility;
 
 namespace BlueDwarf.Controls
@@ -13,31 +13,11 @@ namespace BlueDwarf.Controls
     /// </summary>
     public partial class UrlBox
     {
-        #region public dependency Uri Uri { get; set; }
+        [AutoDependencyProperty(Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        public Uri Uri { get; set; }
 
-        public static readonly DependencyProperty UriProperty = DependencyProperty.Register(
-            "Uri", typeof(Uri), typeof(UrlBox), new PropertyMetadata(default(Uri), OnUriChanged));
-
-        public Uri Uri
-        {
-            get { return (Uri)GetValue(UriProperty); }
-            set { SetValue(UriProperty, value); }
-        }
-
-        #endregion
-
-        #region public dependency string[] AllowedSchemes { get; set; }
-
-        public static readonly DependencyProperty AllowedSchemesProperty = DependencyProperty.Register(
-            "AllowedSchemes", typeof(string), typeof(UrlBox), new PropertyMetadata("http", OnAllowedSchemesChanged));
-
-        public string AllowedSchemes
-        {
-            get { return (string)GetValue(AllowedSchemesProperty); }
-            set { SetValue(AllowedSchemesProperty, value); }
-        }
-
-        #endregion
+        [AutoDependencyProperty(DefaultValue = "http", Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        public string AllowedSchemes { get; set; }
 
         private string[] AllowedSchemesArray
         {
@@ -55,10 +35,9 @@ namespace BlueDwarf.Controls
             UpdateAllowedSchemes();
         }
 
-        private static void OnAllowedSchemesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void OnAllowedSchemesChanged()
         {
-            var @this = (UrlBox)d;
-            @this.UpdateAllowedSchemes();
+            UpdateAllowedSchemes();
         }
 
         private void UpdateAllowedSchemes()
@@ -93,10 +72,9 @@ namespace BlueDwarf.Controls
             ReadUri();
         }
 
-        private static void OnUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void OnUriChanged()
         {
-            var @this = (UrlBox)d;
-            @this.WriteUri();
+            WriteUri();
         }
 
         private bool _updating;

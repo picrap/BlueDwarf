@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
+using BlueDwarf.Aspects;
 using BlueDwarf.Utility;
 
 namespace BlueDwarf.ViewModel
@@ -13,8 +14,8 @@ namespace BlueDwarf.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChanged]
-        public virtual bool Loading { get; set; }
+        [AutoNotifyPropertyChanged]
+        public bool Loading { get; set; }
 
         /// <summary>
         /// Called when property changed.

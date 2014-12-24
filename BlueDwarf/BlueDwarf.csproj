@@ -32,6 +32,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -91,6 +92,10 @@
     <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
       <HintPath>..\packages\Unity.Interception.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="PostSharp">
+      <HintPath>..\packages\PostSharp.4.0.39\lib\net35-client\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Drawing" />
@@ -112,6 +117,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Aspects\AutoDependencyPropertyNotification.cs" />
+    <Compile Include="Aspects\AutoNotifyPropertyChanged.cs" />
+    <Compile Include="Aspects\AutoNotifyPropertyChangedExtensions.cs" />
     <Compile Include="BlueDwarfApplication.xaml.cs">
       <DependentUpon>BlueDwarfApplication.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -121,6 +129,10 @@
     </Compile>
     <Compile Include="BlueDwarfInstaller.Designer.cs">
       <DependentUpon>BlueDwarfInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Aspects\AutoDependencyProperty.cs" />
+    <Compile Include="Aspects\AutoDependencyProperties.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
@@ -142,7 +154,6 @@
     <Compile Include="Utility\ShellLink\ShellLink.cs" />
     <Compile Include="Utility\StartupUtility.cs" />
     <Compile Include="Utility\UIElementExtensions.cs" />
-    <Compile Include="ViewModel\NotifyPropertyChangedAttributeExtensions.cs" />
     <Compile Include="ViewModel\ProxyAnalysisViewModel.cs" />
     <Compile Include="Controls\CloseButton.cs" />
     <Compile Include="Controls\CommandExtension.cs" />
@@ -158,8 +169,6 @@
   <ItemGroup>
     <Compile Include="UIConfiguration.cs" />
     <Compile Include="Preferences.cs" />
-    <Compile Include="ViewModel\NotifyPropertyChangedAttribute.cs" />
-    <Compile Include="ViewModel\NotifyPropertyChangedBehavior.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
@@ -264,6 +273,11 @@
     </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Fody.1.26.1\build\Fody.targets" Condition="Exists('..\packages\Fody.1.26.1\build\Fody.targets')" />
+  <Import Project="..\packages\PostSharp.4.0.39\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.0.39\tools\PostSharp.targets')" />
+  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
+    <Error Condition="!Exists('..\packages\PostSharp.4.0.39\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\packages\PostSharp.4.0.39\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

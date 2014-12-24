@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
 using BlueDwarf.Annotations;
-using BlueDwarf.ViewModel;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace BlueDwarf.Navigation
 {
@@ -38,16 +36,6 @@ namespace BlueDwarf.Navigation
         public void Configure(Type viewModelType, Type viewType)
         {
             _viewByViewModel[viewModelType] = viewType;
-            UnityContainer.RegisterType(viewModelType, viewModelType, AsViewModel());
-        }
-
-        /// <summary>
-        /// Adds aspects to view-models.
-        /// </summary>
-        /// <returns></returns>
-        private static InjectionMember[] AsViewModel()
-        {
-            return new InjectionMember[] { new Interceptor<VirtualMethodInterceptor>(), new InterceptionBehavior<NotifyPropertyChangedBehavior>() };
         }
 
         public object Show(Type viewModelType, Action<object> initializer = null)
@@ -59,7 +47,7 @@ namespace BlueDwarf.Navigation
             // load comes second
             viewModel.Load();
             var viewType = _viewByViewModel[viewModelType];
-            var view = (FrameworkElement)Activator.CreateInstance(viewType);
+            var view = (FrameworkElement)UnityContainer.Resolve(viewType);
             view.DataContext = viewModel;
             var window = view as Window;
             if (window != null)

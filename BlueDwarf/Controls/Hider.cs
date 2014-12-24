@@ -1,24 +1,18 @@
 ﻿using System.Linq;
 using System.Windows;
+using BlueDwarf.Aspects;
 using BlueDwarf.Utility;
 
 namespace BlueDwarf.Controls
 {
     public class Hider : FrameworkElement
     {
-        public static readonly DependencyProperty ShowProperty = DependencyProperty.Register(
-            "Show", typeof(bool), typeof(Hider), new PropertyMetadata(default(bool), OnShowChanged));
+        [AutoDependencyProperty(Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        public bool Show { get; set; }
 
-        public bool Show
+        public void OnShowChanged()
         {
-            get { return (bool)GetValue(ShowProperty); }
-            set { SetValue(ShowProperty, value); }
-        }
-
-        private static void OnShowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var @this = (Hider)d;
-            @this.ShowHide();
+            ShowHide();
         }
 
         public Hider()
