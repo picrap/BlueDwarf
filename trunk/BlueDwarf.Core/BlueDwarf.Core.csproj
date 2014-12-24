@@ -75,6 +75,8 @@
     <Compile Include="Net\Proxy\Client\Diagnostic\ProxyDiagnostic.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\RouteStatus.cs" />
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
+    <Compile Include="Net\Proxy\Client\ProxyClientConnectEventArgs.cs" />
+    <Compile Include="Net\Proxy\Client\ProxyClientTransferEventArgs.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.Http.cs" />
@@ -94,12 +96,15 @@
     <Compile Include="Net\Proxy\Server\Mentalis\SocksHandler.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
     <Compile Include="Net\Proxy\Server\ProxyStream.cs" />
+    <Compile Include="Net\Proxy\Server\ProxyStreamReadEventArgs.cs" />
+    <Compile Include="Net\Proxy\Server\ProxyStreamWriteEventArgs.cs" />
     <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ObjectReader.cs" />
     <Compile Include="Serialization\RegistrySerializer.cs" />
     <Compile Include="Utility\CustomAttributeProviderExtensions.cs" />
+    <Compile Include="Utility\EventHandlerExtensions.cs" />
     <Compile Include="Utility\MethodBaseExtensions.cs" />
     <Compile Include="Utility\ObjectExtensions.cs" />
     <Compile Include="Utility\ObjectTypeConverter.cs" />
