@@ -137,6 +137,25 @@
             </Expander>
             <controls:RefreshWebBrowser Width="1" Height="1" Opacity="0.1" Source="{Binding KeepAlive1, Mode=OneWay}" AppendRandomQueryParameter="True" RefreshInterval="{Binding KeepAlive1Interval,Mode=OneWay}"/>
             <controls:RefreshWebBrowser Width="1" Height="1" Opacity="0.1" Source="{Binding KeepAlive2, Mode=OneWay}" AppendRandomQueryParameter="True" RefreshInterval="{Binding KeepAlive2Interval,Mode=OneWay}" />
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <TextBlock Text="Statistics" Style="{DynamicResource SectionTitleTextBlock}"/>
+                </Expander.Header>
+                <StackPanel Orientation="Vertical" Margin="24,0,0,0">
+                    <TextBlock>
+                        <Run Text="Connections so far: "/>
+                        <Run FontWeight="Bold" Text="{Binding ConnectionsCount}"/>
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="Bytes read: "/>
+                        <Run FontWeight="Bold" Text="{Binding BytesRead}"/>
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="Bytes written: "/>
+                        <Run FontWeight="Bold" Text="{Binding BytesWritten}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Expander>
         </StackPanel>
     </Grid>
 </Window>

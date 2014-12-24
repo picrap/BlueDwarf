@@ -43,7 +43,6 @@ namespace Org.Mentalis.Proxy.Socks
     ///<remarks>This class also implements the SOCKS4a protocol.</remarks>
     public sealed class SocksListener : Listener
     {
-        public IProxyClient ProxyClient { get; set; }
         public INameResolver NameResolver { get; set; }
         public ProxyRoute ProxyRoute { get; set; }
 

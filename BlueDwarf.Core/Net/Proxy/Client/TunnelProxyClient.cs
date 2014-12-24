@@ -3,6 +3,7 @@ using System.IO;
 using BlueDwarf.Annotations;
 using BlueDwarf.Net.Name;
 using BlueDwarf.Net.Proxy.Server;
+using BlueDwarf.Utility;
 using Microsoft.Practices.Unity;
 
 namespace BlueDwarf.Net.Proxy.Client
@@ -20,21 +21,25 @@ namespace BlueDwarf.Net.Proxy.Client
             Socks4
         }
 
+        public event EventHandler<ProxyClientConnectEventArgs> Connect;
+        public event EventHandler<ProxyClientTransferEventArgs> Transfer;
+
         /// <summary>
         /// Validates and creates a route.
         /// </summary>
-        /// <param name="testTarget">The test target.</param>
+        /// <param name="targetHost"></param>
+        /// <param name="targetPort"></param>
         /// <param name="proxyServers">The proxy servers.</param>
         /// <returns></returns>
-        public ProxyRoute CreateRoute(Uri testTarget, params Uri[] proxyServers)
+        public ProxyRoute CreateRoute(string targetHost, int targetPort, params Uri[] proxyServers)
         {
             try
             {
-                if (testTarget == null)
+                if (targetHost == null)
                     return null;
 
-                var proxyRoute = new ProxyRoute(Connect, proxyServers);
-                var stream = Connect(testTarget.Host, testTarget.Port, proxyRoute, false);
+                var proxyRoute = new ProxyRoute(TunnelConnect, proxyServers);
+                var stream = TunnelConnect(targetHost, targetPort, proxyRoute, false);
 
                 if (stream == null)
                     return null;
@@ -57,20 +62,22 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="route">The route.</param>
         /// <param name="overrideDns">if set to <c>true</c> [override DNS].</param>
         /// <returns></returns>
-        private ProxyStream Connect(string targetHost, int targetPort, ProxyRoute route, bool overrideDns)
+        private ProxyStream TunnelConnect(string targetHost, int targetPort, ProxyRoute route, bool overrideDns)
         {
             Tuple<ProxyStream, ProxyType> stream = null;
-            var routeUntilHere = new ProxyRoute(Connect);
+            var routeUntilHere = new ProxyRoute(TunnelConnect);
             foreach (var uri in route.Route)
             {
                 if (uri == null)
                     continue;
-                stream = Connect(stream, uri, routeUntilHere, overrideDns);
+                stream = TunnelConnect(stream, uri, routeUntilHere, overrideDns);
                 routeUntilHere += uri;
                 if (stream == null)
                     return null;
             }
-            return Connect(stream, targetHost, targetPort, route, overrideDns);
+            var newStream = TunnelConnect(stream, targetHost, targetPort, route, overrideDns);
+            Connect.Raise(this, new ProxyClientConnectEventArgs(targetHost, targetPort));
+            return newStream;
         }
 
         /// <summary>
@@ -82,9 +89,9 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="overrideDns">if set to <c>true</c> [override DNS].</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentException">@Unknown proxy type</exception>
-        private Tuple<ProxyStream, ProxyType> Connect(Tuple<ProxyStream, ProxyType> stream, Uri server, ProxyRoute route, bool overrideDns)
+        private Tuple<ProxyStream, ProxyType> TunnelConnect(Tuple<ProxyStream, ProxyType> stream, Uri server, ProxyRoute route, bool overrideDns)
         {
-            var newStream = Connect(stream, server.Host, server.Port, route, overrideDns);
+            var newStream = TunnelConnect(stream, server.Host, server.Port, route, overrideDns);
             if (newStream == null)
                 return null;
             if (server.Scheme == Uri.UriSchemeHttp)
@@ -94,7 +101,7 @@ namespace BlueDwarf.Net.Proxy.Client
             throw new ArgumentException(@"Unknown proxy type", server.ToString());
         }
 
-        private ProxyStream Connect(Tuple<ProxyStream, ProxyType> stream, string targetHost, int targetPort, ProxyRoute routeUntilHere, bool overrideDns)
+        private ProxyStream TunnelConnect(Tuple<ProxyStream, ProxyType> stream, string targetHost, int targetPort, ProxyRoute routeUntilHere, bool overrideDns)
         {
             if (overrideDns)
             {
@@ -118,7 +125,20 @@ namespace BlueDwarf.Net.Proxy.Client
 
         private ProxyStream DirectConnect(ProxyStream stream, string targetHost, int targetPort, ProxyRoute routeUntilHere)
         {
-            return Net.Connect.To(targetHost, targetPort);
+            var newStream = Net.Connect.To(targetHost, targetPort);
+            newStream.DataRead += OnProxyStreamDataRead;
+            newStream.DataWritten += OnProxyStreamDataWritten;
+            return newStream;
+        }
+
+        private void OnProxyStreamDataRead(object sender, ProxyStreamReadEventArgs e)
+        {
+            Transfer.Raise(this, new ProxyClientTransferEventArgs(e.BytesRead, 0));
+        }
+
+        private void OnProxyStreamDataWritten(object sender, ProxyStreamWriteEventArgs e)
+        {
+            Transfer.Raise(this, new ProxyClientTransferEventArgs(0, e.BytesWritten));
         }
     }
 }

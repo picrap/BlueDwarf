@@ -82,6 +82,15 @@ namespace BlueDwarf.ViewModel
         [AutoNotifyPropertyChanged]
         public bool Show { get; set; }
 
+        [AutoNotifyPropertyChanged]
+        public int ConnectionsCount { get; set; }
+
+        [AutoNotifyPropertyChanged]
+        public long BytesRead { get; set; }
+
+        [AutoNotifyPropertyChanged]
+        public long BytesWritten { get; set; }
+
         private readonly RegistrySerializer _serializer = new RegistrySerializer();
 
         private readonly Preferences _preferences = new Preferences();
@@ -97,8 +106,21 @@ namespace BlueDwarf.ViewModel
             if (CanSetSocksListeningPort)
                 SocksListeningPort = _preferences.SocksListeningPort;
             PropertyChanged += OnPropertyChanged;
+            ProxyClient.Connect += OnProxyClientConnect;
+            ProxyClient.Transfer += OnProxyClientTransfer;
             CheckProxyTunnel();
             SetupProxyServer();
+        }
+
+        private void OnProxyClientConnect(object sender, ProxyClientConnectEventArgs e)
+        {
+            ConnectionsCount++;
+        }
+
+        private void OnProxyClientTransfer(object sender, ProxyClientTransferEventArgs e)
+        {
+            BytesRead += e.BytesRead;
+            BytesWritten += e.BytesWritten;
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -140,7 +162,7 @@ namespace BlueDwarf.ViewModel
             _proxyChecker = ThreadHelper.CreateBackground(
                 delegate
                 {
-                    var route = ProxyClient.CreateRoute(_preferences.TestTarget, _preferences.LocalProxy, _preferences.RemoteProxy);
+                    var route = ProxyClient.CreateRoute(_preferences.TestTarget.Host, _preferences.TestTarget.Port, _preferences.LocalProxy, _preferences.RemoteProxy);
                     if (route != null)
                         ProxyServer.ProxyRoute = route;
                     _proxyChecker = null;
