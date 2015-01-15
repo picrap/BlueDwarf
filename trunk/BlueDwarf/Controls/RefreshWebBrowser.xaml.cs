@@ -52,7 +52,7 @@ namespace BlueDwarf.Controls
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            _runBackgroundRefresh = true;
+            _runBackgroundRefresh = false;
         }
 
         private bool _runBackgroundRefresh;
@@ -62,7 +62,7 @@ namespace BlueDwarf.Controls
         /// Refreshes the browser content.
         /// Note this has to be done in UI thread (hence the Dispatcher.Invoke)
         /// </summary>
-        [Async]
+        [Async(ThreadName = "BackgroundRefresh")]
         private void BackgroundRefresh()
         {
             while (_runBackgroundRefresh)
