@@ -72,10 +72,11 @@ namespace BlueDwarf.Navigation
         private object ShowMain(Window window, ViewModel.ViewModel viewModel)
         {
             _windows.Push(window);
-            if (window.IsVisible)
+            if (window.Visibility != Visibility.Collapsed)
             {
                 window.Show();
-                window.Activate();
+                if (window.ShowActivated)
+                    window.Activate();
             }
             window.IsVisibleChanged += OnVisibleChanged;
             return viewModel;
