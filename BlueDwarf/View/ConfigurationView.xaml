@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=false}" WindowStyle="ToolWindow"
         Visibility="Hidden">
-    <Grid Margin="8" Width="400">
+    <Grid Margin="8" Width="450">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -52,14 +52,40 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="Local proxy:" />
-                            <controls:UrlBox Grid.Column="1" Grid.Row="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
+                            <Grid Grid.Column="1" Grid.Row="0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
+                                <controls:Status Grid.Column="1" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                            </Grid>
 
                             <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" Text="Remote proxy:" />
-                            <controls:UrlBox Grid.Column="1" Grid.Row="1" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
+                            <Grid Grid.Column="1" Grid.Row="1" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
+                                <controls:Status Grid.Column="1" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                            </Grid>
 
-                            <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" Text="Test URL:" />
-                            <TextBox Grid.Column="1" Grid.Row="2" Style="{DynamicResource DialogTextBox}" Text="{Binding TestTarget, Mode=TwoWay}" />
+                            <TextBlock  Grid.Column="1" Grid.Row="2" Style="{DynamicResource LegendTextBlock}">
+                                <Run Text="Find happiness at "/>
+                                <Hyperlink NavigateUri="http://www.proxynova.com/proxy-server-list" RequestNavigate="OnHyperlinkRequestNavigate">http://www.proxynova.com/proxy-server-list</Hyperlink>
+                            </TextBlock>
 
+                            <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" Text="Test URL:" />
+                            <Grid Grid.Column="1" Grid.Row="3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Style="{DynamicResource DialogTextBox}" Text="{Binding TestTarget, Mode=TwoWay}" />
+                                <controls:Status Grid.Column="1" Code="{Binding TestTargetStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                            </Grid>
+                            
                         </Grid>
                     </StackPanel>
                 </Expander>

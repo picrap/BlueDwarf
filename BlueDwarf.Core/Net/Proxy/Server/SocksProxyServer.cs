@@ -17,9 +17,6 @@ namespace BlueDwarf.Net.Proxy.Server
         private SocksListener _server;
 
         [Dependency]
-        public IProxyClient ProxyClient { get; set; }
-
-        [Dependency]
         public INameResolver NameResolver { get; set; }
 
         private int _port = 0;

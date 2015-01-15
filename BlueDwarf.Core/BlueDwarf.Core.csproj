@@ -78,6 +78,7 @@
     <Compile Include="Net\Proxy\Client\ProxyClientConnectEventArgs.cs" />
     <Compile Include="Net\Proxy\Client\ProxyClientTransferEventArgs.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
+    <Compile Include="Net\Proxy\Client\ProxyRouteException.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.Http.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.Socks.cs" />
