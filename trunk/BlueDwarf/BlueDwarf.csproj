@@ -140,6 +140,10 @@
     <Compile Include="Controls\ResultTextBlock.xaml.cs">
       <DependentUpon>ResultTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Status.xaml.cs">
+      <DependentUpon>Status.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatusCode.cs" />
     <Compile Include="Controls\UrlBox.xaml.cs">
       <DependentUpon>UrlBox.xaml</DependentUpon>
     </Compile>
@@ -211,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ResultTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Status.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -73,9 +73,13 @@ namespace BlueDwarf.Net.Proxy.Client
                 stream = TunnelConnect(stream, uri, routeUntilHere, overrideDns);
                 routeUntilHere += uri;
                 if (stream == null)
-                    return null;
+                    throw new ProxyRouteException(uri);
             }
             var newStream = TunnelConnect(stream, targetHost, targetPort, route, overrideDns);
+
+            if (newStream == null)
+                throw new ProxyRouteException(targetHost);
+
             Connect.Raise(this, new ProxyClientConnectEventArgs(targetHost, targetPort));
             return newStream;
         }

@@ -138,7 +138,11 @@ namespace BlueDwarf.Controls
                 if (!int.TryParse(PortTextBox.Text, out port) || port < 0)
                     return;
                 var uriStringWithPort = string.Format("{0}://{1}:{2}", scheme, HostTextBox.Text, port);
-                Uri = new Uri(uriStringWithPort);
+                try
+                {
+                    Uri = new Uri(uriStringWithPort);
+                }
+                catch (UriFormatException) { }
             });
         }
 

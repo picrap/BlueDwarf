@@ -27,13 +27,6 @@ namespace BlueDwarf.Net.Proxy.Client
             Route = route.Where(r => r != null).ToArray();
         }
 
-        public ProxyRoute GetPrevious()
-        {
-            if (Route.Length == 0)
-                return null;
-            return new ProxyRoute(_connect, Route.Take(Route.Length - 1).ToArray());
-        }
-
         /// <summary>
         /// Adds an element to current route and returns a new route.
         /// </summary>

@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading;
 using BlueDwarf.Annotations;
 using BlueDwarf.Aspects;
+using BlueDwarf.Controls;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Client;
 using BlueDwarf.Net.Proxy.Server;
@@ -44,13 +45,22 @@ namespace BlueDwarf.ViewModel
         [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri LocalProxy { get; set; }
 
+        [AutoNotifyPropertyChanged]
+        public StatusCode LocalProxyStatus { get; set; }
+
         [DataMember(Name = Preferences.RemoteProxyKey)]
         [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri RemoteProxy { get; set; }
 
+        [AutoNotifyPropertyChanged]
+        public StatusCode RemoteProxyStatus { get; set; }
+
         [DataMember(Name = Preferences.TestTargetKey)]
         [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public string TestTarget { get; set; }
+
+        [AutoNotifyPropertyChanged]
+        public StatusCode TestTargetStatus { get; set; }
 
         [DataMember(Name = Preferences.KeepAlive1Key)]
         [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
@@ -162,11 +172,53 @@ namespace BlueDwarf.ViewModel
             _proxyChecker = ThreadHelper.CreateBackground(
                 delegate
                 {
-                    var route = ProxyClient.CreateRoute(_preferences.TestTarget.Host, _preferences.TestTarget.Port, _preferences.LocalProxy, _preferences.RemoteProxy);
-                    if (route != null)
+                    try
+                    {
+                        SetStatusPending();
+                        var route = ProxyClient.CreateRoute(_preferences.TestTarget.Host, _preferences.TestTarget.Port, _preferences.LocalProxy, _preferences.RemoteProxy);
                         ProxyServer.ProxyRoute = route;
+                        SetStatus(null);
+                    }
+                    catch (ProxyRouteException pre)
+                    {
+                        ProxyServer.ProxyRoute = null;
+                        SetStatus(pre);
+                    }
                     _proxyChecker = null;
                 });
+        }
+
+        private void SetStatusPending()
+        {
+            LocalProxyStatus = StatusCode.None;
+            RemoteProxyStatus = StatusCode.None;
+            TestTargetStatus = StatusCode.None;
+        }
+
+        private void SetStatus(ProxyRouteException proxyRouteException)
+        {
+            Func<Uri, bool> checkUri = u => proxyRouteException != null && proxyRouteException.Proxy == u;
+            Func<string, bool> checkHost = h => proxyRouteException != null && proxyRouteException.TargetHost == h;
+            SetStatusLines(
+                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(LocalProxy), v => LocalProxyStatus = v),
+                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(RemoteProxy), v => RemoteProxyStatus = v),
+                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkHost(_preferences.TestTarget.Host), v => TestTargetStatus = v)
+                );
+        }
+
+        private static void SetStatusLines(params Tuple<Func<bool>, Action<StatusCode>>[] failurePointsAndSetters)
+        {
+            var code = StatusCode.OK;
+            foreach (var failurePointAndSetter in failurePointsAndSetters)
+            {
+                if (failurePointAndSetter.Item1())
+                {
+                    failurePointAndSetter.Item2(StatusCode.Error);
+                    code = StatusCode.None;
+                }
+                else
+                    failurePointAndSetter.Item2(code);
+            }
         }
 
         private void SetupProxyServer()
