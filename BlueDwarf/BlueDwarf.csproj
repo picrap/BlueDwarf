@@ -117,6 +117,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Aspects\Async.cs" />
     <Compile Include="Aspects\AutoDependencyPropertyNotification.cs" />
     <Compile Include="Aspects\AutoNotifyPropertyChanged.cs" />
     <Compile Include="Aspects\AutoNotifyPropertyChangedExtensions.cs" />

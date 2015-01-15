@@ -161,31 +161,21 @@ namespace BlueDwarf.ViewModel
             _serializer.Serialize(_preferences, BlueDwarfKey);
         }
 
-        private Thread _proxyChecker;
-
+        [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
-            var proxyChecker = _proxyChecker;
-            if (proxyChecker != null)
-                _proxyChecker.Abort();
-
-            _proxyChecker = ThreadHelper.CreateBackground(
-                delegate
-                {
-                    try
-                    {
-                        SetStatusPending();
-                        var route = ProxyClient.CreateRoute(_preferences.TestTarget.Host, _preferences.TestTarget.Port, _preferences.LocalProxy, _preferences.RemoteProxy);
-                        ProxyServer.ProxyRoute = route;
-                        SetStatus(null);
-                    }
-                    catch (ProxyRouteException pre)
-                    {
-                        ProxyServer.ProxyRoute = null;
-                        SetStatus(pre);
-                    }
-                    _proxyChecker = null;
-                });
+            try
+            {
+                SetStatusPending();
+                var route = ProxyClient.CreateRoute(_preferences.TestTarget.Host, _preferences.TestTarget.Port, _preferences.LocalProxy, _preferences.RemoteProxy);
+                ProxyServer.ProxyRoute = route;
+                SetStatus(null);
+            }
+            catch (ProxyRouteException pre)
+            {
+                ProxyServer.ProxyRoute = null;
+                SetStatus(pre);
+            }
         }
 
         private void SetStatusPending()
