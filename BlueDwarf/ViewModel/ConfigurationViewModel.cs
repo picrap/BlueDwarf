@@ -135,8 +135,10 @@ namespace BlueDwarf.ViewModel
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdatePreferences();
-            switch (this.GetPropertyCategory<Category>(e.PropertyName))
+            var category = this.GetPropertyCategory<Category>(e.PropertyName);
+            if (category != Category.None)
+                UpdatePreferences();
+            switch (category)
             {
                 case Category.ProxyTunnel:
                     CheckProxyTunnel();
@@ -161,7 +163,7 @@ namespace BlueDwarf.ViewModel
             _serializer.Serialize(_preferences, BlueDwarfKey);
         }
 
-        [Async(KillExisting = true)]
+        [Async(KillExisting = true, ThreadName = "CheckProxyTunnel")]
         private void CheckProxyTunnel()
         {
             try

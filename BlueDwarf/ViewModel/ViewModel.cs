@@ -61,7 +61,7 @@ namespace BlueDwarf.ViewModel
         /// Asynchronously invokes the action and shows the wait overlay (assuming view handles it).
         /// </summary>
         /// <param name="action">The action.</param>
-        [Async]
+        [Async(ThreadName = "Async")]
         protected void Async(Action action)
         {
             bool loading = Loading;

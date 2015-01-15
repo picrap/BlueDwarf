@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Threading;
 using PostSharp.Aspects;
+using PostSharp.Extensibility;
 
 namespace BlueDwarf.Aspects
 {
@@ -10,14 +10,21 @@ namespace BlueDwarf.Aspects
     /// Allows to invoke a method asynchronously (here, in a background thread)
     /// </summary>
     [Serializable]
-    public class Async : MethodInterceptionAspect, ISerializable
+    [MulticastAttributeUsage(MulticastTargets.Method, AllowMultiple = false, TargetMemberAttributes = MulticastAttributes.NonAbstract | MulticastAttributes.NonLiteral, PersistMetaData = true)]
+    public class Async : MethodInterceptionAspect
     {
         public bool KillExisting { get; set; }
 
-        private Thread _thread;
+        /// <summary>
+        /// Gets or sets the name of the thread (debug feature).
+        /// </summary>
+        /// <value>
+        /// The name of the thread.
+        /// </value>
+        public string ThreadName { get; set; }
 
-        public Async()
-        { }
+        [NonSerialized]
+        private Thread _thread;
 
         public override void RuntimeInitialize(MethodBase method)
         {
@@ -32,22 +39,8 @@ namespace BlueDwarf.Aspects
         {
             if (KillExisting && _thread != null && _thread.IsAlive)
                 _thread.Abort();
-            _thread = new Thread(args.Proceed) { IsBackground = true };
+            _thread = new Thread(args.Proceed) { IsBackground = true, Name = ThreadName };
             _thread.Start();
         }
-
-        #region Serialization plumbing
-
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("k", KillExisting);
-        }
-
-        protected Async(SerializationInfo info, StreamingContext context)
-        {
-            KillExisting = info.GetBoolean("k");
-        }
-
-        #endregion
     }
 }
