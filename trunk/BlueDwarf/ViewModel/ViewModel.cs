@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
 using BlueDwarf.Aspects;
-using BlueDwarf.Utility;
 
 namespace BlueDwarf.ViewModel
 {
@@ -62,21 +61,19 @@ namespace BlueDwarf.ViewModel
         /// Asynchronously invokes the action and shows the wait overlay (assuming view handles it).
         /// </summary>
         /// <param name="action">The action.</param>
+        [Async]
         protected void Async(Action action)
         {
-            ThreadHelper.CreateBackground(delegate
+            bool loading = Loading;
+            try
             {
-                bool loading = Loading;
-                try
-                {
-                    Loading = true;
-                    action();
-                }
-                finally 
-                {
-                    Loading = loading;
-                }
-            });
+                Loading = true;
+                action();
+            }
+            finally
+            {
+                Loading = loading;
+            }
         }
     }
 }

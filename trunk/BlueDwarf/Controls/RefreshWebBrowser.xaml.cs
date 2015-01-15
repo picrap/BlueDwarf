@@ -46,22 +46,26 @@ namespace BlueDwarf.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _refreshThread = ThreadHelper.CreateBackground(BackgroundRefresh);
+            _runBackgroundRefresh = true;
+            BackgroundRefresh();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            _refreshThread.Abort();
+            _runBackgroundRefresh = true;
         }
+
+        private bool _runBackgroundRefresh;
 
         /// <summary>
         /// Background thread worker.
         /// Refreshes the browser content.
         /// Note this has to be done in UI thread (hence the Dispatcher.Invoke)
         /// </summary>
+        [Async]
         private void BackgroundRefresh()
         {
-            for (; ; )
+            while (_runBackgroundRefresh)
             {
                 var interval = Dispatcher.Invoke(() => RefreshInterval);
                 if (interval == 0)
