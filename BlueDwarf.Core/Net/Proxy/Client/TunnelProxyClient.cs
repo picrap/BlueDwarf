@@ -3,7 +3,6 @@ using System.IO;
 using BlueDwarf.Annotations;
 using BlueDwarf.Net.Name;
 using BlueDwarf.Net.Proxy.Server;
-using BlueDwarf.Utility;
 using Microsoft.Practices.Unity;
 
 namespace BlueDwarf.Net.Proxy.Client
@@ -20,9 +19,6 @@ namespace BlueDwarf.Net.Proxy.Client
             HttpConnect,
             Socks4
         }
-
-        public event EventHandler<ProxyClientConnectEventArgs> Connect;
-        public event EventHandler<ProxyClientTransferEventArgs> Transfer;
 
         /// <summary>
         /// Validates and creates a route.
@@ -80,7 +76,6 @@ namespace BlueDwarf.Net.Proxy.Client
             if (newStream == null)
                 throw new ProxyRouteException(targetHost);
 
-            Connect.Raise(this, new ProxyClientConnectEventArgs(targetHost, targetPort));
             return newStream;
         }
 
@@ -130,19 +125,7 @@ namespace BlueDwarf.Net.Proxy.Client
         private ProxyStream DirectConnect(ProxyStream stream, string targetHost, int targetPort, ProxyRoute routeUntilHere)
         {
             var newStream = Net.Connect.To(targetHost, targetPort);
-            newStream.DataRead += OnProxyStreamDataRead;
-            newStream.DataWritten += OnProxyStreamDataWritten;
             return newStream;
-        }
-
-        private void OnProxyStreamDataRead(object sender, ProxyStreamReadEventArgs e)
-        {
-            Transfer.Raise(this, new ProxyClientTransferEventArgs(e.BytesRead, 0));
-        }
-
-        private void OnProxyStreamDataWritten(object sender, ProxyStreamWriteEventArgs e)
-        {
-            Transfer.Raise(this, new ProxyClientTransferEventArgs(0, e.BytesWritten));
         }
     }
 }

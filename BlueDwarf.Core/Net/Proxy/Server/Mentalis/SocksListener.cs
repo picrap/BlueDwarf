@@ -33,6 +33,8 @@ using System.Net;
 using System.Net.Sockets;
 using BlueDwarf.Net.Name;
 using BlueDwarf.Net.Proxy.Client;
+using BlueDwarf.Net.Proxy.Server;
+using BlueDwarf.Utility;
 using Org.Mentalis.Proxy;
 using Org.Mentalis.Proxy.Socks.Authentication;
 
@@ -45,6 +47,10 @@ namespace Org.Mentalis.Proxy.Socks
     {
         public INameResolver NameResolver { get; set; }
         public ProxyRoute ProxyRoute { get; set; }
+
+        public event EventHandler ClientConnected;
+        public event EventHandler<ClientReceivedEventArgs> ClientReceived;
+        public event EventHandler<ClientReceivedEventArgs> RemoteReceived;
 
         ///<summary>Initializes a new instance of the SocksListener class.</summary>
         ///<param name="Port">The port to listen on.</param>
@@ -81,6 +87,9 @@ namespace Org.Mentalis.Proxy.Socks
                 if (NewSocket != null)
                 {
                     SocksClient NewClient = new SocksClient(NewSocket, new DestroyDelegate(this.RemoveClient), AuthList) { Listener = this };
+                    ClientConnected.Raise(this);
+                    NewClient.ClientReceived += OnClientReceived;
+                    NewClient.RemoteReceived += OnRemoteReceived;
                     AddClient(NewClient);
                     NewClient.StartHandshake();
                 }
@@ -96,6 +105,17 @@ namespace Org.Mentalis.Proxy.Socks
                 Dispose();
             }
         }
+
+        private void OnRemoteReceived(object sender, ClientReceivedEventArgs e)
+        {
+            RemoteReceived.Raise(this, e);
+        }
+
+        private void OnClientReceived(object sender, ClientReceivedEventArgs e)
+        {
+            ClientReceived.Raise(this, e);
+        }
+
         ///<summary>Gets or sets the AuthenticationList to be used when a SOCKS5 client connects.</summary>
         ///<value>An AuthenticationList that is to be used when a SOCKS5 client connects.</value>
         ///<remarks>This value can be null.</remarks>

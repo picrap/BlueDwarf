@@ -13,9 +13,6 @@ namespace BlueDwarf.Net.Proxy.Server
     {
         public new Socket Socket { get { return base.Socket; } }
 
-        public event EventHandler<ProxyStreamReadEventArgs> DataRead;
-        public event EventHandler<ProxyStreamWriteEventArgs> DataWritten;
-
         public ProxyStream([NotNull] Socket socket)
             : base(socket)
         {
@@ -34,19 +31,6 @@ namespace BlueDwarf.Net.Proxy.Server
         public ProxyStream([NotNull] Socket socket, FileAccess access, bool ownsSocket)
             : base(socket, access, ownsSocket)
         {
-        }
-
-        public override int Read(byte[] buffer, int offset, int size)
-        {
-            var bytesRead = base.Read(buffer, offset, size);
-            DataRead.Raise(this, new ProxyStreamReadEventArgs(bytesRead));
-            return bytesRead;
-        }
-
-        public override void Write(byte[] buffer, int offset, int size)
-        {
-            base.Write(buffer, offset, size);
-            DataWritten.Raise(this, new ProxyStreamWriteEventArgs(size));
         }
     }
 }

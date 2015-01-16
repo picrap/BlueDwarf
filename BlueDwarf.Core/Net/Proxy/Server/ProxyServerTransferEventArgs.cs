@@ -1,13 +1,13 @@
 using System;
 
-namespace BlueDwarf.Net.Proxy.Client
+namespace BlueDwarf.Net.Proxy.Server
 {
-    public class ProxyClientTransferEventArgs : EventArgs
+    public class ProxyServerTransferEventArgs : EventArgs
     {
         public int BytesWritten { get; private set; }
         public int BytesRead { get; private set; }
 
-        public ProxyClientTransferEventArgs(int bytesRead, int bytesWritten)
+        public ProxyServerTransferEventArgs(int bytesRead, int bytesWritten)
         {
             BytesRead = bytesRead;
             BytesWritten = bytesWritten;

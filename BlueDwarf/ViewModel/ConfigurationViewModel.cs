@@ -101,6 +101,8 @@ namespace BlueDwarf.ViewModel
         [AutoNotifyPropertyChanged]
         public long BytesWritten { get; set; }
 
+        private object _statisticsLock = new object();
+
         private readonly RegistrySerializer _serializer = new RegistrySerializer();
 
         private readonly Preferences _preferences = new Preferences();
@@ -116,21 +118,25 @@ namespace BlueDwarf.ViewModel
             if (CanSetSocksListeningPort)
                 SocksListeningPort = _preferences.SocksListeningPort;
             PropertyChanged += OnPropertyChanged;
-            ProxyClient.Connect += OnProxyClientConnect;
-            ProxyClient.Transfer += OnProxyClientTransfer;
+            ProxyServer.Connect += OnProxyServerConnect;
+            ProxyServer.Transfer += OnProxyServerTransfer;
             CheckProxyTunnel();
             SetupProxyServer();
         }
 
-        private void OnProxyClientConnect(object sender, ProxyClientConnectEventArgs e)
+        private void OnProxyServerConnect(object sender, EventArgs e)
         {
-            ConnectionsCount++;
+            lock (_statisticsLock)
+                ConnectionsCount++;
         }
 
-        private void OnProxyClientTransfer(object sender, ProxyClientTransferEventArgs e)
+        private void OnProxyServerTransfer(object sender, ProxyServerTransferEventArgs e)
         {
-            BytesRead += e.BytesRead;
-            BytesWritten += e.BytesWritten;
+            lock (_statisticsLock)
+            {
+                BytesRead += e.BytesRead;
+                BytesWritten += e.BytesWritten;
+            }
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

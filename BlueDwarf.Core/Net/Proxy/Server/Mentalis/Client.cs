@@ -31,6 +31,8 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using BlueDwarf.Net.Proxy.Server;
+using BlueDwarf.Utility;
 
 namespace Org.Mentalis.Proxy {
 
@@ -40,7 +42,12 @@ public delegate void DestroyDelegate(Client client);
 
 ///<summary>Specifies the basic methods and properties of a <c>Client</c> object. This is an abstract class and must be inherited.</summary>
 ///<remarks>The Client class provides an abstract base class that represents a connection to a local client and a remote server. Descendant classes further specify the protocol that is used between those two connections.</remarks>
-public abstract class Client : IDisposable {
+public abstract class Client : IDisposable
+{
+
+    public event EventHandler<ClientReceivedEventArgs> ClientReceived;
+    public event EventHandler<ClientReceivedEventArgs> RemoteReceived;
+
 	///<summary>Initializes a new instance of the Client class.</summary>
 	///<param name="ClientSocket">The <see cref ="Socket">Socket</see> connection between this proxy server and the local client.</param>
 	///<param name="Destroyer">The callback method to be called when this Client object disconnects from the local client and the remote server.</param>
@@ -145,6 +152,7 @@ public abstract class Client : IDisposable {
 				Dispose();
 				return;
 			}
+            ClientReceived.Raise(this,new ClientReceivedEventArgs(Ret));
 			DestinationSocket.BeginSend(Buffer, 0, Ret, SocketFlags.None, new AsyncCallback(this.OnRemoteSent), DestinationSocket);
 		} catch {
 			Dispose();
@@ -171,7 +179,8 @@ public abstract class Client : IDisposable {
 				Dispose();
 				return;
 			}
-			ClientSocket.BeginSend(RemoteBuffer, 0, Ret, SocketFlags.None, new AsyncCallback(this.OnClientSent), ClientSocket);
+            RemoteReceived.Raise(this, new ClientReceivedEventArgs(Ret));
+            ClientSocket.BeginSend(RemoteBuffer, 0, Ret, SocketFlags.None, new AsyncCallback(this.OnClientSent), ClientSocket);
 		} catch {
 			Dispose();
 		}

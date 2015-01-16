@@ -1,3 +1,4 @@
+using System;
 using BlueDwarf.Net.Proxy.Client;
 
 namespace BlueDwarf.Net.Proxy.Server
@@ -7,6 +8,16 @@ namespace BlueDwarf.Net.Proxy.Server
     /// </summary>
     public interface IProxyServer
     {
+        /// <summary>
+        /// Occurs when a client connects.
+        /// </summary>
+        event EventHandler Connect;
+
+        /// <summary>
+        /// Occurs when data is transferred, from or to client.
+        /// </summary>
+        event EventHandler<ProxyServerTransferEventArgs> Transfer;
+
         /// <summary>
         /// Gets or sets the listening port.
         /// </summary>
