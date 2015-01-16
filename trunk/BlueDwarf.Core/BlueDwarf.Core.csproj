@@ -75,8 +75,7 @@
     <Compile Include="Net\Proxy\Client\Diagnostic\ProxyDiagnostic.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\RouteStatus.cs" />
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
-    <Compile Include="Net\Proxy\Client\ProxyClientConnectEventArgs.cs" />
-    <Compile Include="Net\Proxy\Client\ProxyClientTransferEventArgs.cs" />
+    <Compile Include="Net\Proxy\Server\ProxyServerTransferEventArgs.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRouteException.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="Net\Proxy\Server\Mentalis\AuthNone.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\AuthUserPass.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\Client.cs" />
+    <Compile Include="Net\Proxy\Server\ClientReceivedEventArgs.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\Listener.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\Socks4Handler.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\Socks5Handler.cs" />
@@ -97,8 +97,6 @@
     <Compile Include="Net\Proxy\Server\Mentalis\SocksHandler.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
     <Compile Include="Net\Proxy\Server\ProxyStream.cs" />
-    <Compile Include="Net\Proxy\Server\ProxyStreamReadEventArgs.cs" />
-    <Compile Include="Net\Proxy\Server\ProxyStreamWriteEventArgs.cs" />
     <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

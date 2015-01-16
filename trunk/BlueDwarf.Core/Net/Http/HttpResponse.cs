@@ -25,7 +25,17 @@ namespace BlueDwarf.Net.Http
             }
         }
 
-        public int StatusCode { get { return int.Parse(Header[1]); } }
+        public int StatusCode
+        {
+            get
+            {
+                if (Lines.Count == 0 || Header.Length <= 1)
+                    return 0;
+                int code;
+                int.TryParse(Header[1], out code);
+                return code;
+            }
+        }
 
         private IDictionary<string, string> _headers;
 
