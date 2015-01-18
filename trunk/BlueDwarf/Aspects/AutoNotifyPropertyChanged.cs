@@ -12,6 +12,12 @@ namespace BlueDwarf.Aspects
     [MulticastAttributeUsage(MulticastTargets.Property, AllowMultiple = false, TargetMemberAttributes = MulticastAttributes.NonAbstract | MulticastAttributes.NonLiteral, PersistMetaData = true)]
     public class AutoNotifyPropertyChanged : LocationInterceptionAspect
     {
+        /// <summary>
+        /// Gets or sets the category, a custom value used by notifications
+        /// </summary>
+        /// <value>
+        /// The category.
+        /// </value>
         public object Category { get; set; }
 
         /// <summary>

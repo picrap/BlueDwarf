@@ -10,7 +10,6 @@ using Microsoft.Practices.Unity;
 namespace BlueDwarf
 {
     using System.Threading;
-    using System.Windows.Controls;
     using View;
 
     /// <summary>
@@ -52,58 +51,49 @@ namespace BlueDwarf
             var navigator = container.Resolve<INavigator>();
             navigator.Exiting += OnNavigatorExiting;
 
-            StartupUtility.Register(GetType().Assembly, "-m");
-
             // Command-line options
             var options = Parser.Default.ParseArguments<Options>(Environment.GetCommandLineArgs());
 
             // Special request for download
             if (options.Value.DownloadUri != null)
+                DownloadFile(navigator, options.Value.DownloadUri, options.Value.SaveTextPath);
+            else // Main behavior: configuration window
             {
-                navigator.Show(
-                          delegate(WebDownloaderViewModel vm)
-                          {
-                              if (options.Value.ProxyPort > 0)
-                              {
-                                  vm.DownloadUri = options.Value.DownloadUri;
-                                  vm.SaveTextPath = options.Value.SaveTextPath;
-                              }
-                          });
-                return;
+                StartupUtility.Register(GetType().Assembly, "-m");
+                container.Resolve<IProxyServer>().Start();
+                ShowConfiguration(navigator, options.Value.ProxyPort, options.Value.Minimized);
             }
+        }
 
-            var proxyServer = container.Resolve<IProxyServer>();
-            proxyServer.Start();
+        private static void DownloadFile(INavigator navigator, string downloadUri, string saveTextPath)
+        {
+            navigator.Show(
+                delegate(WebDownloaderViewModel vm)
+                {
+                    vm.DownloadUri = downloadUri;
+                    vm.SaveTextPath = saveTextPath;
+                });
+        }
 
+        private static void ShowConfiguration(INavigator navigator, int socksListeningPort, bool minimized)
+        {
             var viewModel = navigator.Show(
-                      delegate(ConfigurationViewModel vm)
-                      {
-                          if (options.Value.ProxyPort > 0)
-                          {
-                              vm.CanSetSocksListeningPort = false;
-                              vm.SocksListeningPort = options.Value.ProxyPort;
-                          }
-                      });
+                delegate(ConfigurationViewModel vm)
+                {
+                    if (socksListeningPort > 0)
+                    {
+                        vm.CanSetSocksListeningPort = false;
+                        vm.SocksListeningPort = socksListeningPort;
+                    }
+                });
 
-            if (!options.Value.Minimized)
+            if (!minimized)
                 viewModel.Show = true;
         }
 
         private void OnNavigatorExiting(object sender, EventArgs e)
         {
             StartupUtility.Unregister(GetType().Assembly);
-        }
-
-        private void DownloadUri(string downloadUri, string saveTextPath)
-        {
-            var webBrowser = new WebDownloaderView();
-            webBrowser.Show();
-            var signal = new EventWaitHandle(false, EventResetMode.ManualReset);
-            webBrowser.Browser.LoadCompleted += delegate { signal.Set(); };
-            webBrowser.Browser.Navigate(downloadUri);
-            signal.WaitOne(TimeSpan.FromSeconds(10));
-            dynamic document = webBrowser.Browser.Document;
-            var text = document.DomDocument.selection.createRange().text;
         }
     }
 }

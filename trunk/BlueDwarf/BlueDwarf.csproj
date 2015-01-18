@@ -121,7 +121,8 @@
     <Compile Include="Aspects\Async.cs" />
     <Compile Include="Aspects\AutoDependencyPropertyNotification.cs" />
     <Compile Include="Aspects\AutoNotifyPropertyChanged.cs" />
-    <Compile Include="Aspects\AutoNotifyPropertyChangedExtensions.cs" />
+    <Compile Include="Aspects\PropertyChangedEventArgsExtensions.cs" />
+    <Compile Include="Aspects\CategoryPropertyChangedEventArgs.cs" />
     <Compile Include="BlueDwarfApplication.xaml.cs">
       <DependentUpon>BlueDwarfApplication.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -135,6 +136,9 @@
     <Compile Include="Aspects\AutoDependencyProperty.cs" />
     <Compile Include="Aspects\AutoDependencyProperties.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\ExtendedWebBrowser.xaml.cs">
+      <DependentUpon>ExtendedWebBrowser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
@@ -169,9 +173,6 @@
       <DependentUpon>ProxyAnalysisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VisibilityConverter.cs" />
-    <Compile Include="Controls\RefreshWebBrowser.xaml.cs">
-      <DependentUpon>RefreshWebBrowser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\WebDownloaderView.xaml.cs">
       <DependentUpon>WebDownloaderView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +217,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ExtendedWebBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,10 +242,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ProxyAnalysisView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\RefreshWebBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

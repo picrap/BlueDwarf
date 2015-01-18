@@ -1,26 +1,49 @@
 ﻿
 namespace BlueDwarf.ViewModel
 {
+    using System.IO;
     using Aspects;
+    using Microsoft.Practices.Unity;
+    using Navigation;
 
+    /// <summary>
+    /// Simple file download using IE ActiveX control
+    /// We're not supposed to know this here, so that's going to be our little secret...
+    /// </summary>
     public class WebDownloaderViewModel : ViewModel
     {
+        [Dependency]
+        public INavigator Navigator { get; set; }
+
         [AutoNotifyPropertyChanged]
         public string DownloadUri { get; set; }
 
         [AutoNotifyPropertyChanged]
         public string SaveTextPath { get; set; }
 
-        public void LoadCompleted(dynamic document)
+        private string _documentText;
+        [AutoNotifyPropertyChanged]
+        public string DocumentText
         {
-            var text = document.body.innerText;
-            //dynamic doc = document;
-            //var body = doc.BODY;
-            //var r2 = body.createRange();
-            //var t2 = r2.text;
-            //dynamic selection = doc.selection;
-            //dynamic range = selection.createRange();
-            //var text = range.text;
+            get { return _documentText; }
+            set
+            {
+                _documentText = value;
+                OnDocumentTextChanged();
+            }
+        }
+
+        private void OnDocumentTextChanged()
+        {
+            if (SaveTextPath != null)
+            {
+                var parentDirectory = Path.GetDirectoryName(SaveTextPath);
+                if (!Directory.Exists(parentDirectory))
+                    Directory.CreateDirectory(parentDirectory);
+                using (var streamWriter = File.CreateText(SaveTextPath))
+                    streamWriter.Write(DocumentText);
+            }
+            Navigator.Exit(false);
         }
     }
 }

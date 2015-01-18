@@ -4,9 +4,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+        xmlns:controls="clr-namespace:BlueDwarf.Controls"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:WebDownloaderViewModel, IsDesignTimeCreatable=false}" WindowStyle="None"
-        Loaded="OnViewLoaded" Visibility="Hidden" Opacity="0" ShowInTaskbar="False" ShowActivated="False"
+        Visibility="Hidden" Opacity="0" ShowInTaskbar="False" ShowActivated="False"
         Title="WebBrowserView" Height="1" Width="1">
-    <WebBrowser x:Name="Browser" LoadCompleted="OnLoadCompleted"/>
+    <controls:ExtendedWebBrowser Silent="True" Uri="{Binding DownloadUri}" Text="{Binding DocumentText, Mode=TwoWay}" />
 </Window>
