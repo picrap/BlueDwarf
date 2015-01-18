@@ -3,7 +3,7 @@ namespace BlueDwarf.Aspects
     /// <summary>
     /// Notification type for DependencyPropertyChanged
     /// </summary>
-    public enum AutoDependencyPropertyNotification
+    public enum DependencyPropertyNotification
     {
         /// <summary>
         /// No notification (this is the default)

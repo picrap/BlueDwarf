@@ -9,19 +9,19 @@ namespace BlueDwarf.Aspects
     /// <summary>
     /// This class holds all auto DependencyProperties, grouped by control type
     /// </summary>
-    public static class AutoDependencyProperties
+    public static class DependencyProperties
     {
-        private static readonly IDictionary<Type, IDictionary<string, DependencyProperty>> RegisteredTypes = new Dictionary<Type, IDictionary<string, DependencyProperty>>();
+        private static readonly IDictionary<Type, IDictionary<string, System.Windows.DependencyProperty>> RegisteredTypes = new Dictionary<Type, IDictionary<string, System.Windows.DependencyProperty>>();
 
         /// <summary>
         /// Gets the dependency property matching the given PropertyInfo.
         /// </summary>
         /// <param name="propertyInfo">The property information.</param>
         /// <returns></returns>
-        public static DependencyProperty GetDependencyProperty(this PropertyInfo propertyInfo)
+        public static System.Windows.DependencyProperty GetDependencyProperty(this PropertyInfo propertyInfo)
         {
             var dependencyProperties = GetDependencyProperties(propertyInfo);
-            DependencyProperty property;
+            System.Windows.DependencyProperty property;
             dependencyProperties.TryGetValue(propertyInfo.Name, out property);
             return property;
         }
@@ -32,7 +32,7 @@ namespace BlueDwarf.Aspects
         /// <param name="propertyInfo">The property information.</param>
         /// <param name="defaultValue">The default value (null if none).</param>
         /// <param name="notification">The notification type, in order to have a callback.</param>
-        public static void CreateDependencyProperty(this PropertyInfo propertyInfo, object defaultValue, AutoDependencyPropertyNotification notification)
+        public static void CreateDependencyProperty(this PropertyInfo propertyInfo, object defaultValue, DependencyPropertyNotification notification)
         {
             var dependencyProperties = GetDependencyProperties(propertyInfo);
             var ownerType = propertyInfo.DeclaringType;
@@ -45,7 +45,7 @@ namespace BlueDwarf.Aspects
             }
             else
             {
-                dependencyProperties[propertyName] = DependencyProperty.Register(propertyName, propertyInfo.PropertyType, ownerType,
+                dependencyProperties[propertyName] = System.Windows.DependencyProperty.Register(propertyName, propertyInfo.PropertyType, ownerType,
                     new PropertyMetadata(defaultPropertyValue, onPropertyChanged));
             }
         }
@@ -58,13 +58,13 @@ namespace BlueDwarf.Aspects
         /// <param name="ownerType">Type of the owner.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentOutOfRangeException">notification</exception>
-        private static PropertyChangedCallback GetPropertyChangedCallback(AutoDependencyPropertyNotification notification, string propertyName, Type ownerType)
+        private static PropertyChangedCallback GetPropertyChangedCallback(DependencyPropertyNotification notification, string propertyName, Type ownerType)
         {
             switch (notification)
             {
-                case AutoDependencyPropertyNotification.None:
+                case DependencyPropertyNotification.None:
                     return null;
-                case AutoDependencyPropertyNotification.OnPropertyNameChanged:
+                case DependencyPropertyNotification.OnPropertyNameChanged:
                     return GetOnPropertyNameChangedCallback(propertyName, ownerType);
                 default:
                     throw new ArgumentOutOfRangeException("notification");
@@ -91,12 +91,12 @@ namespace BlueDwarf.Aspects
         /// </summary>
         /// <param name="propertyInfo">The property.</param>
         /// <returns></returns>
-        private static IDictionary<string, DependencyProperty> GetDependencyProperties(PropertyInfo propertyInfo)
+        private static IDictionary<string, System.Windows.DependencyProperty> GetDependencyProperties(PropertyInfo propertyInfo)
         {
-            IDictionary<string, DependencyProperty> dependencyProperties;
+            IDictionary<string, System.Windows.DependencyProperty> dependencyProperties;
             var ownerType = propertyInfo.DeclaringType;
             if (!RegisteredTypes.TryGetValue(ownerType, out dependencyProperties))
-                RegisteredTypes[ownerType] = dependencyProperties = new Dictionary<string, DependencyProperty>();
+                RegisteredTypes[ownerType] = dependencyProperties = new Dictionary<string, System.Windows.DependencyProperty>();
             return dependencyProperties;
         }
     }

@@ -82,7 +82,8 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBox Grid.Column="0" Style="{DynamicResource DialogTextBox}" Text="{Binding TestTarget, Mode=TwoWay}" />
+                                <TextBox Grid.Column="0" Style="{DynamicResource DialogTextBox}" 
+                                         Text="{Binding TestTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <controls:Status Grid.Column="1" Code="{Binding TestTargetStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                             </Grid>
                             
@@ -114,7 +115,7 @@
                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
                        Text="SOCKS 4 proxy server port:" />
                         <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}" IsEnabled="{Binding CanSetSocksListeningPort}"
-                     Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                 Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </StackPanel>
             </Expander>
@@ -161,8 +162,8 @@
                     </StackPanel>
                 </Grid>
             </Expander>
-            <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive1FullUri, Mode=OneWay}" />
-            <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive2FullUri, Mode=OneWay}" />
+            <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive1FullUri, Mode=OneWay}" Silent="True" />
+            <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive2FullUri, Mode=OneWay}" Silent="True" />
             <Expander IsExpanded="false">
                 <Expander.Header>
                     <TextBlock Text="Statistics" Style="{DynamicResource SectionTitleTextBlock}"/>

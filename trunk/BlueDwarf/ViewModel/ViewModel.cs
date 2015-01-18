@@ -13,18 +13,19 @@ namespace BlueDwarf.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool Loading { get; set; }
 
         /// <summary>
         /// Called when property changed.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        public void OnPropertyChanged(string propertyName)
+        /// <param name="category">The category.</param>
+        public void OnPropertyChanged(string propertyName, object category = null)
         {
             var onPropertyChanged = PropertyChanged;
             if (onPropertyChanged != null)
-                onPropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                onPropertyChanged(this, new CategoryPropertyChangedEventArgs(propertyName, category));
         }
 
         /// <summary>

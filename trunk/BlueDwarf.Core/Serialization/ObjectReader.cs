@@ -48,7 +48,7 @@ namespace BlueDwarf.Serialization
         /// <param name="value">The value.</param>
         /// <param name="targetType">Type of the target.</param>
         /// <returns></returns>
-        private static object SafeConvert(object value, Type targetType)
+        public static object SafeConvert(object value, Type targetType)
         {
             try
             {

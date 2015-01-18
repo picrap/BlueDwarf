@@ -12,6 +12,11 @@ namespace BlueDwarf.Serialization
     {
         private readonly ObjectReader _reader = new ObjectReader();
 
+        private static RegistryKey CreateSubKey(string node)
+        {
+            return Registry.CurrentUser.CreateSubKey(@"Software\" + node);
+        }
+
         /// <summary>
         /// Serializes the specified object.
         /// </summary>
@@ -20,7 +25,7 @@ namespace BlueDwarf.Serialization
         public void Serialize(object o, string node)
         {
             var data = _reader.Read(o);
-            using (var r = Registry.CurrentUser.CreateSubKey(@"Software\" + node))
+            using (var r = CreateSubKey(node))
             {
                 foreach (var kv in data)
                 {
@@ -37,10 +42,46 @@ namespace BlueDwarf.Serialization
         /// <param name="node">The node.</param>
         public void Deserialize(object o, string node)
         {
-            using (var r = Registry.CurrentUser.CreateSubKey(@"Software\" + node))
+            using (var r = CreateSubKey(node))
             {
                 var data = r.GetValueNames().ToDictionary(n => n, n => ReadValue(r, n));
                 _reader.Write(o, data);
+            }
+        }
+
+        /// <summary>
+        /// Serializes the specified node.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        public void Serialize(string node, string name, object value)
+        {
+            using (var r = CreateSubKey(node))
+            {
+                var qualifiedValue = GetValue(value);
+                r.SetValue(name, qualifiedValue.Item1 ?? new byte[0], qualifiedValue.Item2);
+            }
+        }
+
+        /// <summary>
+        /// Tries the deserialize.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public bool TryDeserialize(string node, string name, out object value)
+        {
+            using (var r = CreateSubKey(node))
+            {
+                if (!r.GetValueNames().Contains(name))
+                {
+                    value = null;
+                    return false;
+                }
+                value = ReadValue(r, name);
+                return true;
             }
         }
 

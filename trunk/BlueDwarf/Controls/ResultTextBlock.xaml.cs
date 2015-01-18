@@ -9,10 +9,10 @@ namespace BlueDwarf.Controls
     /// </summary>
     public partial class ResultTextBlock : UserControl
     {
-        [AutoDependencyProperty]
+        [DependencyProperty]
         public string Text { get; set; }
 
-        [AutoDependencyProperty]
+        [DependencyProperty]
         public bool Success { get; set; }
 
         public ResultTextBlock()

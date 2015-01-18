@@ -9,10 +9,10 @@ namespace BlueDwarf.Controls
 
     public partial class ExtendedWebBrowser
     {
-        [AutoDependencyProperty(Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [AutoDependencyProperty]
+        [Aspects.DependencyProperty]
         public string Text { get; set; }
 
         private dynamic Document
@@ -39,10 +39,19 @@ namespace BlueDwarf.Controls
             }
         }
 
+        private bool? _silent;
+
         public bool Silent
         {
             get { return ActiveXControl.Silent; }
-            set { ActiveXControl.Silent = value; }
+            set
+            {
+                var activeXControl = ActiveXControl;
+                if (activeXControl != null)
+                    activeXControl.Silent = value;
+                else
+                    _silent = value;
+            }
         }
 
         public ExtendedWebBrowser()
@@ -53,7 +62,8 @@ namespace BlueDwarf.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            ActiveXControl.Silent = true;
+            if (_silent.HasValue)
+                ActiveXControl.Silent = _silent.Value;
             WebBrowser.LoadCompleted += OnLoadCompleted;
             if (Uri != null)
                 WebBrowser.Navigate(Uri);

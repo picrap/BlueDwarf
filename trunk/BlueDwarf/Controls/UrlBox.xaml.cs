@@ -13,10 +13,10 @@ namespace BlueDwarf.Controls
     /// </summary>
     public partial class UrlBox
     {
-        [AutoDependencyProperty(Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [AutoDependencyProperty(DefaultValue = "http", Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(DefaultValue = "http", Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public string AllowedSchemes { get; set; }
 
         private string[] AllowedSchemesArray
