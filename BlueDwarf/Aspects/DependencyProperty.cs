@@ -7,13 +7,17 @@ using PostSharp.Reflection;
 
 namespace BlueDwarf.Aspects
 {
+    using PostSharp.Aspects.Configuration;
+
     /// <summary>
     /// Marks a simple auto property to be bound to a DependencyProperty
     /// This attribute is handled by Postsharp, and by some unexplainable magic, works.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
     [Serializable]
-    [MulticastAttributeUsage(MulticastTargets.Property, AllowMultiple = false, TargetMemberAttributes = MulticastAttributes.NonAbstract | MulticastAttributes.NonLiteral, PersistMetaData = true)]
-    public class AutoDependencyProperty : LocationInterceptionAspect
+    [LocationInterceptionAspectConfiguration(AspectPriority = 10)]
+    public class DependencyProperty : LocationInterceptionAspect
     {
         /// <summary>
         /// Gets or sets the default value for the dependency property.
@@ -29,7 +33,7 @@ namespace BlueDwarf.Aspects
         /// <value>
         /// The notification.
         /// </value>
-        public AutoDependencyPropertyNotification Notification { get; set; }
+        public DependencyPropertyNotification Notification { get; set; }
 
         /// <summary>
         /// Initializes the current aspect.

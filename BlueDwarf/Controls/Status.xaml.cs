@@ -6,7 +6,7 @@ namespace BlueDwarf.Controls
 {
     public partial class Status
     {
-        [AutoDependencyProperty(Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public StatusCode Code { get; set; }
 
         public Status()

@@ -119,8 +119,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Aspects\Async.cs" />
-    <Compile Include="Aspects\AutoDependencyPropertyNotification.cs" />
-    <Compile Include="Aspects\AutoNotifyPropertyChanged.cs" />
+    <Compile Include="Aspects\DependencyPropertyNotification.cs" />
+    <Compile Include="Aspects\NotifyPropertyChanged.cs" />
     <Compile Include="Aspects\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="Aspects\CategoryPropertyChangedEventArgs.cs" />
     <Compile Include="BlueDwarfApplication.xaml.cs">
@@ -133,10 +133,12 @@
     <Compile Include="BlueDwarfInstaller.Designer.cs">
       <DependentUpon>BlueDwarfInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\AutoDependencyProperty.cs" />
-    <Compile Include="Aspects\AutoDependencyProperties.cs">
+    <Compile Include="Aspects\DependencyProperty.cs" />
+    <Compile Include="Aspects\DependencyProperties.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Configuration\Persistence.cs" />
+    <Compile Include="Configuration\Persistent.cs" />
     <Compile Include="Controls\ExtendedWebBrowser.xaml.cs">
       <DependentUpon>ExtendedWebBrowser.xaml</DependentUpon>
     </Compile>
@@ -179,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UIConfiguration.cs" />
-    <Compile Include="Preferences.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>

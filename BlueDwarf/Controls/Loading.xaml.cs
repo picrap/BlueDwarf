@@ -7,7 +7,7 @@ namespace BlueDwarf.Controls
     /// </summary>
     public partial class Loading 
     {
-        [AutoDependencyProperty]
+        [DependencyProperty]
         public bool Show { get; set; }
 
         public Loading()

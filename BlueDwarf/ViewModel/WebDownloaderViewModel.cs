@@ -15,14 +15,14 @@ namespace BlueDwarf.ViewModel
         [Dependency]
         public INavigator Navigator { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public string DownloadUri { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public string SaveTextPath { get; set; }
 
         private string _documentText;
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public string DocumentText
         {
             get { return _documentText; }

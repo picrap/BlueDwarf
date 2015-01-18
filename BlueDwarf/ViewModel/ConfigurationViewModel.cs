@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.Serialization;
 using System.Threading;
 using BlueDwarf.Annotations;
 using BlueDwarf.Aspects;
@@ -8,17 +7,17 @@ using BlueDwarf.Controls;
 using BlueDwarf.Navigation;
 using BlueDwarf.Net.Proxy.Client;
 using BlueDwarf.Net.Proxy.Server;
-using BlueDwarf.Serialization;
 using BlueDwarf.Utility;
 using Microsoft.Practices.Unity;
 
 namespace BlueDwarf.ViewModel
 {
+    using Configuration;
+
     /// <summary>
     /// Configuration view-model.
     /// This is the main view
     /// </summary>
-    [DataContract]
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ConfigurationViewModel : ViewModel
     {
@@ -31,8 +30,6 @@ namespace BlueDwarf.ViewModel
         [Dependency]
         public INavigator Navigator { get; set; }
 
-        private const string BlueDwarfKey = "BlueDwarf";
-
         public enum Category
         {
             None = 0,
@@ -41,88 +38,100 @@ namespace BlueDwarf.ViewModel
             ProxyKeepalive,
         }
 
-        [DataMember(Name = Preferences.LocalProxyKey)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        [Persistent("Proxy1")]
+        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri LocalProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public StatusCode LocalProxyStatus { get; set; }
 
-        [DataMember(Name = Preferences.RemoteProxyKey)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        [Persistent("Proxy2")]
+        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri RemoteProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public StatusCode RemoteProxyStatus { get; set; }
 
-        [DataMember(Name = Preferences.TestTargetKey)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        [Persistent("ProxyTest", Default = "https://google.com")]
+        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public string TestTarget { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        public Uri TestTargetUri
+        {
+            get
+            {
+                try
+                {
+                    if (TestTarget != null)
+                        return new Uri(TestTarget);
+                }
+                catch (UriFormatException)
+                {
+                }
+                return null;
+            }
+        }
+
+        [NotifyPropertyChanged]
         public StatusCode TestTargetStatus { get; set; }
 
-        [DataMember(Name = Preferences.KeepAlive1Key)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [Persistent("KeepAlive1", Default = "https://google.com")]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive1 { get; set; }
 
-        [DataMember(Name = Preferences.KeepAlive1IntervalKey)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [Persistent("KeepAlive1Interval", Default = 120)]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive1Interval { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public Uri KeepAlive1FullUri { get; set; }
 
-        [DataMember(Name = Preferences.KeepAlive2Key)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [Persistent("KeepAlive2")]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive2 { get; set; }
 
-        [DataMember(Name = Preferences.KeepAlive2IntervalKey)]
-        [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [Persistent("KeepAlive2Interval", Default = 120)]
+        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive2Interval { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public Uri KeepAlive2FullUri { get; set; }
 
-        [AutoNotifyPropertyChanged(Category = Category.ProxyServer)]
+        [NotifyPropertyChanged(Category = Category.ProxyServer)]
         public int SocksListeningPort { get; set; }
 
+        [Persistent("SocksListeningPort", Default = 1080)]
+        public int PersistentSocksListeningPort { get; set; }
+
         private bool _canSetSocksListeningPort = true;
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool CanSetSocksListeningPort
         {
             get { return _canSetSocksListeningPort; }
             set { _canSetSocksListeningPort = value; }
         }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool Show { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public int ConnectionsCount { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public long BytesRead { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public long BytesWritten { get; set; }
 
         private readonly object _statisticsLock = new object();
-
-        private readonly RegistrySerializer _serializer = new RegistrySerializer();
-
-        private readonly Preferences _preferences = new Preferences();
-        private readonly ObjectReader _objectReader = new ObjectReader();
 
         /// <summary>
         /// Loads preferences and intializes proxy from them.
         /// </summary>
         public override void Load()
         {
-            _serializer.Deserialize(_preferences, BlueDwarfKey);
-            _objectReader.Map(_preferences, this);
             if (CanSetSocksListeningPort)
-                SocksListeningPort = _preferences.SocksListeningPort;
+                SocksListeningPort = PersistentSocksListeningPort;
             PropertyChanged += OnPropertyChanged;
             ProxyServer.Connect += OnProxyServerConnect;
             ProxyServer.Transfer += OnProxyServerTransfer;
@@ -170,11 +179,9 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         private void UpdatePreferences()
         {
-            _serializer.Deserialize(_preferences, BlueDwarfKey);
-            _objectReader.Map(this, _preferences);
             if (CanSetSocksListeningPort)
-                _preferences.SocksListeningPort = SocksListeningPort;
-            _serializer.Serialize(_preferences, BlueDwarfKey);
+                PersistentSocksListeningPort = SocksListeningPort;
+            Persistence.Current.Write();
         }
 
         [Async(KillExisting = true, ThreadName = "CheckProxyTunnel")]
@@ -183,8 +190,9 @@ namespace BlueDwarf.ViewModel
             try
             {
                 SetStatusPending();
-                var route = ProxyClient.CreateRoute(_preferences.TestTarget.Host, _preferences.TestTarget.Port, _preferences.LocalProxy, _preferences.RemoteProxy);
-                ProxyServer.ProxyRoute = route;
+                var testTargetUri = TestTargetUri;
+                if (testTargetUri != null)
+                    ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
                 SetStatus(null);
             }
             catch (ProxyRouteException pre)
@@ -231,10 +239,11 @@ namespace BlueDwarf.ViewModel
         {
             Func<Uri, bool> checkUri = u => proxyRouteException != null && proxyRouteException.Proxy == u;
             Func<string, bool> checkHost = h => proxyRouteException != null && proxyRouteException.TargetHost == h;
+            var testTargetUri = TestTargetUri;
             SetStatusLines(
                 Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(LocalProxy), v => LocalProxyStatus = v),
                 Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(RemoteProxy), v => RemoteProxyStatus = v),
-                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkHost(_preferences.TestTarget.Host), v => TestTargetStatus = v)
+                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkHost(testTargetUri != null ? TestTargetUri.Host : null), v => TestTargetStatus = v)
                 );
         }
 

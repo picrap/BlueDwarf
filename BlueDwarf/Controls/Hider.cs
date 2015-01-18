@@ -7,7 +7,7 @@ namespace BlueDwarf.Controls
 {
     public class Hider : FrameworkElement
     {
-        [AutoDependencyProperty(Notification = AutoDependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public bool Show { get; set; }
 
         public void OnShowChanged()

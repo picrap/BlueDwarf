@@ -17,34 +17,34 @@ namespace BlueDwarf.ViewModel
         [Dependency]
         public IProxyAnalyzer ProxyAnalyzer { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool RequiresProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool DoesNotRequireProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public Uri DefaultProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool ProxyAllowsSensitiveSites { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool DnsResolvesLocal { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool DnsResolvesSensitiveSites { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool ProxyConnectsToSensitiveIP { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool WorkWithLocalProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool WorkWithTwoProxy { get; set; }
 
-        [AutoNotifyPropertyChanged]
+        [NotifyPropertyChanged]
         public bool WorkWithSomethingElse { get; set; }
 
         public override void Load()
