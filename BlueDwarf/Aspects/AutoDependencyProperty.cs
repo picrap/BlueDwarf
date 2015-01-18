@@ -22,8 +22,7 @@ namespace BlueDwarf.Aspects
         /// The default value.
         /// </value>
         public object DefaultValue { get; set; }
-
-
+        
         /// <summary>
         /// Gets or sets the notification type.
         /// </summary>

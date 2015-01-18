@@ -12,6 +12,6 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>--proxy-port=1081 --downloadz=http://www.proxynova.com/proxy-server-list/ --save-text=c:\users\pascal\desktop\p.txt</StartArguments>
+    <StartArguments>--proxy-port=1081 --download=http://www.proxynova.com/proxy-server-list/ --save-text=c:\users\pascal\desktop\p.txt</StartArguments>
   </PropertyGroup>
 </Project>

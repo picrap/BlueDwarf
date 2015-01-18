@@ -70,6 +70,9 @@ namespace BlueDwarf.ViewModel
         [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive1Interval { get; set; }
 
+        [AutoNotifyPropertyChanged]
+        public Uri KeepAlive1FullUri { get; set; }
+
         [DataMember(Name = Preferences.KeepAlive2Key)]
         [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive2 { get; set; }
@@ -77,6 +80,9 @@ namespace BlueDwarf.ViewModel
         [DataMember(Name = Preferences.KeepAlive2IntervalKey)]
         [AutoNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive2Interval { get; set; }
+
+        [AutoNotifyPropertyChanged]
+        public Uri KeepAlive2FullUri { get; set; }
 
         [AutoNotifyPropertyChanged(Category = Category.ProxyServer)]
         public int SocksListeningPort { get; set; }
@@ -101,7 +107,7 @@ namespace BlueDwarf.ViewModel
         [AutoNotifyPropertyChanged]
         public long BytesWritten { get; set; }
 
-        private object _statisticsLock = new object();
+        private readonly object _statisticsLock = new object();
 
         private readonly RegistrySerializer _serializer = new RegistrySerializer();
 
@@ -122,6 +128,8 @@ namespace BlueDwarf.ViewModel
             ProxyServer.Transfer += OnProxyServerTransfer;
             CheckProxyTunnel();
             SetupProxyServer();
+            KeepAlive(() => KeepAlive1, () => KeepAlive1Interval, u => KeepAlive1FullUri = u);
+            KeepAlive(() => KeepAlive2, () => KeepAlive2Interval, u => KeepAlive2FullUri = u);
         }
 
         private void OnProxyServerConnect(object sender, EventArgs e)
@@ -141,7 +149,7 @@ namespace BlueDwarf.ViewModel
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var category = this.GetPropertyCategory<Category>(e.PropertyName);
+            var category = e.GetCategory<Category>();
             if (category != Category.None)
                 UpdatePreferences();
             switch (category)
@@ -183,6 +191,32 @@ namespace BlueDwarf.ViewModel
             {
                 ProxyServer.ProxyRoute = null;
                 SetStatus(pre);
+            }
+        }
+
+        private readonly object _keepAliveSerialLock = new object();
+        private int _keepAliveSerial;
+
+        [Async]
+        private void KeepAlive(Func<Uri> getBaseUri, Func<int> getInterval, Action<Uri> setFullUri)
+        {
+            for (; ; )
+            {
+                var baseUri = getBaseUri();
+                if (baseUri != null)
+                {
+                    lock (_keepAliveSerialLock)
+                    {
+                        var randomParameter = string.Format("whatthefook={0}", ++_keepAliveSerial);
+                        var uri = baseUri.Query.IsNullOrEmpty()
+                            ? new Uri(baseUri + "?" + randomParameter)
+                            : new Uri(baseUri + "&" + randomParameter);
+                        setFullUri(uri);
+                    }
+                }
+
+                var interval = Math.Max(getInterval(), 10);
+                Thread.Sleep(interval * 1000);
             }
         }
 

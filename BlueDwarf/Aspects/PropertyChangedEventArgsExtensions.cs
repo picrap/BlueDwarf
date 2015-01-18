@@ -1,37 +1,38 @@
 using System;
-using BlueDwarf.Utility;
 
 namespace BlueDwarf.Aspects
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// Extensions to make it more handy (because we're pragmatic people)
     /// </summary>
-    public static class AutoNotifyPropertyChangedExtensions
+    public static class PropertyChangedEventArgsExtensions
     {
         /// <summary>
         /// Gets the property category, as an object.
         /// </summary>
-        /// <param name="viewModel">The view model.</param>
-        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         /// <returns></returns>
-        public static object GetPropertyCategory(this ViewModel.ViewModel viewModel, string propertyName)
+        public static object GetCategory(this PropertyChangedEventArgs e)
         {
-            var notifyPropertyChangedAttribute = viewModel.GetType().GetProperty(propertyName).GetCustomAttribute<AutoNotifyPropertyChanged>();
-            return notifyPropertyChangedAttribute.Category;
+            var categoryPropertyChangedEventArgs = e as CategoryPropertyChangedEventArgs;
+            if (categoryPropertyChangedEventArgs == null)
+                return null;
+            return categoryPropertyChangedEventArgs.Category;
         }
 
         /// <summary>
         /// Gets the property category, as the requested type (whose only pupose is to avoid casts in client calls).
         /// </summary>
         /// <typeparam name="TCategory">The type of the category.</typeparam>
-        /// <param name="viewModel">The view model.</param>
-        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         /// <returns></returns>
-        public static TCategory GetPropertyCategory<TCategory>(this ViewModel.ViewModel viewModel, string propertyName)
+        public static TCategory GetCategory<TCategory>(this PropertyChangedEventArgs e)
         {
             try
             {
-                var category = GetPropertyCategory(viewModel, propertyName);
+                var category = GetCategory(e);
                 if (category != null)
                     return (TCategory)category;
             }
