@@ -14,6 +14,7 @@ namespace BlueDwarf.ViewModel
     using Net.Proxy.Client;
     using Net.Proxy.Server;
     using Properties;
+    using Resources.Localization;
     using Utility;
 
     /// <summary>
@@ -34,6 +35,8 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IPersistence Persistence { get; set; }
+
+        public ConfigurationLocale Locale { get; set; }
 
         public enum Category
         {
@@ -71,7 +74,7 @@ namespace BlueDwarf.ViewModel
 
         [NotifyPropertyChanged]
         public StatusCode RemoteProxyStatus { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the test target.
         /// the blue dwarf tries to establish a connection, after going through local and remote proxy servers
@@ -182,6 +185,14 @@ namespace BlueDwarf.ViewModel
         public long BytesWritten { get; set; }
 
         private readonly object _statisticsLock = new object();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
+        /// </summary>
+        public ConfigurationViewModel()
+        {
+            Locale = new ConfigurationLocale();
+        }
 
         /// <summary>
         /// Loads preferences and intializes proxy from them.
