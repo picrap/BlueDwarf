@@ -4,7 +4,8 @@
 namespace BlueDwarf.Controls
 {
     using System.Windows.Controls;
-    using Aspects;
+    using View;
+    using View.Properties;
 
     /// <summary>
     /// ResultTextBlock.xaml

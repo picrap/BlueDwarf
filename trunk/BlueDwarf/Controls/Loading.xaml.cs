@@ -3,7 +3,8 @@
 
 namespace BlueDwarf.Controls
 {
-    using Aspects;
+    using View;
+    using View.Properties;
 
     /// <summary>
     /// Logique d'interaction pour Loading.xaml

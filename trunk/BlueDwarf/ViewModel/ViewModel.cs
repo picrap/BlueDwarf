@@ -7,7 +7,8 @@ namespace BlueDwarf.ViewModel
     using System.ComponentModel;
     using System.Reflection;
     using System.Windows.Input;
-    using Aspects;
+    using Properties;
+    using Utility;
 
     /// <summary>
     /// View-model base (in case we write more than one).

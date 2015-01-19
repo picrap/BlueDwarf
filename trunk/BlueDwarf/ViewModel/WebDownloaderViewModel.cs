@@ -5,9 +5,9 @@ namespace BlueDwarf.ViewModel
 {
     using System.IO;
     using Annotations;
-    using Aspects;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Properties;
 
     /// <summary>
     /// Simple file download using IE ActiveX control

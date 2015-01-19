@@ -4,7 +4,6 @@
 namespace BlueDwarf
 {
     using Microsoft.Practices.Unity;
-    using Microsoft.Practices.Unity.InterceptionExtension;
     using Navigation;
     using View;
     using ViewModel;
@@ -26,7 +25,6 @@ namespace BlueDwarf
         /// <param name="container">The container.</param>
         public static void Configure(IUnityContainer container)
         {
-            container.AddNewExtension<Interception>();
             container.RegisterType<INavigator, Navigator>(AsSingleton());
             ConfigureViews(container);
         }

@@ -6,18 +6,18 @@ namespace BlueDwarf.Controls
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-    using Aspects;
     using Utility;
+    using ViewModel.Properties;
 
     /// <summary>
     /// UrlBox.xaml code behind
     /// </summary>
     public partial class UrlBox
     {
-        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [Aspects.DependencyProperty(DefaultValue = "http", Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [View.Properties.DependencyProperty(DefaultValue = "http", Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public string AllowedSchemes { get; set; }
 
         private string[] AllowedSchemesArray
