@@ -1,15 +1,10 @@
 ﻿
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using BlueDwarf.Controls;
-using BlueDwarf.View;
 
 namespace BlueDwarf.Utility
 {
@@ -31,46 +26,6 @@ namespace BlueDwarf.Utility
                 yield return uiElement;
                 uiElement = (UIElement)LogicalTreeHelper.GetParent(uiElement);
             }
-        }
-
-        public static bool SetCommandParameter(this UIElement uiElement, object commandParameter)
-        {
-            return SetCommandAndParameter(uiElement, null, () => commandParameter);
-        }
-
-        public static bool SetCommand(this UIElement uiElement, ICommand command)
-        {
-            return SetCommandAndParameter(uiElement, () => command, null);
-        }
-
-        public static bool SetCommand(this UIElement uiElement, ICommand command, object commandParameter)
-        {
-            return SetCommandAndParameter(uiElement, () => command, () => commandParameter);
-        }
-
-        private static bool SetCommandAndParameter(this UIElement uiElement, Func<ICommand> commandSetter, Func<object> commandParameterSetter)
-        {
-            var closeButton = uiElement as CloseButton;
-            if (closeButton != null)
-            {
-                if (commandSetter != null)
-                    closeButton.Command = commandSetter();
-                if (commandParameterSetter != null)
-                    closeButton.CommandParameter = commandParameterSetter();
-                return true;
-            }
-
-            var buttonBase = uiElement as ButtonBase;
-            if (buttonBase != null)
-            {
-                if (commandSetter != null)
-                    buttonBase.Command = commandSetter();
-                if (commandParameterSetter != null)
-                    buttonBase.CommandParameter = commandParameterSetter();
-                return true;
-            }
-
-            return false;
         }
 
         public static bool SetCommand(this UIElement uiElement, object targetProperty, ICommand command, object commandParameter)

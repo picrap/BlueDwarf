@@ -26,7 +26,7 @@ namespace BlueDwarf.Aspects
         /// The default value.
         /// </value>
         public object DefaultValue { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the notification type.
         /// </summary>
@@ -41,7 +41,8 @@ namespace BlueDwarf.Aspects
         /// <param name="locationInfo">Location to which the current aspect is applied.</param>
         public void RuntimeInitialize(LocationInfo locationInfo)
         {
-            locationInfo.PropertyInfo.CreateDependencyProperty(DefaultValue, Notification);
+            var propertyInfo = locationInfo.PropertyInfo;
+            propertyInfo.CreateDependencyProperty(DefaultValue, Notification);
         }
 
         /// <summary>

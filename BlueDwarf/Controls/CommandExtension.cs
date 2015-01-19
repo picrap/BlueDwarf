@@ -7,6 +7,10 @@ using BlueDwarf.Utility;
 
 namespace BlueDwarf.Controls
 {
+    /// <summary>
+    /// Allows to bind commands directly to view-model methods
+    /// Syntax: Command="{controls:Command {Binding methodName}}"
+    /// </summary>
     public class CommandExtension : MarkupExtension
     {
         private readonly object _parameter;

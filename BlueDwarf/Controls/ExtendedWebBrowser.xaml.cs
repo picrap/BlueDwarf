@@ -6,15 +6,25 @@ namespace BlueDwarf.Controls
     using System.Windows;
     using System.Windows.Navigation;
     using Aspects;
+    using DependencyProperty = Aspects.DependencyProperty;
 
+    /// <summary>
+    /// Extensions to web browser. Unfortunately the WebBrowser class can not be overriden (WTF?)
+    /// </summary>
     public partial class ExtendedWebBrowser
     {
-        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [Aspects.DependencyProperty]
+        [DependencyProperty]
         public string Text { get; set; }
 
+        /// <summary>
+        /// Gets the document (as dynamic, since dynamic compensates my laziness).
+        /// </summary>
+        /// <value>
+        /// The document.
+        /// </value>
         private dynamic Document
         {
             get { return WebBrowser.Document; }
@@ -22,6 +32,12 @@ namespace BlueDwarf.Controls
 
         private object _activeXControl;
 
+        /// <summary>
+        /// Gets the inner ActiveX control.
+        /// </summary>
+        /// <value>
+        /// The active x control.
+        /// </value>
         private dynamic ActiveXControl
         {
             get
@@ -41,6 +57,13 @@ namespace BlueDwarf.Controls
 
         private bool? _silent;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="ExtendedWebBrowser"/> is silent.
+        /// If Silent, no alert box is shown
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if silent; otherwise, <c>false</c>.
+        /// </value>
         public bool Silent
         {
             get { return ActiveXControl.Silent; }
@@ -74,6 +97,10 @@ namespace BlueDwarf.Controls
             Text = Document.body.innerText;
         }
 
+        /// <summary>
+        /// Called when Uri changed.
+        /// (raised automatically)
+        /// </summary>
         public void OnUriChanged()
         {
             WebBrowser.Navigate(Uri);

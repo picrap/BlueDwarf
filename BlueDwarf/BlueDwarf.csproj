@@ -119,6 +119,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Aspects\Async.cs" />
+    <Compile Include="Aspects\Attached.cs" />
+    <Compile Include="Aspects\Property.cs" />
     <Compile Include="Aspects\DependencyPropertyNotification.cs" />
     <Compile Include="Aspects\NotifyPropertyChanged.cs" />
     <Compile Include="Aspects\PropertyChangedEventArgsExtensions.cs" />
@@ -153,7 +155,6 @@
     <Compile Include="Navigation\Navigator.cs" />
     <Compile Include="Navigation\NavigatorExtensions.cs" />
     <Compile Include="Utility\CollectionExtensions.cs" />
-    <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\ShellLink\FileIcon.cs" />
     <Compile Include="Utility\ServiceProviderExtensions.cs" />
     <Compile Include="Utility\ShellLink\ShellLink.cs" />

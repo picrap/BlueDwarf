@@ -1,13 +1,15 @@
-﻿
-using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using BlueDwarf.Aspects;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Controls
 {
+    using System;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using Aspects;
+    using Utility;
+
     /// <summary>
     /// UrlBox.xaml code behind
     /// </summary>
