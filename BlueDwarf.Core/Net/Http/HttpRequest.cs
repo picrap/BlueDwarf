@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Http
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+
     /// <summary>
     /// Simple HTTP request
     /// (because using the one from the framework was too difficult)

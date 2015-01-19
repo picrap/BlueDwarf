@@ -1,16 +1,16 @@
-﻿using System;
-using System.Windows;
-using BlueDwarf.Navigation;
-using BlueDwarf.Net.Proxy.Server;
-using BlueDwarf.Utility;
-using BlueDwarf.ViewModel;
-using CommandLine;
-using Microsoft.Practices.Unity;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf
 {
-    using System.Threading;
-    using View;
+    using System;
+    using System.Windows;
+    using CommandLine;
+    using Microsoft.Practices.Unity;
+    using Navigation;
+    using Net.Proxy.Server;
+    using Utility;
+    using ViewModel;
 
     /// <summary>
     /// Application

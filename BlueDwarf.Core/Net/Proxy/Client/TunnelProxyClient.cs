@@ -1,12 +1,15 @@
-﻿using System;
-using System.IO;
-using BlueDwarf.Annotations;
-using BlueDwarf.Net.Name;
-using BlueDwarf.Net.Proxy.Server;
-using Microsoft.Practices.Unity;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Proxy.Client
 {
+    using System;
+    using System.IO;
+    using Annotations;
+    using Microsoft.Practices.Unity;
+    using Name;
+    using Server;
+
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public partial class TunnelProxyClient : IProxyClient
     {
@@ -124,7 +127,7 @@ namespace BlueDwarf.Net.Proxy.Client
 
         private ProxyStream DirectConnect(ProxyStream stream, string targetHost, int targetPort, ProxyRoute routeUntilHere)
         {
-            var newStream = Net.Connect.To(targetHost, targetPort);
+            var newStream = Connect.To(targetHost, targetPort);
             return newStream;
         }
     }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Reflection;
-using System.Threading;
-using PostSharp.Aspects;
-using PostSharp.Extensibility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Aspects
 {
+    using System;
+    using System.Reflection;
+    using System.Threading;
+    using PostSharp.Aspects;
     using PostSharp.Aspects.Configuration;
+    using PostSharp.Extensibility;
 
     /// <summary>
     /// Allows to invoke a method asynchronously (here, in a background thread)

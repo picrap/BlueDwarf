@@ -1,8 +1,11 @@
-using System;
-using BlueDwarf.Net.Proxy.Client;
+// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Proxy.Server
 {
+    using System;
+    using Client;
+
     /// <summary>
     /// Proxy server interface
     /// </summary>

@@ -1,8 +1,11 @@
-﻿using System.IO;
-using System.Text;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.IO
 {
+    using System.IO;
+    using System.Text;
+
     /// <summary>
     /// Exntensions to Stream
     /// </summary>

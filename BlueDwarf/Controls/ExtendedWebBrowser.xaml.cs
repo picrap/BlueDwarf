@@ -1,22 +1,24 @@
-﻿
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
+
 namespace BlueDwarf.Controls
 {
     using System;
     using System.Reflection;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Navigation;
     using Aspects;
-    using DependencyProperty = Aspects.DependencyProperty;
 
     /// <summary>
     /// Extensions to web browser. Unfortunately the WebBrowser class can not be overriden (WTF?)
     /// </summary>
     public partial class ExtendedWebBrowser
     {
-        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [DependencyProperty]
+        [Aspects.DependencyProperty]
         public string Text { get; set; }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace BlueDwarf.Controls
                 if (_activeXControl == null)
                 {
                     // this is a brilliant way to access the WebBrowserObject prior to displaying the actual document (eg. Document property)
-                    var webBrowserField = typeof(System.Windows.Controls.WebBrowser).GetField("_axIWebBrowser2",
+                    var webBrowserField = typeof(WebBrowser).GetField("_axIWebBrowser2",
                         BindingFlags.Instance | BindingFlags.NonPublic);
                     if (webBrowserField == null)
                         return null;

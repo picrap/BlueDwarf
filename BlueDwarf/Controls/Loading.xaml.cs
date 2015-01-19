@@ -1,7 +1,10 @@
-﻿using BlueDwarf.Aspects;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Controls
 {
+    using Aspects;
+
     /// <summary>
     /// Logique d'interaction pour Loading.xaml
     /// </summary>

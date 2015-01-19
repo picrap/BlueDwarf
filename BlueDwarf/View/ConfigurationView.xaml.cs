@@ -1,8 +1,11 @@
-﻿using System.Diagnostics;
-using System.Windows.Navigation;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.View
 {
+    using System.Diagnostics;
+    using System.Windows.Navigation;
+
     /// <summary>
     /// Configuration view
     /// </summary>

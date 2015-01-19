@@ -1,11 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.Windows.Input;
-using BlueDwarf.Aspects;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.ViewModel
 {
+    using System;
+    using System.ComponentModel;
+    using System.Reflection;
+    using System.Windows.Input;
+    using Aspects;
+
     /// <summary>
     /// View-model base (in case we write more than one).
     /// </summary>

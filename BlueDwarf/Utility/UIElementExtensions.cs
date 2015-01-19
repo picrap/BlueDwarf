@@ -1,13 +1,15 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
     public static class UIElementExtensions
     {
         public static IEnumerable<UIElement> GetVisualSelfAndParents(this UIElement uiElement)

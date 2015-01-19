@@ -1,9 +1,11 @@
-﻿
-using System;
-using System.Net;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System;
+    using System.Net;
+
     public static class UriExtensions
     {
         public static NetworkCredential GetNetworkCredential(this Uri uri)

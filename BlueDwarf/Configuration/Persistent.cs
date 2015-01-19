@@ -1,4 +1,6 @@
-﻿
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
+
 namespace BlueDwarf.Configuration
 {
     using System;
@@ -10,7 +12,7 @@ namespace BlueDwarf.Configuration
     [AttributeUsage(AttributeTargets.Property)]
     [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
     [Serializable]
-    [LocationInterceptionAspectConfigurationAttribute(AspectPriority = 100)]
+    [LocationInterceptionAspectConfiguration(AspectPriority = 100)]
     public class Persistent : Aspect, ILocationInterceptionAspect
     {
         /// <summary>

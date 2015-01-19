@@ -1,13 +1,15 @@
-﻿using System;
-using System.Windows;
-using BlueDwarf.Utility;
-using PostSharp.Aspects;
-using PostSharp.Extensibility;
-using PostSharp.Reflection;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Aspects
 {
+    using System;
+    using System.Windows;
+    using PostSharp.Aspects;
     using PostSharp.Aspects.Configuration;
+    using PostSharp.Extensibility;
+    using PostSharp.Reflection;
+    using Utility;
 
     /// <summary>
     /// Marks a simple auto property to be bound to a DependencyProperty

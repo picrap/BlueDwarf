@@ -1,13 +1,15 @@
-﻿
-using System;
-using BlueDwarf.Annotations;
-using BlueDwarf.Aspects;
-using BlueDwarf.Navigation;
-using BlueDwarf.Net.Proxy.Client.Diagnostic;
-using Microsoft.Practices.Unity;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.ViewModel
 {
+    using System;
+    using Annotations;
+    using Aspects;
+    using Microsoft.Practices.Unity;
+    using Navigation;
+    using Net.Proxy.Client.Diagnostic;
+
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ProxyAnalysisViewModel : ViewModel
     {

@@ -1,14 +1,16 @@
-﻿
-using System;
-using BlueDwarf.Annotations;
-using BlueDwarf.Net.Name;
-using BlueDwarf.Net.Proxy.Client;
-using BlueDwarf.Utility;
-using Microsoft.Practices.Unity;
-using Org.Mentalis.Proxy.Socks;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Proxy.Server
 {
+    using System;
+    using Annotations;
+    using Client;
+    using Microsoft.Practices.Unity;
+    using Name;
+    using Org.Mentalis.Proxy.Socks;
+    using Utility;
+
     /// <summary>
     /// Socks proxy server
     /// Was from far the easiest to implement

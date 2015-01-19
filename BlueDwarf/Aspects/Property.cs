@@ -1,9 +1,11 @@
-﻿using System.Windows;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Aspects
 {
+    using System.Windows;
     using Annotations;
+    using Utility;
 
     /// <summary>
     /// This is the property part for attached properties.

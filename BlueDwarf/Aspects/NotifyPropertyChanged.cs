@@ -1,12 +1,15 @@
-﻿using System;
-using BlueDwarf.Utility;
-using PostSharp.Aspects;
-using PostSharp.Extensibility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Aspects
 {
+    using System;
+    using PostSharp.Aspects;
     using PostSharp.Aspects.Configuration;
+    using PostSharp.Extensibility;
     using PostSharp.Reflection;
+    using Utility;
+    using ViewModel;
 
     /// <summary>
     /// Invokes notify property changed... If the property has actually changed
@@ -14,7 +17,7 @@ namespace BlueDwarf.Aspects
     [AttributeUsage(AttributeTargets.Property)]
     [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
     [Serializable]
-    [LocationInterceptionAspectConfigurationAttribute(AspectPriority = 10)]
+    [LocationInterceptionAspectConfiguration(AspectPriority = 10)]
     public class NotifyPropertyChanged : Aspect, ILocationInterceptionAspect
     {
         /// <summary>
@@ -55,7 +58,7 @@ namespace BlueDwarf.Aspects
             var newValue = args.Value;
             if (!oldValue.SafeEquals(newValue))
             {
-                var viewModel = (ViewModel.ViewModel)args.Instance;
+                var viewModel = (ViewModel)args.Instance;
                 viewModel.OnPropertyChanged(args.Location.PropertyInfo.Name, Category);
             }
         }

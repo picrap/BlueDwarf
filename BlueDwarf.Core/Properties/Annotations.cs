@@ -1,5 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
+
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
@@ -11,7 +12,10 @@ using System.Diagnostics;
 
 namespace BlueDwarf.Annotations
 {
-  /// <summary>
+    using System;
+    using System.Diagnostics;
+
+    /// <summary>
   /// Indicates that the value of the marked element could be <c>null</c> sometimes,
   /// so the check for <c>null</c> is necessary before its usage
   /// </summary>

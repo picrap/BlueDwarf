@@ -1,8 +1,11 @@
-﻿using System.Net;
-using BlueDwarf.Net.Proxy.Client;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Name
 {
+    using System.Net;
+    using Proxy.Client;
+
     /// <summary>
     /// Name resolution interface
     /// (yes, in other words, a simple DNS client)

@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Aspects
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using System.Windows;
+    using Utility;
+
     /// <summary>
     /// This class holds all auto DependencyProperties, grouped by control type
     /// </summary>

@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using BlueDwarf.Annotations;
-using BlueDwarf.Net.Http;
-using BlueDwarf.Net.Proxy.Client;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Name
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Json;
+    using Annotations;
+    using Http;
+    using Proxy.Client;
+
     /// <summary>
     /// DNS resolution using the excellent statdns.com resolution
     /// </summary>

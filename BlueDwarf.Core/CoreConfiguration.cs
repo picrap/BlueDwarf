@@ -1,11 +1,14 @@
-﻿using BlueDwarf.Net.Name;
-using BlueDwarf.Net.Proxy.Client;
-using BlueDwarf.Net.Proxy.Client.Diagnostic;
-using BlueDwarf.Net.Proxy.Server;
-using Microsoft.Practices.Unity;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf
 {
+    using Microsoft.Practices.Unity;
+    using Net.Name;
+    using Net.Proxy.Client;
+    using Net.Proxy.Client.Diagnostic;
+    using Net.Proxy.Server;
+
     public static class CoreConfiguration
     {
         private static LifetimeManager AsSingleton()

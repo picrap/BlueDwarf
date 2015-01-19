@@ -1,13 +1,15 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Serialization
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+    using Utility;
+
     /// <summary>
     /// Allows to collect and inject object properties
     /// </summary>

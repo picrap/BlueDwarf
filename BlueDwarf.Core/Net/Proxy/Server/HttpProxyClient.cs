@@ -1,19 +1,22 @@
-﻿
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
-using System;
-using System.Collections.Specialized;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using Org.Mentalis.Proxy;
 
 namespace BlueDwarf.Net.Proxy.Server
 {
+    using System;
+    using System.Collections.Specialized;
+    using System.Globalization;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Text;
+    using Org.Mentalis.Proxy;
+
     ///<summary>Relays HTTP data between a remote host and a local client.
     /// Shamelessly stolen from mentalis.org
     /// </summary>
     ///<remarks>This class supports both HTTP and HTTPS.</remarks>
-    public sealed class HttpProxyClient : Org.Mentalis.Proxy.Client
+    public sealed class HttpProxyClient : Client
     {
         public HttpProxyListener Listener { get; set; }
 
@@ -249,7 +252,7 @@ namespace BlueDwarf.Net.Proxy.Server
                 foreach (string sc in HeaderFields.Keys)
                 {
                     if (sc.Length < 6 || !sc.Substring(0, 6).Equals("proxy-"))
-                        ret += System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(sc) + ": " + (string)HeaderFields[sc] + "\r\n";
+                        ret += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(sc) + ": " + (string)HeaderFields[sc] + "\r\n";
                 }
                 ret += "\r\n";
                 if (_httpPost != null)

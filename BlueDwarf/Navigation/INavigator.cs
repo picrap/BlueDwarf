@@ -1,7 +1,10 @@
-﻿using System;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Navigation
 {
+    using System;
+
     /// <summary>
     /// Navigation interface, to be injected in view-models
     /// </summary>
