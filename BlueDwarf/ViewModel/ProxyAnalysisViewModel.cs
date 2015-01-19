@@ -5,10 +5,10 @@ namespace BlueDwarf.ViewModel
 {
     using System;
     using Annotations;
-    using Aspects;
     using Microsoft.Practices.Unity;
     using Navigation;
     using Net.Proxy.Client.Diagnostic;
+    using Properties;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ProxyAnalysisViewModel : ViewModel

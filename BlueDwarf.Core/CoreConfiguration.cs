@@ -3,6 +3,7 @@
 
 namespace BlueDwarf
 {
+    using Configuration;
     using Microsoft.Practices.Unity;
     using Net.Name;
     using Net.Proxy.Client;
@@ -22,6 +23,7 @@ namespace BlueDwarf
             container.RegisterType<IProxyServer, SocksProxyServer>(AsSingleton());
             container.RegisterType<INameResolver, StatDnsNameResolver>(AsSingleton());
             container.RegisterType<IProxyAnalyzer, ProxyAnalyzer>(AsSingleton());
+            container.RegisterType<IPersistence, RegistryPersistence>(AsSingleton());
         }
     }
 }

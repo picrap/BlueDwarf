@@ -8,17 +8,17 @@ namespace BlueDwarf.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Navigation;
-    using Aspects;
+    using ViewModel.Properties;
 
     /// <summary>
     /// Extensions to web browser. Unfortunately the WebBrowser class can not be overriden (WTF?)
     /// </summary>
     public partial class ExtendedWebBrowser
     {
-        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [Aspects.DependencyProperty]
+        [View.Properties.DependencyProperty]
         public string Text { get; set; }
 
         /// <summary>

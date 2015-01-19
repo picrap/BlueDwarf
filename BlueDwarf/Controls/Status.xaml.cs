@@ -4,11 +4,11 @@
 namespace BlueDwarf.Controls
 {
     using System.Windows;
-    using Aspects;
+    using ViewModel.Properties;
 
     public partial class Status
     {
-        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public StatusCode Code { get; set; }
 
         public Status()

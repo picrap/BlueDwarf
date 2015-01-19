@@ -7,13 +7,13 @@ namespace BlueDwarf.ViewModel
     using System.ComponentModel;
     using System.Threading;
     using Annotations;
-    using Aspects;
     using Configuration;
     using Controls;
     using Microsoft.Practices.Unity;
     using Navigation;
     using Net.Proxy.Client;
     using Net.Proxy.Server;
+    using Properties;
     using Utility;
 
     /// <summary>
@@ -31,6 +31,9 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public INavigator Navigator { get; set; }
+
+        [Dependency]
+        public IPersistence Persistence { get; set; }
 
         public enum Category
         {
@@ -183,7 +186,7 @@ namespace BlueDwarf.ViewModel
         {
             if (CanSetSocksListeningPort)
                 PersistentSocksListeningPort = SocksListeningPort;
-            Persistence.Current.Write();
+            Persistence.Write();
         }
 
         [Async(KillExisting = true)]

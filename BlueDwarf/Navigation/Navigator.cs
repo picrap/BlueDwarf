@@ -8,8 +8,9 @@ namespace BlueDwarf.Navigation
     using System.Windows;
     using System.Windows.Threading;
     using Annotations;
-    using Aspects;
     using Microsoft.Practices.Unity;
+    using View;
+    using View.Properties;
     using ViewModel;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
