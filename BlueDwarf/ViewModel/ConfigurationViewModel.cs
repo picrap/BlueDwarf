@@ -43,6 +43,13 @@ namespace BlueDwarf.ViewModel
             ProxyKeepalive,
         }
 
+        /// <summary>
+        /// Gets or sets the local proxy.
+        /// The local proxy is the proxy that can be found in the LAN
+        /// </summary>
+        /// <value>
+        /// The local proxy.
+        /// </value>
         [Persistent("Proxy1")]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri LocalProxy { get; set; }
@@ -50,14 +57,29 @@ namespace BlueDwarf.ViewModel
         [NotifyPropertyChanged]
         public StatusCode LocalProxyStatus { get; set; }
 
+        /// <summary>
+        /// Gets or sets the remote proxy.
+        /// The remote proxy, used with local proxy allows to access sites forbidden by the latter
+        /// The remote proxy, used without local proxy allows to access sites anonymously (assuming the remote site is fully anonymous)
+        /// </summary>
+        /// <value>
+        /// The remote proxy.
+        /// </value>
         [Persistent("Proxy2")]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri RemoteProxy { get; set; }
 
         [NotifyPropertyChanged]
         public StatusCode RemoteProxyStatus { get; set; }
-
-        [Persistent("ProxyTest", Default = "https://google.com")]
+        
+        /// <summary>
+        /// Gets or sets the test target.
+        /// the blue dwarf tries to establish a connection, after going through local and remote proxy servers
+        /// </summary>
+        /// <value>
+        /// The test target.
+        /// </value>
+        [Persistent("ProxyTest", DefaultValue = "https://google.com")]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public string TestTarget { get; set; }
 
@@ -80,11 +102,18 @@ namespace BlueDwarf.ViewModel
         [NotifyPropertyChanged]
         public StatusCode TestTargetStatus { get; set; }
 
-        [Persistent("KeepAlive1", Default = "https://google.com")]
+        /// <summary>
+        /// Gets or sets the keep alive #1.
+        /// Some proxy servers use an authentication, and de-authenticate when the internet access is idle for too long
+        /// </summary>
+        /// <value>
+        /// The keep alive1.
+        /// </value>
+        [Persistent("KeepAlive1", DefaultValue = "https://google.com")]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive1 { get; set; }
 
-        [Persistent("KeepAlive1Interval", Default = 120)]
+        [Persistent("KeepAlive1Interval", DefaultValue = 120)]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive1Interval { get; set; }
 
@@ -95,7 +124,7 @@ namespace BlueDwarf.ViewModel
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive2 { get; set; }
 
-        [Persistent("KeepAlive2Interval", Default = 120)]
+        [Persistent("KeepAlive2Interval", DefaultValue = 120)]
         [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive2Interval { get; set; }
 
@@ -105,7 +134,7 @@ namespace BlueDwarf.ViewModel
         [NotifyPropertyChanged(Category = Category.ProxyServer)]
         public int SocksListeningPort { get; set; }
 
-        [Persistent("SocksListeningPort", Default = 1080)]
+        [Persistent("SocksListeningPort", DefaultValue = 1080)]
         public int PersistentSocksListeningPort { get; set; }
 
         private bool _canSetSocksListeningPort = true;
@@ -116,15 +145,39 @@ namespace BlueDwarf.ViewModel
             set { _canSetSocksListeningPort = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the main window is visible or not.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if show; otherwise, <c>false</c>.
+        /// </value>
         [NotifyPropertyChanged]
         public bool Show { get; set; }
 
+        /// <summary>
+        /// Gets or sets the connections count (for statistics).
+        /// </summary>
+        /// <value>
+        /// The connections count.
+        /// </value>
         [NotifyPropertyChanged]
         public int ConnectionsCount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the bytes read (for statistics).
+        /// </summary>
+        /// <value>
+        /// The bytes read.
+        /// </value>
         [NotifyPropertyChanged]
         public long BytesRead { get; set; }
 
+        /// <summary>
+        /// Gets or sets the bytes written (for statistics).
+        /// </summary>
+        /// <value>
+        /// The bytes written.
+        /// </value>
         [NotifyPropertyChanged]
         public long BytesWritten { get; set; }
 
@@ -184,6 +237,7 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         private void UpdatePreferences()
         {
+            // this is a special case for debug (I have two instances of BlueDwarf running, so in Visual Studio, I force the port)
             if (CanSetSocksListeningPort)
                 PersistentSocksListeningPort = SocksListeningPort;
             Persistence.Write();

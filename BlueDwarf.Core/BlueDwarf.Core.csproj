@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aspects\AspectPriority.cs" />
+    <Compile Include="Aspects\PropertyImporter.cs" />
     <Compile Include="Configuration\IPersistence.cs" />
     <Compile Include="Configuration\RegistryPersistence.cs" />
     <Compile Include="Configuration\PersistenceExtensions.cs" />

@@ -5,7 +5,11 @@ namespace BlueDwarf.Configuration
 {
     using System;
     using System.Linq;
+    using System.Reflection;
+    using Aspects;
+    using Microsoft.Practices.Unity;
     using PostSharp.Aspects;
+    using PostSharp.Aspects.Advices;
     using PostSharp.Aspects.Configuration;
     using PostSharp.Extensibility;
     using PostSharp.Reflection;
@@ -38,7 +42,9 @@ namespace BlueDwarf.Configuration
         /// <value>
         /// The default value.
         /// </value>
-        public object Default { get; set; }
+        public object DefaultValue { get; set; }
+
+        [NonSerialized] private PropertyImporter<IPersistence> _persistence;
 
         public Persistent(string name)
         {
@@ -52,6 +58,7 @@ namespace BlueDwarf.Configuration
 
         public void RuntimeInitialize(LocationInfo locationInfo)
         {
+            _persistence = new PropertyImporter<IPersistence>(locationInfo);
         }
 
         /// <summary>
@@ -61,7 +68,7 @@ namespace BlueDwarf.Configuration
         /// <param name="args">Advice arguments.</param>
         public void OnGetValue(LocationInterceptionArgs args)
         {
-            args.Value = GetPersistence(args).GetValue(Name, args.Location.PropertyInfo.PropertyType, Default);
+            args.Value = _persistence.Get(args).GetValue(Name, args.Location.PropertyInfo.PropertyType, DefaultValue);
         }
 
         /// <summary>
@@ -71,22 +78,7 @@ namespace BlueDwarf.Configuration
         /// <param name="args">Advice arguments.</param>
         public void OnSetValue(LocationInterceptionArgs args)
         {
-            GetPersistence(args).SetValue(Name, args.Value, AutoSave);
-        }
-
-        /// <summary>
-        /// Gets the persistence property value from the target class.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        private static IPersistence GetPersistence(AdviceArgs args)
-        {
-            var instanceType = args.Instance.GetType();
-            var persistenceProperty = instanceType.GetProperties().SingleOrDefault(p => typeof(IPersistence).IsAssignableFrom(p.PropertyType));
-            if (persistenceProperty == null)
-                throw new NotImplementedException(string.Format("The type {0} must have a property of type {1}", instanceType.Name, typeof(IPersistence).Name));
-            return (IPersistence)persistenceProperty.GetValue(args.Instance, new object[0]);
+            _persistence.Get(args).SetValue(Name, args.Value, AutoSave);
         }
     }
 }
