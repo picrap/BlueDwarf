@@ -28,6 +28,8 @@
   OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#pragma warning disable 618
+
 using System;
 using System.Text;
 using System.Net;
