@@ -1,11 +1,14 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Controls
 {
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Input;
+    using Utility;
+
     public class CloseButton : FrameworkElement
     {
         public ICommand Command { get; set; }

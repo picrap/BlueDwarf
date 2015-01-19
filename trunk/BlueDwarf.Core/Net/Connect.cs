@@ -1,11 +1,13 @@
-﻿
-using System.IO;
-using System.Net.Sockets;
-using System.Threading;
-using BlueDwarf.Net.Proxy.Server;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net
 {
+    using System.IO;
+    using System.Net.Sockets;
+    using System.Threading;
+    using Proxy.Server;
+
     public static class Connect
     {
         public static ProxyStream To(string targetHost, int targetPort)

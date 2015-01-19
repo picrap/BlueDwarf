@@ -1,14 +1,17 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Threading;
-using BlueDwarf.Annotations;
-using BlueDwarf.Aspects;
-using Microsoft.Practices.Unity;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Navigation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Threading;
+    using Annotations;
+    using Aspects;
+    using Microsoft.Practices.Unity;
+    using ViewModel;
+
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class Navigator : INavigator
     {
@@ -31,7 +34,7 @@ namespace BlueDwarf.Navigation
 
         public object Show(Type viewModelType, Action<object> initializer = null)
         {
-            var viewModel = (ViewModel.ViewModel)UnityContainer.Resolve(viewModelType);
+            var viewModel = (ViewModel)UnityContainer.Resolve(viewModelType);
             // initializer comes first
             if (initializer != null)
                 initializer(viewModel);
@@ -50,7 +53,7 @@ namespace BlueDwarf.Navigation
             return null;
         }
 
-        private object ShowDialog(Window window, ViewModel.ViewModel viewModel)
+        private object ShowDialog(Window window, ViewModel viewModel)
         {
             window.Owner = _windows.Peek();
             // the Exit() method is called only if the window is still present
@@ -60,7 +63,7 @@ namespace BlueDwarf.Navigation
             return ok ?? (false) ? viewModel : null;
         }
 
-        private object ShowMain(Window window, ViewModel.ViewModel viewModel)
+        private object ShowMain(Window window, ViewModel viewModel)
         {
             _windows.Push(window);
             if (window.Visibility != Visibility.Collapsed)

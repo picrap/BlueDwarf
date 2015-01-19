@@ -1,11 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Net.Sockets;
-using BlueDwarf.Annotations;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Proxy.Server
 {
+    using System.IO;
+    using System.Net.Sockets;
+    using Annotations;
+
     /// <summary>
     /// Because of some twisted implementations, we had to expose the underlying socket
     /// </summary>

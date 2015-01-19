@@ -1,11 +1,13 @@
-﻿
-using System;
-using System.IO;
-using System.Reflection;
-using vbAccelerator.Components.Shell;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using vbAccelerator.Components.Shell;
+
     /// <summary>
     /// Utility for startup menu
     /// </summary>

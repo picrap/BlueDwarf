@@ -1,11 +1,14 @@
-﻿using BlueDwarf.Navigation;
-using BlueDwarf.View;
-using BlueDwarf.ViewModel;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.InterceptionExtension;
+    using Navigation;
+    using View;
+    using ViewModel;
+
     public static class UIConfiguration
     {
         /// <summary>

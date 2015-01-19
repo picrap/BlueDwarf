@@ -1,12 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using BlueDwarf.Utility;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Controls
 {
+    using System;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+    using Utility;
+    using ViewModel;
+
     /// <summary>
     /// Allows to bind commands directly to view-model methods
     /// Syntax: Command="{controls:Command {Binding methodName}}"
@@ -30,7 +34,7 @@ namespace BlueDwarf.Controls
             var targetProperty = provideValueTarget.TargetProperty;
             element.DataContextChanged += delegate
             {
-                var viewModel = element.DataContext as ViewModel.ViewModel;
+                var viewModel = element.DataContext as ViewModel;
                 if (viewModel == null)
                     return;
 

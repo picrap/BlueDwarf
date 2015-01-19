@@ -1,10 +1,13 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Drawing;
+// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace vbAccelerator.Components.Shell
 {
-	/// <summary>
+    using System;
+    using System.Drawing;
+    using System.Runtime.InteropServices;
+
+    /// <summary>
 	/// Enables extraction of icons for any file type from
 	/// the Shell.
 	/// </summary>
@@ -95,7 +98,7 @@ namespace vbAccelerator.Components.Shell
 		/// <summary>
 		/// Gets/sets the flags used to extract the icon
 		/// </summary>
-		public FileIcon.SHGetFileInfoConstants Flags
+		public SHGetFileInfoConstants Flags
 		{
 			get
 			{
@@ -176,7 +179,7 @@ namespace vbAccelerator.Components.Shell
 			{
 				if (shfi.hIcon != IntPtr.Zero)
 				{
-					fileIcon = System.Drawing.Icon.FromHandle(shfi.hIcon);
+					fileIcon = Icon.FromHandle(shfi.hIcon);
 					// Now owned by the GDI+ object
 					//DestroyIcon(shfi.hIcon);
 				}
@@ -233,7 +236,7 @@ namespace vbAccelerator.Components.Shell
 		/// for</param>
 		/// <param name="flags">The flags to use when extracting the
 		/// icon and other shell information.</param>
-		public FileIcon(string fileName, FileIcon.SHGetFileInfoConstants flags)
+		public FileIcon(string fileName, SHGetFileInfoConstants flags)
 		{
 			this.fileName = fileName;
 			this.flags = flags;

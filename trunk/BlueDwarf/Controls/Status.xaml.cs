@@ -1,13 +1,14 @@
-﻿
-using System.Windows;
-using BlueDwarf.Aspects;
-using DependencyProperty = BlueDwarf.Aspects.DependencyProperty;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Controls
 {
+    using System.Windows;
+    using Aspects;
+
     public partial class Status
     {
-        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public StatusCode Code { get; set; }
 
         public Status()

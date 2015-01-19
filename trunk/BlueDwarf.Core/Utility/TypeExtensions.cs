@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Extensions for Type
     /// </summary>

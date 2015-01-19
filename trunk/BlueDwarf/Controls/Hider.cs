@@ -1,14 +1,16 @@
-﻿using System.Linq;
-using System.Windows;
-using BlueDwarf.Aspects;
-using BlueDwarf.Utility;
-using DependencyProperty = BlueDwarf.Aspects.DependencyProperty;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Controls
 {
+    using System.Linq;
+    using System.Windows;
+    using Aspects;
+    using Utility;
+
     public class Hider : FrameworkElement
     {
-        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public bool Show { get; set; }
 
         /// <summary>

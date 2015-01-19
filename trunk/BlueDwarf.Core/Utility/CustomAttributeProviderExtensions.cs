@@ -1,10 +1,12 @@
-﻿
-using System;
-using System.Linq;
-using System.Reflection;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+
     public static class CustomAttributeProviderExtensions
     {
         /// <summary>

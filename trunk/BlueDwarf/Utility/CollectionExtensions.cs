@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Controls;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Windows.Controls;
+
     public static class CollectionExtensions
     {
         public static void AddRange<TItem>(this ICollection<TItem> collection, IEnumerable<TItem> items)

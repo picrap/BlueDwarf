@@ -1,4 +1,6 @@
-﻿
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
+
 namespace BlueDwarf.Configuration
 {
     using System;

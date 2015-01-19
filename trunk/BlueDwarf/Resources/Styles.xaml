@@ -15,11 +15,9 @@
         <Setter Property="FontStyle" Value="Italic"/>
     </Style>
 
-    <Style x:Key="DialogTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}">
-    </Style>
+    <Style x:Key="DialogTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}" />
 
-    <Style x:Key="DialogUrlBox" TargetType="v:UrlBox" BasedOn="{StaticResource DialogElement}">
-    </Style>
+    <Style x:Key="DialogUrlBox" TargetType="v:UrlBox" BasedOn="{StaticResource DialogElement}" />
 
     <Style x:Key="DialogInnerTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}">
         <Setter Property="Margin" Value="0,3,8,4"/>

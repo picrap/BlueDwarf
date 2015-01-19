@@ -1,13 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using BlueDwarf.Annotations;
-using BlueDwarf.Net.Http;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Proxy.Client.Diagnostic
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Sockets;
+    using Annotations;
+    using Http;
+
     /// <summary>
     /// Proxy analyzer implementation
     /// </summary>

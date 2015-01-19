@@ -1,10 +1,13 @@
-﻿using System;
-using System.Linq;
-using BlueDwarf.Utility;
-using Microsoft.Win32;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Serialization
 {
+    using System;
+    using System.Linq;
+    using Microsoft.Win32;
+    using Utility;
+
     /// <summary>
     /// Serializes data from and to registry
     /// </summary>

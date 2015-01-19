@@ -1,7 +1,10 @@
-﻿using System;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Utility
 {
+    using System;
+
     /// <summary>
     /// Type converter, with more conversion than System.Convert
     /// </summary>

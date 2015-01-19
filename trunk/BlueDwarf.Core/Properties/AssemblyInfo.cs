@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("BlueDwarf.Core")]

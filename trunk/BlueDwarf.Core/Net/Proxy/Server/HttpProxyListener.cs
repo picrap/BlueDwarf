@@ -1,10 +1,13 @@
-﻿using System;
-using System.Net;
-using BlueDwarf.Net.Proxy.Client;
-using Org.Mentalis.Proxy;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Proxy.Server
 {
+    using System;
+    using System.Net;
+    using Client;
+    using Org.Mentalis.Proxy;
+
     ///<summary>Listens on a specific port on the proxy server and forwards all incoming HTTP traffic to the appropriate server.</summary>
     public class HttpProxyListener : Listener
     {

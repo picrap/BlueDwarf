@@ -1,10 +1,13 @@
-﻿using System.Linq;
-using System.Net;
-using BlueDwarf.Annotations;
-using BlueDwarf.Net.Proxy.Client;
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
 
 namespace BlueDwarf.Net.Name
 {
+    using System.Linq;
+    using System.Net;
+    using Annotations;
+    using Proxy.Client;
+
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class DnsNameResolver : INameResolver
     {
