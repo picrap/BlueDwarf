@@ -7,7 +7,7 @@ namespace BlueDwarf.Configuration
 
     public class Persistence
     {
-        public static Persistence Current = new Persistence();
+        public static readonly Persistence Current = new Persistence();
 
         private const string Key = "BlueDwarf";
 

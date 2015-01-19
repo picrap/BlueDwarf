@@ -159,7 +159,6 @@
     <Compile Include="Navigation\Navigator.cs" />
     <Compile Include="Navigation\NavigatorExtensions.cs" />
     <Compile Include="Utility\CollectionExtensions.cs" />
-    <Compile Include="Utility\DispatcherExtensions.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\ShellLink\FileIcon.cs" />
     <Compile Include="Utility\ServiceProviderExtensions.cs" />

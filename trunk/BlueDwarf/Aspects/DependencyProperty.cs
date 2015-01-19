@@ -16,8 +16,8 @@ namespace BlueDwarf.Aspects
     [AttributeUsage(AttributeTargets.Property)]
     [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
     [Serializable]
-    [LocationInterceptionAspectConfiguration(AspectPriority = 10)]
-    public class DependencyProperty : LocationInterceptionAspect
+    [LocationInterceptionAspectConfiguration(AspectPriority = 100)]
+    public class DependencyProperty : Aspect, ILocationInterceptionAspect
     {
         /// <summary>
         /// Gets or sets the default value for the dependency property.
@@ -39,7 +39,7 @@ namespace BlueDwarf.Aspects
         /// Initializes the current aspect.
         /// </summary>
         /// <param name="locationInfo">Location to which the current aspect is applied.</param>
-        public override void RuntimeInitialize(LocationInfo locationInfo)
+        public void RuntimeInitialize(LocationInfo locationInfo)
         {
             locationInfo.PropertyInfo.CreateDependencyProperty(DefaultValue, Notification);
         }
@@ -49,7 +49,7 @@ namespace BlueDwarf.Aspects
         /// i.e. when the value of this field or property is retrieved.
         /// </summary>
         /// <param name="args">Advice arguments.</param>
-        public override void OnGetValue(LocationInterceptionArgs args)
+        public void OnGetValue(LocationInterceptionArgs args)
         {
             var dependencyProperty = args.Location.PropertyInfo.GetDependencyProperty();
             var dependencyObject = (DependencyObject)args.Instance;
@@ -62,7 +62,7 @@ namespace BlueDwarf.Aspects
         /// i.e. when the value of this field or property is changed.
         /// </summary>
         /// <param name="args">Advice arguments.</param>
-        public override void OnSetValue(LocationInterceptionArgs args)
+        public void OnSetValue(LocationInterceptionArgs args)
         {
             var dependencyProperty = args.Location.PropertyInfo.GetDependencyProperty();
             var dependencyObject = (DependencyObject)args.Instance;
