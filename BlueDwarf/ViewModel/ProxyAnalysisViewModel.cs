@@ -51,13 +51,13 @@ namespace BlueDwarf.ViewModel
 
         public override void Load()
         {
-            Async(LoadAsync);
+            ShowAsyncLoad(LoadDiagnostic);
         }
 
         /// <summary>
         /// Analyses proxy status, asynchronously.
         /// </summary>
-        private void LoadAsync()
+        private void LoadDiagnostic()
         {
             var d = ProxyAnalyzer.Diagnose();
             RequiresProxy = d.DefaultProxy != null;

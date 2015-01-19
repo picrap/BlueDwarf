@@ -21,14 +21,6 @@ namespace BlueDwarf.Aspects
     {
         public bool KillExisting { get; set; }
 
-        /// <summary>
-        /// Gets or sets the name of the thread (debug feature).
-        /// </summary>
-        /// <value>
-        /// The name of the thread.
-        /// </value>
-        public string ThreadName { get; set; }
-
         [NonSerialized]
         private Thread _thread;
 
@@ -45,7 +37,7 @@ namespace BlueDwarf.Aspects
         {
             if (KillExisting && _thread != null && _thread.IsAlive)
                 _thread.Abort();
-            _thread = new Thread(args.Proceed) { IsBackground = true, Name = ThreadName };
+            _thread = new Thread(args.Proceed) { IsBackground = true, Name = args.Method.Name };
             _thread.Start();
         }
     }

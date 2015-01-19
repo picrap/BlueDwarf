@@ -35,6 +35,9 @@ namespace BlueDwarf.ViewModel
             }
         }
 
+        /// <summary>
+        /// Called when document text changed.
+        /// </summary>
         private void OnDocumentTextChanged()
         {
             if (SaveTextPath != null)
