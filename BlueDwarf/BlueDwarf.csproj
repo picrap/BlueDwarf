@@ -127,12 +127,6 @@
       <DependentUpon>BlueDwarfApplication.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BlueDwarfInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="BlueDwarfInstaller.Designer.cs">
-      <DependentUpon>BlueDwarfInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="Aspects\DependencyProperty.cs" />
     <Compile Include="Aspects\DependencyProperties.cs">
       <SubType>Code</SubType>
