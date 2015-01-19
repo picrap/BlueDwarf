@@ -186,7 +186,7 @@ namespace BlueDwarf.ViewModel
             Persistence.Current.Write();
         }
 
-        [Async(KillExisting = true, ThreadName = "CheckProxyTunnel")]
+        [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
             try
