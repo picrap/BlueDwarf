@@ -1,7 +1,7 @@
-using System;
 
 namespace BlueDwarf.Aspects
 {
+    using System;
     using System.ComponentModel;
 
     /// <summary>

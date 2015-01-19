@@ -1,5 +1,4 @@
-﻿using BlueDwarf.Annotations;
-using BlueDwarf.Navigation;
+﻿using BlueDwarf.Navigation;
 using BlueDwarf.View;
 using BlueDwarf.ViewModel;
 using Microsoft.Practices.Unity;

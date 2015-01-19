@@ -2,14 +2,19 @@
 using System.Windows;
 using BlueDwarf.Aspects;
 using BlueDwarf.Utility;
+using DependencyProperty = BlueDwarf.Aspects.DependencyProperty;
 
 namespace BlueDwarf.Controls
 {
     public class Hider : FrameworkElement
     {
-        [Aspects.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public bool Show { get; set; }
 
+        /// <summary>
+        /// Called when Show property changed.
+        /// Raised automatically
+        /// </summary>
         public void OnShowChanged()
         {
             ShowHide();

@@ -50,6 +50,11 @@ namespace BlueDwarf.Utility
             return (T)Convert(o, typeof(T));
         }
 
+        /// <summary>
+        /// Creates the default instance for the given type.
+        /// </summary>
+        /// <param name="targetType">Type of the target.</param>
+        /// <returns></returns>
         public static object CreateDefault(Type targetType)
         {
             if (targetType.IsClass)
