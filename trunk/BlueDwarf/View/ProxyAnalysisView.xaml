@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewModel:ProxyAnalysisViewModel, IsDesignTimeCreatable=false}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+        d:DataContext="{d:DesignInstance Type=viewModel:ProxyAnalysisViewModel, IsDesignTimeCreatable=true}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 
     <Window.Resources>
         <Style x:Key="ValidResultTextBlock" TargetType="TextBlock">
@@ -23,39 +23,40 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="8">
             <TextBlock Visibility="{Binding DoesNotRequireProxy, Converter={StaticResource BoolToVisibilityConverter}}"
-                   Text="Your system does not require my services (which is good)"/>
+                   Text="{Binding Locale.DoesNotRequireProxy}"/>
             <StackPanel Orientation="Vertical" Visibility="{Binding RequiresProxy, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock>
                 <TextBlock>
-                    <Run Text="Your default proxy is "/>
+                    <Run Text="{Binding Locale.DefaultProxyPrefix, Mode=OneTime}"/>
+                    <Run Text=" "/>
                     <Run Text="{Binding DefaultProxy}" FontWeight="Bold"/>
-                    <Run Text=":"/>
+                    <Run Text="{Binding Locale.DefaultProxySuffix, Mode=OneTime}"/>
                 </TextBlock>
             </TextBlock>
-                <TextBlock Text="The proxy allows sensitive sites" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{Binding Locale.ProxyAllowsSensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="The proxy does not allow sensitive sites" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{Binding Locale.ProxyDoesNotAllowSensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
-                <TextBlock Text="DNS resolves locally" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{Binding Locale.DnsResolvesLocally}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="DNS does not resolve locally" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{Binding Locale.DnsDoesNotResolveLocally}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
-                <TextBlock Text="DNS resolves locally sensitive sites" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{Binding Locale.DnsResolvesLocallySensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="DNS does not resolve locally sensitive sites" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{Binding Locale.DnsDoesNotResolveLocallySensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
-                <TextBlock Text="The proxy allows connection to sensitive sites using IP" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{Binding Locale.ProxyConnectsToSensitiveIPs}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="The proxy does no allow connection to sensitive sites using IP" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{Binding Locale.ProxyDoesNotConnectToSensitiveIPs}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
 
-                <TextBlock Text="The application can work only with the local proxy" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Text="The application can work with the local and a remote proxy (not provider)" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Text="Sorry, you'll have to figure out your own solution :'(" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Locale.WorkWithLocalProxy}" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Locale.WorkWithTwoProxy}" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Locale.WorkWithSomethingElse}" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                <Button Style="{DynamicResource DialogButton}" Content="Let's got with this" Command="{controls:Command {Binding Apply}}"/>
-                <Button Style="{DynamicResource DialogButton}" Content="I'll configure it myself, but thanks for the advice" Command="{controls:Command {Binding Cancel}}"/>
+                <Button Style="{DynamicResource DialogButton}" Content="{Binding Locale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
+                <Button Style="{DynamicResource DialogButton}" Content="{Binding Locale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
             </StackPanel>
         </StackPanel>
         <controls:Loading Show="{Binding Loading}" />

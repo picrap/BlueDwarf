@@ -10,7 +10,7 @@
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=false}" WindowStyle="ToolWindow"
+        d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
         Visibility="Hidden">
     <Grid Margin="8" Width="450">
         <Grid.ColumnDefinitions>
@@ -21,22 +21,23 @@
         <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{controls:Command {Binding Restore}}">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Configure" Command="{controls:Command {Binding Restore}}" FontWeight="Bold" />
-                    <MenuItem Header="Exit" Command="{controls:Command {Binding Exit}}" />
+                    <MenuItem Header="{Binding Locale.MenuConfigure}" Command="{controls:Command {Binding Restore}}" FontWeight="Bold" />
+                    <MenuItem Header="{Binding Locale.MenuExit}" Command="{controls:Command {Binding Exit}}" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
         <controls:CloseButton Command="{controls:Command {Binding Minimize}}" />
         <controls:Hider Show="{Binding Show, Mode=OneWay}" />
-        <Image Grid.Column="0" Grid.Row="0" Source="/Resources/passe100.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" RenderOptions.BitmapScalingMode="Fant"/>
+        <Image Grid.Column="0" Grid.Row="0" Source="/Resources/passe100.png" Height="100" VerticalAlignment="Top" Margin="0,0,8,0" 
+               RenderOptions.BitmapScalingMode="Fant"/>
         <StackPanel Grid.Column="1" Orientation="Vertical" >
             <Grid>
                 <Expander IsExpanded="true">
                     <Expander.Header>
-                        <TextBlock Text="Proxy tunnel configuration" Style="{DynamicResource SectionTitleTextBlock}"/>
+                        <TextBlock Text="{Binding Locale.ProxyTunnelConfigurationTitle}" Style="{DynamicResource SectionTitleTextBlock}"/>
                     </Expander.Header>
                     <StackPanel Orientation="Vertical" Margin="24,0,0,0">
-                        <TextBlock Style="{DynamicResource LegendTextBlock}" Text="This is where you go out"/>
+                        <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyTunnelConfigurationLegend}"/>
                         <Grid Margin="0,4,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -51,7 +52,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="Local proxy:" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.LocalProxyLabel}" />
                             <Grid Grid.Column="1" Grid.Row="0" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -61,22 +62,23 @@
                                 <controls:Status Grid.Column="1" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                             </Grid>
 
-                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" Text="Remote proxy:" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.RemoteProxyLabel}" />
                             <Grid Grid.Column="1" Grid.Row="1" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                </Grid.ColumnDefinitions>
                                 <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
                                 <controls:Status Grid.Column="1" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                             </Grid>
 
                             <TextBlock  Grid.Column="1" Grid.Row="2" Style="{DynamicResource LegendTextBlock}">
-                                <Run Text="Find happiness at "/>
+                                <Run Text="{Binding Locale.RemoteProxySite, Mode=OneTime}"/>
+                                <Run Text=" "/>
                                 <Hyperlink NavigateUri="http://www.proxynova.com/proxy-server-list" RequestNavigate="OnHyperlinkRequestNavigate">http://www.proxynova.com/proxy-server-list</Hyperlink>
                             </TextBlock>
 
-                            <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" Text="Test URL:" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.TestURL}" />
                             <Grid Grid.Column="1" Grid.Row="3" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -86,18 +88,19 @@
                                          Text="{Binding TestTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <controls:Status Grid.Column="1" Code="{Binding TestTargetStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                             </Grid>
-                            
+
                         </Grid>
                     </StackPanel>
                 </Expander>
-                <Button Content="Summon the wizard!" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{controls:Command {Binding AnalyzeProxy}}" />
+                <Button Content="{Binding Locale.WizardInvoke}" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Command="{controls:Command {Binding AnalyzeProxy}}" />
             </Grid>
             <Expander IsExpanded="false">
                 <Expander.Header>
-                    <TextBlock Text="Proxy server configuration" Style="{DynamicResource SectionTitleTextBlock}"/>
+                    <TextBlock Text="{Binding Locale.ProxyTunnelConfigurationTitle}" Style="{DynamicResource SectionTitleTextBlock}"/>
                 </Expander.Header>
                 <StackPanel Orientation="Vertical" Margin="24,0,0,0">
-                    <TextBlock Style="{DynamicResource LegendTextBlock}" Text="This is where you configure the local proxy for your browser and other applications" TextWrapping="Wrap" />
+                    <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyTunnelConfigurationLegend}" TextWrapping="Wrap" />
                     <Grid Margin="0,4,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -113,7 +116,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
-                       Text="SOCKS 4 proxy server port:" />
+                       Text="{Binding Locale.Socks4ServerPort}" />
                         <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}" IsEnabled="{Binding CanSetSocksListeningPort}"
                                  Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
@@ -121,7 +124,7 @@
             </Expander>
             <Expander IsExpanded="false">
                 <Expander.Header>
-                    <TextBlock Text="Local proxy keepalive" Style="{DynamicResource SectionTitleTextBlock}"/>
+                    <TextBlock Text="{Binding Locale.LocalProxyKeepaliveTitle}" Style="{DynamicResource SectionTitleTextBlock}"/>
                 </Expander.Header>
                 <Grid Margin="24,4,0,0">
                     <Grid.ColumnDefinitions>
@@ -139,25 +142,25 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Keepalive URL 1:" />
+                       Text="{Binding Locale.LocalProxyKeepaliveURL1Label}" />
                     <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical">
                         <controls:UrlBox Style="{DynamicResource DialogUrlBox}" Uri="{Binding KeepAlive1, Mode=TwoWay}" AllowedSchemes="http;https"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="Refresh interval:" />
+                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.LocalProxyKeepaliveRefreshIntervalLabel}" />
                             <TextBox Style="{DynamicResource DialogInnerTextBox}" 
                                      Text="{Binding KeepAlive1Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" />
-                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="s" />
+                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.s}" />
                         </StackPanel>
                     </StackPanel>
                     <TextBlock Grid.Column="0" Grid.Row="4" Style="{DynamicResource DialogTextBlock}" 
-                       Text="Keepalive URL 2:" />
+                       Text="{Binding Locale.LocalProxyKeepaliveURL2Label}" />
                     <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
                         <controls:UrlBox Style="{DynamicResource DialogUrlBox}" Uri="{Binding KeepAlive2, Mode=TwoWay}" AllowedSchemes="http;https" />
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="Refresh interval:" />
+                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.LocalProxyKeepaliveRefreshIntervalLabel}" />
                             <TextBox Style="{DynamicResource DialogInnerTextBox}" 
                                      Text="{Binding KeepAlive2Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" />
-                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="s" />
+                            <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.s}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -166,20 +169,23 @@
             <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive2FullUri, Mode=OneWay}" Silent="True" />
             <Expander IsExpanded="false">
                 <Expander.Header>
-                    <TextBlock Text="Statistics" Style="{DynamicResource SectionTitleTextBlock}"/>
+                    <TextBlock Text="{Binding Locale.StatisticsTitle}" Style="{DynamicResource SectionTitleTextBlock}"/>
                 </Expander.Header>
                 <StackPanel Orientation="Vertical" Margin="24,0,0,0">
                     <TextBlock>
-                        <Run Text="Connections so far: "/>
+                        <Run Text="{Binding Locale.StatisticsConnections, Mode=OneTime}"/>
+                        <Run Text=" "/>
                         <Run FontWeight="Bold" Text="{Binding ConnectionsCount}"/>
                     </TextBlock>
                     <TextBlock>
-                        <Run Text="Bytes read: "/>
-                        <Run FontWeight="Bold" Text="{Binding BytesRead}"/>
+                        <Run Text="{Binding Locale.StatisticsBytesRead, Mode=OneTime}"/>
+                        <Run Text=" "/>
+                        <Run FontWeight="Bold" Text="{Binding BytesRead, Converter={StaticResource UnitConverter}, ConverterParameter='B'}"/>
                     </TextBlock>
                     <TextBlock>
-                        <Run Text="Bytes written: "/>
-                        <Run FontWeight="Bold" Text="{Binding BytesWritten}"/>
+                        <Run Text="{Binding Locale.StatisticsBytesWritten, Mode=OneTime}"/>
+                        <Run Text=" "/>
+                        <Run FontWeight="Bold" Text="{Binding BytesWritten, Converter={StaticResource UnitConverter}, ConverterParameter='B'}"/>
                     </TextBlock>
                 </StackPanel>
             </Expander>

@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewModel:WebDownloaderViewModel, IsDesignTimeCreatable=false}" WindowStyle="None"
+        d:DataContext="{d:DesignInstance Type=viewModel:WebDownloaderViewModel, IsDesignTimeCreatable=true}" WindowStyle="None"
         Visibility="Hidden" Opacity="0" ShowInTaskbar="False" ShowActivated="False"
         Title="WebBrowserView" Height="1" Width="1">
     <controls:ExtendedWebBrowser Silent="True" Uri="{Binding DownloadUri}" Text="{Binding DocumentText, Mode=TwoWay}" />
