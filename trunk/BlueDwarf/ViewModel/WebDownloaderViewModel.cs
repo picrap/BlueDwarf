@@ -4,6 +4,7 @@
 namespace BlueDwarf.ViewModel
 {
     using System.IO;
+    using Annotations;
     using Aspects;
     using Microsoft.Practices.Unity;
     using Navigation;
@@ -12,6 +13,7 @@ namespace BlueDwarf.ViewModel
     /// Simple file download using IE ActiveX control
     /// We're not supposed to know this here, so that's going to be our little secret...
     /// </summary>
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class WebDownloaderViewModel : ViewModel
     {
         [Dependency]
