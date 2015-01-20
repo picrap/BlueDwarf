@@ -18,5 +18,8 @@ namespace BlueDwarf
 
         [Option('t', "save-text", Required = false, HelpText = "Saves the file as text.")]
         public string SaveTextPath { get; set; }
+
+        [Option("proxy", Required = false, HelpText = "Sets proxy (for downloading URIs).")]
+        public string Proxy { get; set; }
     }
 }
