@@ -9,7 +9,9 @@ namespace BlueDwarf
     using Configuration;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Net.Proxy;
     using Net.Proxy.Server;
+    using Utility;
     using ViewModel;
 
     /// <summary>
@@ -25,6 +27,9 @@ namespace BlueDwarf
 
         [Dependency]
         public INavigator Navigator { get; set; }
+
+        [Dependency]
+        public IProxyConfiguration ProxyConfiguration { get; set; }
 
         /// <summary>
         /// Application startup code.
@@ -45,7 +50,7 @@ namespace BlueDwarf
 
             // Special request for download
             if (applicationOptions.DownloadUri != null)
-                DownloadFile(Navigator, applicationOptions.DownloadUri, applicationOptions.SaveTextPath);
+                DownloadFile(Navigator, applicationOptions.DownloadUri, applicationOptions.SaveTextPath, applicationOptions.Proxy.ToSafeUri());
             else // Main behavior: configuration window
                 StartMain(applicationOptions);
         }
@@ -65,8 +70,10 @@ namespace BlueDwarf
             container.BuildUp(this);
         }
 
-        private static void DownloadFile(INavigator navigator, string downloadUri, string saveTextPath)
+        private void DownloadFile(INavigator navigator, string downloadUri, string saveTextPath, Uri proxy)
         {
+            if (proxy != null)
+                ProxyConfiguration.SetApplicationProxy(proxy);
             navigator.Show(
                 delegate(WebDownloaderViewModel vm)
                 {

@@ -87,6 +87,8 @@
     <Compile Include="Net\Proxy\Client\Diagnostic\ProxyDiagnostic.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\RouteStatus.cs" />
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
+    <Compile Include="Net\Proxy\IProxyConfiguration.cs" />
+    <Compile Include="Net\Proxy\ProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerTransferEventArgs.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRouteException.cs" />
