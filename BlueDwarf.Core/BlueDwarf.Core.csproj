@@ -57,16 +57,22 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aspects\AspectPriority.cs" />
     <Compile Include="Aspects\PropertyImporter.cs" />
     <Compile Include="Configuration\IPersistence.cs" />
+    <Compile Include="Configuration\IStartupConfiguration.cs" />
+    <Compile Include="Configuration\MenuStartupConfiguration.cs" />
     <Compile Include="Configuration\RegistryPersistence.cs" />
     <Compile Include="Configuration\PersistenceExtensions.cs" />
     <Compile Include="Configuration\Persistent.cs" />
+    <Compile Include="Configuration\ShellLink\FileIcon.cs" />
+    <Compile Include="Configuration\ShellLink\ShellLink.cs" />
     <Compile Include="CoreConfiguration.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
     <Compile Include="Net\Connect.cs" />

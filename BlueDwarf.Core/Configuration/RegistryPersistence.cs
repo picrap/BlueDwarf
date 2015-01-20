@@ -11,7 +11,7 @@ namespace BlueDwarf.Configuration
     /// Implementation with registry of IPersistence
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public class RegistryPersistence : IPersistence
+    internal class RegistryPersistence : IPersistence
     {
         private const string Key = "BlueDwarf";
 

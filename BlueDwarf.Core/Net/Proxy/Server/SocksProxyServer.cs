@@ -16,7 +16,7 @@ namespace BlueDwarf.Net.Proxy.Server
     /// Was from far the easiest to implement
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public class SocksProxyServer : IProxyServer
+    internal class SocksProxyServer : IProxyServer
     {
         private SocksListener _server;
 

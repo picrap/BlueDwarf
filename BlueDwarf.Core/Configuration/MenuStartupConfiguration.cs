@@ -1,24 +1,23 @@
 ﻿// This is the blue dwarf
 // more information at https://code.google.com/p/blue-dwarf/
 
-namespace BlueDwarf.Utility
+namespace BlueDwarf.Configuration
 {
     using System;
     using System.IO;
     using System.Reflection;
+    using Annotations;
     using vbAccelerator.Components.Shell;
 
-    /// <summary>
-    /// Utility for startup menu
-    /// </summary>
-    public static class StartupUtility
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    internal class MenuStartupConfiguration : IStartupConfiguration
     {
         /// <summary>
         /// Registers the specified assembly to be launched at startup.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
         /// <param name="commandLine">The command line.</param>
-        public static void Register(Assembly assembly, string commandLine = null)
+        public void Register(Assembly assembly, string commandLine = null)
         {
             using (var shortcut = new ShellLink())
             {
@@ -38,7 +37,7 @@ namespace BlueDwarf.Utility
         /// Unregisters the specified assembly from being launched at startup.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
-        public static void Unregister(Assembly assembly)
+        public void Unregister(Assembly assembly)
         {
             File.Delete(GetShortcutPath(assembly));
         }
