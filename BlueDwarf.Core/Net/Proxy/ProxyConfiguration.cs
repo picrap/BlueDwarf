@@ -2,7 +2,9 @@
 {
     using System;
     using System.Runtime.InteropServices;
+    using Annotations;
 
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class ProxyConfiguration : IDisposable, IProxyConfiguration
     {
         const int INTERNET_OPEN_TYPE_PRECONFIG = 0;	// use registry configuration

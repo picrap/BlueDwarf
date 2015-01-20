@@ -9,7 +9,7 @@ namespace BlueDwarf.Net.Proxy.Server
     /// <summary>
     /// Proxy server interface
     /// </summary>
-    public interface IProxyServer
+    public interface IProxyServer: IDisposable
     {
         /// <summary>
         /// Occurs when a client connects.
@@ -23,23 +23,20 @@ namespace BlueDwarf.Net.Proxy.Server
 
         /// <summary>
         /// Gets or sets the listening port.
+        /// 0 to auto-select
+        /// null to stop
         /// </summary>
         /// <value>
         /// The port.
         /// </value>
-        int Port { get; set; }
+        int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets the proxy route.
+        /// Gets or sets the proxy outgoing route.
         /// </summary>
         /// <value>
         /// The proxy route.
         /// </value>
         ProxyRoute ProxyRoute { get; set; }
-
-        /// <summary>
-        /// Starts listening and serving.
-        /// </summary>
-        void Start();
     }
 }

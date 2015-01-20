@@ -38,7 +38,7 @@ namespace BlueDwarf.Net.Proxy.Client
                     return null;
 
                 var proxyRoute = new ProxyRoute(TunnelConnect, proxyServers);
-                var stream = TunnelConnect(targetHost, targetPort, proxyRoute, false);
+                var stream = TunnelConnect(targetHost, targetPort, proxyRoute, true);
 
                 if (stream == null)
                     return null;

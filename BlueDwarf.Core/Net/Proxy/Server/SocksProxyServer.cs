@@ -4,9 +4,9 @@
 namespace BlueDwarf.Net.Proxy.Server
 {
     using System;
+    using System.Net.Sockets;
     using Annotations;
     using Client;
-    using Microsoft.Practices.Unity;
     using Name;
     using Org.Mentalis.Proxy.Socks;
     using Utility;
@@ -15,13 +15,11 @@ namespace BlueDwarf.Net.Proxy.Server
     /// Socks proxy server
     /// Was from far the easiest to implement
     /// </summary>
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class SocksProxyServer : IProxyServer
     {
         private SocksListener _server;
 
-        [Dependency]
-        public INameResolver NameResolver { get; set; }
+        private readonly INameResolver _nameResolver;
 
         /// <summary>
         /// Occurs when a client connects.
@@ -32,8 +30,8 @@ namespace BlueDwarf.Net.Proxy.Server
         /// </summary>
         public event EventHandler<ProxyServerTransferEventArgs> Transfer;
 
-        private int _port = 0;
-        public int Port
+        private int? _port;
+        public int? Port
         {
             get { return _port; }
             set
@@ -47,6 +45,20 @@ namespace BlueDwarf.Net.Proxy.Server
         }
 
         private ProxyRoute _proxyRoute;
+
+        public SocksProxyServer(INameResolver nameResolver)
+        {
+            _nameResolver = nameResolver;
+        }
+
+        /// <summary>
+        /// Disposes the instance.
+        /// </summary>
+        public void Dispose()
+        {
+            // By setting the port to null, we release the current server (if it exists) and do not start another one
+            Port = null;
+        }
 
         /// <summary>
         /// Gets or sets the proxy route.
@@ -65,11 +77,6 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
 
-        public void Start()
-        {
-            ConfigureServer();
-        }
-
         private void ConfigureServer()
         {
             if (_server != null)
@@ -77,14 +84,38 @@ namespace BlueDwarf.Net.Proxy.Server
                 _server.Dispose();
                 _server = null;
             }
-            if (Port > 0)
+            if (Port.HasValue)
             {
-                _server = new SocksListener(Port) { NameResolver = NameResolver, ProxyRoute = _proxyRoute };
-                _server.ClientConnected += OnClientConnected;
-                _server.ClientReceived += OnClientReceived;
-                _server.RemoteReceived += OnRemoteReceived;
-                _server.Start();
+                if (Port.Value > 0)
+                {
+                    _server = CreateListener(Port.Value);
+                }
+                else
+                {
+                    for (; ; )
+                    {
+                        try
+                        {
+                            _server = CreateListener(0);
+                            _port = _server.Port;
+                            break;
+                        }
+                        catch (SocketException)
+                        {
+                        }
+                    }
+                }
             }
+        }
+
+        private SocksListener CreateListener(int port)
+        {
+            var server = new SocksListener(port) { NameResolver = _nameResolver, ProxyRoute = _proxyRoute };
+            server.ClientConnected += OnClientConnected;
+            server.ClientReceived += OnClientReceived;
+            server.RemoteReceived += OnRemoteReceived;
+            server.Start();
+            return server;
         }
 
         private void OnClientConnected(object sender, EventArgs e)

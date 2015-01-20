@@ -11,6 +11,7 @@ namespace BlueDwarf.ViewModel
     using Controls;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Net;
     using Net.Proxy.Client;
     using Net.Proxy.Server;
     using Properties;
@@ -28,15 +29,17 @@ namespace BlueDwarf.ViewModel
         public IProxyClient ProxyClient { get; set; }
 
         [Dependency]
-        public IProxyServer ProxyServer { get; set; }
-
-        [Dependency]
         public INavigator Navigator { get; set; }
 
         [Dependency]
         public IPersistence Persistence { get; set; }
 
+        [Dependency]
+        public IDownloader Downloader { get; set; }
+
         public ConfigurationLocale Locale { get; set; }
+
+        public IProxyServer ProxyServer { get; set; }
 
         public enum Category
         {
@@ -257,6 +260,9 @@ namespace BlueDwarf.ViewModel
         [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
+            // this is for test
+            //var p = DownloadText(new Uri("http://www.proxynova.com/proxy-server-list/country-de/"), LocalProxy);
+
             try
             {
                 SetStatusPending();
@@ -270,6 +276,20 @@ namespace BlueDwarf.ViewModel
                 ProxyServer.ProxyRoute = null;
                 SetStatus(pre);
             }
+        }
+
+        private string DownloadText(Uri uri, params  Uri[] proxyServers)
+        {
+            try
+            {
+                var proxyRoute = ProxyClient.CreateRoute(uri.Host, uri.Port, proxyServers);
+                return Downloader.DownloadText(uri, proxyRoute);
+            }
+            catch (ProxyRouteException pre)
+            {
+                ProxyServer.ProxyRoute = null;
+            }
+            return null;
         }
 
         private readonly object _keepAliveSerialLock = new object();
