@@ -76,8 +76,10 @@
     <Compile Include="CoreConfiguration.cs" />
     <Compile Include="IO\StreamExtensions.cs" />
     <Compile Include="Net\Connect.cs" />
+    <Compile Include="Net\Downloader.cs" />
     <Compile Include="Net\Http\HttpRequest.cs" />
     <Compile Include="Net\Http\HttpResponse.cs" />
+    <Compile Include="Net\IDownloader.cs" />
     <Compile Include="Net\Name\DnsNameResolver.cs" />
     <Compile Include="Net\Name\INameResolver.cs" />
     <Compile Include="Net\Name\StatDnsNameResolver.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
     <Compile Include="Net\Proxy\IProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\ProxyConfiguration.cs" />
+    <Compile Include="Net\Proxy\Server\IProxyServerFactory.cs" />
+    <Compile Include="Net\Proxy\Server\ProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerTransferEventArgs.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRouteException.cs" />

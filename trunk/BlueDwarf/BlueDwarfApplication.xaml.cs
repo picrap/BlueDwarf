@@ -9,7 +9,9 @@ namespace BlueDwarf
     using Configuration;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Net;
     using Net.Proxy;
+    using Net.Proxy.Client;
     using Net.Proxy.Server;
     using Utility;
     using ViewModel;
@@ -20,9 +22,6 @@ namespace BlueDwarf
     public partial class BlueDwarfApplication
     {
         [Dependency]
-        public IUnityContainer Container { get; set; }
-
-        [Dependency]
         public IStartupConfiguration StartupConfiguration { get; set; }
 
         [Dependency]
@@ -30,6 +29,12 @@ namespace BlueDwarf
 
         [Dependency]
         public IProxyConfiguration ProxyConfiguration { get; set; }
+
+        [Dependency]
+        public IProxyServerFactory ProxyServerFactory { get; set; }
+
+        [Dependency]
+        public IDownloader Downloader { get; set; }
 
         /// <summary>
         /// Application startup code.
@@ -58,8 +63,8 @@ namespace BlueDwarf
         private void StartMain(ApplicationOptions applicationOptions)
         {
             StartupConfiguration.Register(GetType().Assembly, "-m");
-            Container.Resolve<IProxyServer>().Start();
-            ShowConfiguration(Navigator, applicationOptions.ProxyPort, applicationOptions.Minimized);
+            var proxyServer = ProxyServerFactory.CreateSocksProxyServer();
+            ShowConfiguration(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized);
         }
 
         private void ConfigureContainer()
@@ -82,11 +87,12 @@ namespace BlueDwarf
                 });
         }
 
-        private static void ShowConfiguration(INavigator navigator, int socksListeningPort, bool minimized)
+        private static void ShowConfiguration(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized)
         {
             var viewModel = navigator.Show(
                 delegate(ConfigurationViewModel vm)
                 {
+                    vm.ProxyServer = proxyServer;
                     if (socksListeningPort > 0)
                     {
                         vm.CanSetSocksListeningPort = false;

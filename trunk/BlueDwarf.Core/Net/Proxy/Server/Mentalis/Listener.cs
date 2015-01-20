@@ -52,13 +52,13 @@ public abstract class Listener : IDisposable{
 	///<value>An integer defining the port number to listen on.</value>
 	///<seealso cref ="Address"/>
 	///<exception cref="ArgumentException">The specified value is less than or equal to zero.</exception>
-	protected int Port {
+	public int Port {
 		get {
 			return m_Port;
 		}
-		set {
-			if (value <= 0) 
-				throw new ArgumentException();
+		protected set {
+            //if (value <= 0) 
+            //    throw new ArgumentException();
 			m_Port = value;
 			Restart();
 		}
@@ -86,8 +86,8 @@ public abstract class Listener : IDisposable{
 			return m_ListenSocket;
 		}
 		set {
-			if (value == null)
-				throw new ArgumentNullException();
+            //if (value == null)
+            //    throw new ArgumentNullException();
 			m_ListenSocket = value;
 		}
 	}
@@ -113,6 +113,8 @@ public abstract class Listener : IDisposable{
 			ListenSocket.Bind(new IPEndPoint(Address, Port));
 			ListenSocket.Listen(50);
 			ListenSocket.BeginAccept(new AsyncCallback(this.OnAccept), ListenSocket);
+		    if (Port == 0)
+		        Port = ((IPEndPoint) ListenSocket.LocalEndPoint).Port;
 		} catch {
 			ListenSocket = null;
 			throw new SocketException();
