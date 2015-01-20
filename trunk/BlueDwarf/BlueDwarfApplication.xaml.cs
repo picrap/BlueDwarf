@@ -6,10 +6,10 @@ namespace BlueDwarf
     using System;
     using System.Windows;
     using CommandLine;
+    using Configuration;
     using Microsoft.Practices.Unity;
     using Navigation;
     using Net.Proxy.Server;
-    using Utility;
     using ViewModel;
 
     /// <summary>
@@ -17,20 +17,14 @@ namespace BlueDwarf
     /// </summary>
     public partial class BlueDwarfApplication
     {
-        private class Options
-        {
-            [Option('p', "proxy-port", Required = false, HelpText = "Sockets proxy server port.")]
-            public int ProxyPort { get; set; }
+        [Dependency]
+        public IUnityContainer Container { get; set; }
 
-            [Option('m', "minimized", Required = false, HelpText = "Starts minimized.")]
-            public bool Minimized { get; set; }
+        [Dependency]
+        public IStartupConfiguration StartupConfiguration { get; set; }
 
-            [Option('d', "download", Required = false, HelpText = "Downloads the URI.")]
-            public string DownloadUri { get; set; }
-
-            [Option('t', "save-text", Required = false, HelpText = "Saves the file as text.")]
-            public string SaveTextPath { get; set; }
-        }
+        [Dependency]
+        public INavigator Navigator { get; set; }
 
         /// <summary>
         /// Application startup code.
@@ -42,27 +36,33 @@ namespace BlueDwarf
         /// <param name="e">The <see cref="StartupEventArgs"/> instance containing the event data.</param>
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            // Unity container configuration
+            ConfigureContainer();
+            Navigator.Exiting += OnNavigatorExiting;
+
+            // Command-line options
+            var options = Parser.Default.ParseArguments<ApplicationOptions>(Environment.GetCommandLineArgs());
+            var applicationOptions = options.Value;
+
+            // Special request for download
+            if (applicationOptions.DownloadUri != null)
+                DownloadFile(Navigator, applicationOptions.DownloadUri, applicationOptions.SaveTextPath);
+            else // Main behavior: configuration window
+                StartMain(applicationOptions);
+        }
+
+        private void StartMain(ApplicationOptions applicationOptions)
+        {
+            StartupConfiguration.Register(GetType().Assembly, "-m");
+            Container.Resolve<IProxyServer>().Start();
+            ShowConfiguration(Navigator, applicationOptions.ProxyPort, applicationOptions.Minimized);
+        }
+
+        private void ConfigureContainer()
+        {
             var container = new UnityContainer();
             UIConfiguration.Configure(container);
             CoreConfiguration.Configure(container);
-
-            // Navigator
-            var navigator = container.Resolve<INavigator>();
-            navigator.Exiting += OnNavigatorExiting;
-
-            // Command-line options
-            var options = Parser.Default.ParseArguments<Options>(Environment.GetCommandLineArgs());
-
-            // Special request for download
-            if (options.Value.DownloadUri != null)
-                DownloadFile(navigator, options.Value.DownloadUri, options.Value.SaveTextPath);
-            else // Main behavior: configuration window
-            {
-                StartupUtility.Register(GetType().Assembly, "-m");
-                container.Resolve<IProxyServer>().Start();
-                ShowConfiguration(navigator, options.Value.ProxyPort, options.Value.Minimized);
-            }
+            container.BuildUp(this);
         }
 
         private static void DownloadFile(INavigator navigator, string downloadUri, string saveTextPath)
@@ -93,7 +93,7 @@ namespace BlueDwarf
 
         private void OnNavigatorExiting(object sender, EventArgs e)
         {
-            StartupUtility.Unregister(GetType().Assembly);
+            StartupConfiguration.Unregister(GetType().Assembly);
         }
     }
 }

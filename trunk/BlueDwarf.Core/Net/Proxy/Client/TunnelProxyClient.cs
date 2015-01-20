@@ -11,7 +11,7 @@ namespace BlueDwarf.Net.Proxy.Client
     using Server;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public partial class TunnelProxyClient : IProxyClient
+    internal partial class TunnelProxyClient : IProxyClient
     {
         [Dependency]
         public INameResolver NameResolver { get; set; }
