@@ -10,6 +10,12 @@ namespace BlueDwarf.Net
 
     public static class Connect
     {
+        /// <summary>
+        /// Simple socket connection to specified host+port.
+        /// </summary>
+        /// <param name="targetHost">The target host.</param>
+        /// <param name="targetPort">The target port.</param>
+        /// <returns></returns>
         public static ProxyStream To(string targetHost, int targetPort)
         {
             for (int i = 0; i < 10; i++)

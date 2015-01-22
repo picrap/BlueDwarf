@@ -91,6 +91,8 @@
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
     <Compile Include="Net\Proxy\IProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\ProxyConfiguration.cs" />
+    <Compile Include="Net\Proxy\Scanner\HostPort.cs" />
+    <Compile Include="Net\Proxy\Scanner\HostScanner.cs" />
     <Compile Include="Net\Proxy\Server\IProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerTransferEventArgs.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Serialization\ObjectReader.cs" />
     <Compile Include="Serialization\RegistrySerializer.cs" />
     <Compile Include="Utility\CustomAttributeProviderExtensions.cs" />
+    <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\EventHandlerExtensions.cs" />
     <Compile Include="Utility\MethodBaseExtensions.cs" />
     <Compile Include="Utility\ObjectExtensions.cs" />
@@ -135,6 +138,7 @@
     <None Include="Properties\BlueDwarf.snk" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
