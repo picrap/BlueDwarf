@@ -11,7 +11,6 @@ namespace BlueDwarf
     using Navigation;
     using Net;
     using Net.Proxy;
-    using Net.Proxy.Client;
     using Net.Proxy.Server;
     using Utility;
     using ViewModel;
@@ -32,9 +31,6 @@ namespace BlueDwarf
 
         [Dependency]
         public IProxyServerFactory ProxyServerFactory { get; set; }
-
-        [Dependency]
-        public IDownloader Downloader { get; set; }
 
         /// <summary>
         /// Application startup code.
