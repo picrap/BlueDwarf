@@ -47,8 +47,7 @@ namespace BlueDwarf.Controls
                 if (_activeXControl == null)
                 {
                     // this is a brilliant way to access the WebBrowserObject prior to displaying the actual document (eg. Document property)
-                    var webBrowserField = typeof(WebBrowser).GetField("_axIWebBrowser2",
-                        BindingFlags.Instance | BindingFlags.NonPublic);
+                    var webBrowserField = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
                     if (webBrowserField == null)
                         return null;
                     _activeXControl = webBrowserField.GetValue(WebBrowser);

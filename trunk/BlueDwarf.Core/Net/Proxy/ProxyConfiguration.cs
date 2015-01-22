@@ -26,7 +26,10 @@
         private static extern IntPtr InternetOpen(string lpszAgent, int dwAccessType, string lpszProxyName, string lpszProxyBypass, int dwFlags);
 
         [DllImport("wininet")]
-        public static extern long InternetCloseHandle(IntPtr hInet);
+        private static extern long InternetCloseHandle(IntPtr hInet);
+
+        [DllImport("urlmon")]
+        private static extern int UrlMkSetSessionOption(int dwOption, IntPtr pBuffer, int dwBufferLength, int dwReserved);
 
         private IntPtr _internet;
         private IntPtr Internet
@@ -67,12 +70,13 @@
             Marshal.StructureToPtr(ipi, intptrStruct, true);
 
             bool iReturn = InternetSetOption(hInternet, INTERNET_OPTION_PROXY, intptrStruct, Marshal.SizeOf(ipi));
+            var v = UrlMkSetSessionOption(INTERNET_OPTION_PROXY, intptrStruct, Marshal.SizeOf(ipi), 0);
             var e = Marshal.GetLastWin32Error();
         }
 
         public void SetApplicationProxy(Uri proxy)
         {
-            SetProxy(proxy.ToString(), IntPtr.Zero);
+            SetProxy(string.Format("{0}={1}:{2}", proxy.Scheme, proxy.Host, proxy.Port), IntPtr.Zero);
         }
     }
 }

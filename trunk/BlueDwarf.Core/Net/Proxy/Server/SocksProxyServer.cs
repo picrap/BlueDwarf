@@ -5,7 +5,6 @@ namespace BlueDwarf.Net.Proxy.Server
 {
     using System;
     using System.Net.Sockets;
-    using Annotations;
     using Client;
     using Name;
     using Org.Mentalis.Proxy.Socks;
