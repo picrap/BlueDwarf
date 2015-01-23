@@ -93,6 +93,7 @@
     <Compile Include="Net\Proxy\ProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\Scanner\HostPort.cs" />
     <Compile Include="Net\Proxy\Scanner\HostScanner.cs" />
+    <Compile Include="Net\Proxy\Scanner\IHostScanner.cs" />
     <Compile Include="Net\Proxy\Server\IProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerTransferEventArgs.cs" />
