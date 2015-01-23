@@ -113,8 +113,8 @@ public abstract class Listener : IDisposable{
 			ListenSocket.Bind(new IPEndPoint(Address, Port));
 			ListenSocket.Listen(50);
 			ListenSocket.BeginAccept(new AsyncCallback(this.OnAccept), ListenSocket);
-		    if (Port == 0)
-		        Port = ((IPEndPoint) ListenSocket.LocalEndPoint).Port;
+		    if (m_Port == 0)
+		        m_Port = ((IPEndPoint) ListenSocket.LocalEndPoint).Port;
 		} catch {
 			ListenSocket = null;
 			throw new SocketException();

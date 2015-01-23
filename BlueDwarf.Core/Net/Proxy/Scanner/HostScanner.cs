@@ -1,12 +1,16 @@
-﻿
+﻿// This is the blue dwarf
+// more information at https://code.google.com/p/blue-dwarf/
+
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Text.RegularExpressions;
+    using Annotations;
     using Utility;
 
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class HostScanner : IHostScanner
     {
         // A literal decimal byte, from 0 to 255
