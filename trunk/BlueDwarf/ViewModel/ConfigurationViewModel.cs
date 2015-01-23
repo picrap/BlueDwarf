@@ -4,7 +4,9 @@
 namespace BlueDwarf.ViewModel
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Threading;
     using Annotations;
     using Configuration;
@@ -13,6 +15,7 @@ namespace BlueDwarf.ViewModel
     using Navigation;
     using Net;
     using Net.Proxy.Client;
+    using Net.Proxy.Scanner;
     using Net.Proxy.Server;
     using Properties;
     using Resources.Localization;
@@ -35,7 +38,7 @@ namespace BlueDwarf.ViewModel
         public IPersistence Persistence { get; set; }
 
         [Dependency]
-        public IDownloader Downloader { get; set; }
+        public IProxyScanner ProxyScanner { get; set; }
 
         public ConfigurationLocale Locale { get; set; }
 
@@ -261,7 +264,7 @@ namespace BlueDwarf.ViewModel
         private void CheckProxyTunnel()
         {
             // this is for test
-            //var p = DownloadText(new Uri("http://www.proxynova.com/proxy-server-list/country-de/"), LocalProxy);
+            //var p = ScanPage(TestTargetUri, new Uri("http://www.proxynova.com/proxy-server-list/"), LocalProxy);
 
             try
             {
@@ -278,12 +281,12 @@ namespace BlueDwarf.ViewModel
             }
         }
 
-        private string DownloadText(Uri uri, params  Uri[] proxyServers)
+        private IEnumerable<HostPort> ScanPage(Uri testUri, Uri proxyServersPageUri, params  Uri[] proxyServers)
         {
             try
             {
-                var proxyRoute = ProxyClient.CreateRoute(uri.Host, uri.Port, proxyServers);
-                return Downloader.DownloadText(uri, proxyRoute);
+                var proxyRoute = ProxyClient.CreateRoute(testUri.Host, testUri.Port, proxyServers);
+                return ProxyScanner.ScanPage(proxyServersPageUri, TestTargetUri.Host, TestTargetUri.Port, proxyRoute).ToArray();
             }
             catch (ProxyRouteException pre)
             {
