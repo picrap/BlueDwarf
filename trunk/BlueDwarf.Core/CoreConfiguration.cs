@@ -10,6 +10,7 @@ namespace BlueDwarf
     using Net.Proxy;
     using Net.Proxy.Client;
     using Net.Proxy.Client.Diagnostic;
+    using Net.Proxy.Scanner;
     using Net.Proxy.Server;
 
     public static class CoreConfiguration
@@ -29,6 +30,7 @@ namespace BlueDwarf
             container.RegisterType<IStartupConfiguration, MenuStartupConfiguration>(AsSingleton());
             container.RegisterType<IProxyConfiguration, ProxyConfiguration>(AsSingleton());
             container.RegisterType<IDownloader, Downloader>(AsSingleton());
+            container.RegisterType<IHostScanner, HostScanner>(AsSingleton());
         }
     }
 }
