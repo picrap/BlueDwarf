@@ -800,8 +800,68 @@ $(document).ready(function(){
 </html>";
         #endregion
 
+        #region private const string XroxyRSS = ...
+        private const string XroxyRSS = @"
+<item>
+<title>Transparent only (Jan 27, 09:33 GMT)</title>
+<link>http://www.xroxy.com/proxy-type-Transparent.htm</link>
+<guid>http://www.xroxy.com/proxy-type-Transparent.htm</guid>
+<description>Proxylists contain 847 recently checked proxies</description>
+<prx:proxy>
+<prx:ip>1.179.147.2</prx:ip>
+<prx:port>8080</prx:port>
+<prx:type>Transparent</prx:type>
+<prx:ssl>false</prx:ssl>
+<prx:check_timestamp>1422350188</prx:check_timestamp>
+<prx:country_code>TH</prx:country_code>
+<prx:latency>5242</prx:latency>
+<prx:reliability>5001</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>1.234.23.22</prx:ip>
+<prx:port>8088</prx:port>
+<prx:type>Transparent</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1422364267</prx:check_timestamp>
+<prx:country_code>KR</prx:country_code>
+<prx:latency>36872</prx:latency>
+<prx:reliability>4830</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>101.1.16.123</prx:ip>
+<prx:port>3128</prx:port>
+<prx:type>Transparent</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1422355147</prx:check_timestamp>
+<prx:country_code>HK</prx:country_code>
+<prx:latency>1355</prx:latency>
+<prx:reliability>9549</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>101.255.28.38</prx:ip>
+<prx:port>8080</prx:port>
+<prx:type>Transparent</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1422357729</prx:check_timestamp>
+<prx:country_code>ID</prx:country_code>
+<prx:latency>1284</prx:latency>
+<prx:reliability>7563</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>101.255.89.70</prx:ip>
+<prx:port>8080</prx:port>
+<prx:type>Transparent</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1422363206</prx:check_timestamp>
+<prx:country_code>ID</prx:country_code>
+<prx:latency>18734</prx:latency>
+<prx:reliability>2942</prx:reliability>
+</prx:proxy>
+";
+        #endregion
+
         [TestMethod]
-        public void ProxynovaCountryEsTest()
+        public void ProxynovaTest()
         {
             var hostPorts = HostScanner.CreateHostPorts(ProxynovaCountryES, ProxyPageProvider.ProxynovaEx).ToArray();
             Assert.AreEqual(6, hostPorts.Length);
@@ -811,6 +871,17 @@ $(document).ready(function(){
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("88.3.200.223"), 8080)));
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("46.24.18.4"), 8080)));
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("91.223.32.9"), 8080)));
+        }
+
+        [TestMethod]
+        public void XroxyTest()
+        {
+            var hostPorts = HostScanner.CreateHostPorts(XroxyRSS, ProxyPageProvider.XroxyRssEx).ToArray();
+            Assert.AreEqual(4, hostPorts.Length);
+            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("1.234.23.22"), 8088)));
+            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.1.16.123"), 3128)));
+            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.255.28.38"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.255.89.70"), 8080)));
         }
     }
 }
