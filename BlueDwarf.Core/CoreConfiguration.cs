@@ -15,11 +15,19 @@ namespace BlueDwarf
 
     public static class CoreConfiguration
     {
+        /// <summary>
+        /// Specifies instance as singleton (laziness follows).
+        /// </summary>
+        /// <returns></returns>
         private static LifetimeManager AsSingleton()
         {
             return new ContainerControlledLifetimeManager();
         }
 
+        /// <summary>
+        /// Configures the specified container for core.
+        /// </summary>
+        /// <param name="container">The container.</param>
         public static void Configure(IUnityContainer container)
         {
             container.RegisterType<IProxyClient, TunnelProxyClient>(AsSingleton());

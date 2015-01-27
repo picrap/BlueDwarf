@@ -54,6 +54,8 @@ namespace BlueDwarf.Net.Proxy.Scanner
             var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, proxyServers);
             if (proxyListingPageText != null)
             {
+                // All runs as parallel, since this is a massive network check with no CPU load at all
+                // TODO: parallelize more
                 HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().ForAll(
                        delegate(HostPort hp)
                        {

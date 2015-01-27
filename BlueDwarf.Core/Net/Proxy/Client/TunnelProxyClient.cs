@@ -103,6 +103,16 @@ namespace BlueDwarf.Net.Proxy.Client
             throw new ArgumentException(@"Unknown proxy type", server.ToString());
         }
 
+        /// <summary>
+        /// Connect to a given host using an already existing stream (coming from connection to other proxy servers).
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="targetHost">The target host.</param>
+        /// <param name="targetPort">The target port.</param>
+        /// <param name="routeUntilHere">The route until here.</param>
+        /// <param name="overrideDns">if set to <c>true</c> [override DNS].</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
         private ProxyStream TunnelConnect(Tuple<ProxyStream, ProxyType> stream, string targetHost, int targetPort, ProxyRoute routeUntilHere, bool overrideDns)
         {
             if (overrideDns)
@@ -125,6 +135,14 @@ namespace BlueDwarf.Net.Proxy.Client
             }
         }
 
+        /// <summary>
+        /// Direct connection to a given host.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="targetHost">The target host.</param>
+        /// <param name="targetPort">The target port.</param>
+        /// <param name="routeUntilHere">The route until here.</param>
+        /// <returns></returns>
         private ProxyStream DirectConnect(ProxyStream stream, string targetHost, int targetPort, ProxyRoute routeUntilHere)
         {
             var newStream = Connect.To(targetHost, targetPort);

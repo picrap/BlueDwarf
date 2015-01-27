@@ -7,6 +7,14 @@ namespace BlueDwarf.Net
 
     public static class DownloaderExtensions
     {
+        /// <summary>
+        /// Downloads text from specified URI, either as text or raw (html).
+        /// </summary>
+        /// <param name="downloader">The downloader.</param>
+        /// <param name="uri">The URI.</param>
+        /// <param name="keepTextOnly">if set to <c>true</c> [keep text only].</param>
+        /// <param name="proxyServers">The proxy servers.</param>
+        /// <returns></returns>
         public static string Download(this IDownloader downloader, Uri uri, bool keepTextOnly, params Uri[] proxyServers)
         {
             if (keepTextOnly)

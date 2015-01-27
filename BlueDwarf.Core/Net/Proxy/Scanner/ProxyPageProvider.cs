@@ -4,9 +4,10 @@
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
-    using Annotations;
 
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    /// <summary>
+    /// Describes a web page, somehwere, which provides proxy servers lists
+    /// </summary>
     public class ProxyPageProvider
     {
         public string Name { get; private set; }
@@ -14,6 +15,13 @@ namespace BlueDwarf.Net.Proxy.Scanner
         public bool ParseAsText { get; private set; }
         public string HostPortEx { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProxyPageProvider"/> class.
+        /// </summary>
+        /// <param name="pageUri">The page URI.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="parseAsText">if set to <c>true</c> [parse as text].</param>
+        /// <param name="hostPortEx">The host port ex.</param>
         public ProxyPageProvider(Uri pageUri, string name, bool parseAsText, string hostPortEx)
         {
             Name = name;
@@ -22,6 +30,12 @@ namespace BlueDwarf.Net.Proxy.Scanner
             HostPortEx = hostPortEx;
         }
 
+        /// <summary>
+        /// Creates a Regex string to match a tag and its content.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <param name="innerEx">The inner ex.</param>
+        /// <returns></returns>
         private static string TagEx(string tag, string innerEx)
         {
             return string.Format(@"\<{0}[^>]*\>\s*({1})\s*\<\/{0}\>", tag.Replace(":", @"\:"), innerEx);

@@ -74,6 +74,10 @@
             var e = Marshal.GetLastWin32Error();
         }
 
+        /// <summary>
+        /// Sets the application-wide proxy.
+        /// </summary>
+        /// <param name="proxy">The proxy.</param>
         public void SetApplicationProxy(Uri proxy)
         {
             SetProxy(string.Format("{0}={1}:{2}", proxy.Scheme, proxy.Host, proxy.Port), IntPtr.Zero);

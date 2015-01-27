@@ -4,12 +4,16 @@
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
-    using Client;
 
+
+    /// <summary>
+    /// Proxy validation
+    /// </summary>
     public interface IProxyValidator
     {
         /// <summary>
         /// Validates the specified proxy host port as a HTTP CONNECT proxy.
+        /// Given a route to get to the proxy and a test target to be reached after proxy
         /// </summary>
         /// <param name="proxyHostPort">The proxy host port.</param>
         /// <param name="testTargetHost"></param>

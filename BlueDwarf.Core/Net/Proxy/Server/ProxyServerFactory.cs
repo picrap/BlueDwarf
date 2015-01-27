@@ -13,6 +13,10 @@ namespace BlueDwarf.Net.Proxy.Server
         [Dependency]
         public INameResolver NameResolver { get; set; }
 
+        /// <summary>
+        /// Creates a socks proxy server.
+        /// </summary>
+        /// <returns></returns>
         public IProxyServer CreateSocksProxyServer()
         {
             return new SocksProxyServer(NameResolver);

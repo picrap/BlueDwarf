@@ -33,16 +33,28 @@ namespace BlueDwarf.Net.Proxy.Scanner
             return CreateHostPorts(pageText, hostPortEx ?? AnyEx);
         }
 
+        /// <summary>
+        /// Creates the HostPort instances, given a full text and an regex.
+        /// </summary>
+        /// <param name="pageText">The page text.</param>
+        /// <param name="hostPortEx">The host port ex.</param>
+        /// <returns></returns>
         internal static IEnumerable<HostPort> CreateHostPorts(string pageText, string hostPortEx)
         {
             var hostPortRegex = new Regex(hostPortEx, RegexOptions.Singleline);
             return hostPortRegex.Matches(pageText).Cast<Match>().SelectNonNull(CreateHostPort);
         }
 
+        /// <summary>
+        /// Creates a signel HostPort, or null if the match does not give all information.
+        /// </summary>
+        /// <param name="match">The match.</param>
+        /// <returns></returns>
         private static HostPort CreateHostPort(Match match)
         {
             var literalPort = match.Groups["port"].Value;
             int port;
+            // if port is not provided or invalid, no HostPort is created
             if (!int.TryParse(literalPort, out port))
                 return null;
             var host = match.Groups["host"].Value;
@@ -54,6 +66,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
             if (IPAddress.TryParse(literalAddress, out address))
                 return new HostPort(address, port);
 
+            // no host or address was captured
             return null;
         }
     }
