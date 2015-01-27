@@ -22,14 +22,21 @@ namespace BlueDwarf.Net.Proxy.Scanner
             HostPortEx = hostPortEx;
         }
 
-        internal const string ProxynovaEx = @"\<span[^>]*\>\s*" + HostPort.IPv4Ex + @"\s*\<\/span\>"
-                                            + ".*?"
-                                            + @"\<a[^>]*\>\s*" + HostPort.PortEx + @"\s*\<\/a\>";
+        private static string TagEx(string tag, string innerEx)
+        {
+            return string.Format(@"\<{0}[^>]*\>\s*({1})\s*\<\/{0}\>", tag.Replace(":", @"\:"), innerEx);
+        }
+
+        internal static readonly string ProxynovaEx = TagEx("span", HostPort.IPv4Ex) + ".*?" + TagEx("a", HostPort.PortEx);
+
+        internal static readonly string XroxyRssEx = TagEx("prx:ip", HostPort.IPv4Ex) + @"\s*" + TagEx("prx:port", HostPort.PortEx)
+                                                     + @"\s*" + TagEx("prx:type", "Transparent|Anonymous") + @"\s*" + TagEx("prx:ssl", "true");
 
         private const string ProxynovaPage = "Proxynova: ";
 
-        public static ProxyPageProvider[] Default = new[]
+        public static readonly ProxyPageProvider[] Default = 
         {
+            new ProxyPageProvider(new Uri("http://www.xroxy.com/proxyrss.xml"), "Xroxy (RSS)", false, XroxyRssEx),
             new ProxyPageProvider(new Uri("http://www.proxynova.com/proxy-server-list/"), "Proxynova (worldwide, recent checks)", false, ProxynovaEx),
             new ProxyPageProvider(new Uri("http://www.proxynova.com/proxy-server-list/country-ar/"), ProxynovaPage + "Argentina", false, ProxynovaEx),
             new ProxyPageProvider(new Uri("http://www.proxynova.com/proxy-server-list/country-br/"), ProxynovaPage + "Brazil", false, ProxynovaEx),
