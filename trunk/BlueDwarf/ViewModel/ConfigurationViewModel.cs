@@ -38,7 +38,7 @@ namespace BlueDwarf.ViewModel
         public IPersistence Persistence { get; set; }
 
         [Dependency]
-        public IProxyScanner ProxyScanner { get; set; }
+        public IProxyPageScanner ProxyPageScanner { get; set; }
 
         public ConfigurationLocale Locale { get; set; }
 
@@ -264,7 +264,7 @@ namespace BlueDwarf.ViewModel
         private void CheckProxyTunnel()
         {
             // this is for test
-            //var p = ScanPage(TestTargetUri, new Uri("http://www.proxynova.com/proxy-server-list/"), LocalProxy);
+            var p = ScanPage(TestTargetUri, ProxyPageProvider.Default[0], LocalProxy);
 
             try
             {
@@ -281,16 +281,15 @@ namespace BlueDwarf.ViewModel
             }
         }
 
-        private IEnumerable<HostPort> ScanPage(Uri testUri, Uri proxyServersPageUri, params  Uri[] proxyServers)
+        private IList<HostPort> ScanPage(Uri testUri, ProxyPageProvider proxyPageProvider, params  Uri[] proxyServers)
         {
             try
             {
-                var proxyRoute = ProxyClient.CreateRoute(testUri.Host, testUri.Port, proxyServers);
-                return ProxyScanner.ScanPage(proxyServersPageUri, TestTargetUri.Host, TestTargetUri.Port, proxyRoute).ToArray();
+                var p = ProxyPageScanner.ScanPage(proxyPageProvider, testUri.Host, testUri.Port, proxyServers).ToArray();
+                return p;
             }
-            catch (ProxyRouteException pre)
+            catch
             {
-                ProxyServer.ProxyRoute = null;
             }
             return null;
         }

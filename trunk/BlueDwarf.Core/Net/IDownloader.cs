@@ -14,8 +14,16 @@ namespace BlueDwarf.Net
         /// Downloads the page as text (removes all tags).
         /// </summary>
         /// <param name="uri">The URI.</param>
-        /// <param name="proxyRoute">The proxy route.</param>
+        /// <param name="proxyServers"></param>
         /// <returns></returns>
-        string DownloadText(Uri uri, ProxyRoute proxyRoute);
+        string DownloadText(Uri uri, params Uri[] proxyServers);
+
+        /// <summary>
+        /// Downloads the page as raw.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <param name="proxyServers">The proxy servers.</param>
+        /// <returns></returns>
+        string DownloadRaw(Uri uri, params Uri[] proxyServers);
     }
 }

@@ -70,7 +70,7 @@
             Marshal.StructureToPtr(ipi, intptrStruct, true);
 
             bool iReturn = InternetSetOption(hInternet, INTERNET_OPTION_PROXY, intptrStruct, Marshal.SizeOf(ipi));
-            var v = UrlMkSetSessionOption(INTERNET_OPTION_PROXY, intptrStruct, Marshal.SizeOf(ipi), 0);
+            //var v = UrlMkSetSessionOption(INTERNET_OPTION_PROXY, intptrStruct, Marshal.SizeOf(ipi), 0);
             var e = Marshal.GetLastWin32Error();
         }
 

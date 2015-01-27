@@ -16,5 +16,10 @@ namespace BlueDwarf.Utility
             var parts = userPassword.Split(new[] { ':' }, 2);
             return new NetworkCredential(parts[0], parts[1]);
         }
+
+        public static string GetHostAndPort(this Uri uri)
+        {
+            return string.Format("{0}:{1}", uri.Host, uri.Port);
+        }
     }
 }
