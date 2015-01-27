@@ -3,7 +3,6 @@
 namespace BlueDwarf.Net
 {
     using System;
-    using Proxy.Client;
 
     /// <summary>
     /// Interface to file download

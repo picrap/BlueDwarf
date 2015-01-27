@@ -28,6 +28,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
             var proxyUri = new Uri(string.Format("http://{0}:{1}", proxyHostPort.Host ?? proxyHostPort.Address.ToString(), proxyHostPort.Port));
             try
             {
+                // validation is simple: if route creation succeeds, then the proxy is valid
                 return ProxyClient.CreateRoute(testTargetHost, testTargetPort, routeToProxy.Concat(new[] { proxyUri }).ToArray()) != null;
             }
             catch (ProxyRouteException)

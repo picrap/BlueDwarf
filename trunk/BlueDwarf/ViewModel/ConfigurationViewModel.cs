@@ -216,12 +216,22 @@ namespace BlueDwarf.ViewModel
             KeepAlive(() => KeepAlive2, () => KeepAlive2Interval, u => KeepAlive2FullUri = u);
         }
 
+        /// <summary>
+        /// Called on connection to proxy server.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnProxyServerConnect(object sender, EventArgs e)
         {
             lock (_statisticsLock)
                 ConnectionsCount++;
         }
 
+        /// <summary>
+        /// Called on transfer from proxy server (read or write).
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="ProxyServerTransferEventArgs"/> instance containing the event data.</param>
         private void OnProxyServerTransfer(object sender, ProxyServerTransferEventArgs e)
         {
             lock (_statisticsLock)
@@ -231,6 +241,11 @@ namespace BlueDwarf.ViewModel
             }
         }
 
+        /// <summary>
+        /// Called when property changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var category = e.GetCategory<Category>();
@@ -260,11 +275,14 @@ namespace BlueDwarf.ViewModel
             Persistence.Write();
         }
 
+        /// <summary>
+        /// Checks the proxy tunnel, and updates the configuration if it works.
+        /// </summary>
         [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
             // this is for test
-            var p = ScanPage(TestTargetUri, ProxyPageProvider.Default[0], LocalProxy);
+            //var p = ScanPage(TestTargetUri, ProxyPageProvider.Default[0], LocalProxy);
 
             try
             {
@@ -297,6 +315,12 @@ namespace BlueDwarf.ViewModel
         private readonly object _keepAliveSerialLock = new object();
         private int _keepAliveSerial;
 
+        /// <summary>
+        /// Keeps the connection alive by refreshing the web browser at specified interval.
+        /// </summary>
+        /// <param name="getBaseUri">The get base URI.</param>
+        /// <param name="getInterval">The get interval.</param>
+        /// <param name="setFullUri">The set full URI.</param>
         [Async]
         private void KeepAlive(Func<Uri> getBaseUri, Func<int> getInterval, Action<Uri> setFullUri)
         {
@@ -320,6 +344,9 @@ namespace BlueDwarf.ViewModel
             }
         }
 
+        /// <summary>
+        /// Sets the status as pending (hides all statuses).
+        /// </summary>
         private void SetStatusPending()
         {
             LocalProxyStatus = StatusCode.None;
@@ -327,6 +354,12 @@ namespace BlueDwarf.ViewModel
             TestTargetStatus = StatusCode.None;
         }
 
+
+        /// <summary>
+        /// Sets the status, given a ProxyRouteException. If no ProxyRouteException, then we consider it's all OK
+        /// (right, this is not very nice)
+        /// </summary>
+        /// <param name="proxyRouteException">The proxy route exception.</param>
         private void SetStatus(ProxyRouteException proxyRouteException)
         {
             Func<Uri, bool> checkUri = u => proxyRouteException != null && proxyRouteException.Proxy == u;
@@ -354,6 +387,9 @@ namespace BlueDwarf.ViewModel
             }
         }
 
+        /// <summary>
+        /// Setups the proxy server.
+        /// </summary>
         private void SetupProxyServer()
         {
             ProxyServer.Port = SocksListeningPort;
