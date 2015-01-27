@@ -14,7 +14,7 @@ namespace BlueDwarf.Test
         [TestMethod]
         public void ParsePortsTest()
         {
-            var portRegex = new Regex(@"^" + HostScanner.PortRangeEx + HostScanner.AfterDigitEx);
+            var portRegex = new Regex(@"^" + HostPort.PortEx + HostScanner.AfterDigitEx);
             //var portRegex = new Regex(@"(?<port>(\d{1,4}))");
             for (int i = 0; i <= 65535; i++)
             {
@@ -34,7 +34,7 @@ namespace BlueDwarf.Test
         [TestMethod]
         public void ParseIP_0_0_0_0_Test()
         {
-            var ipV4Regex = new Regex(@"^" + HostScanner.IPv4Ex + HostScanner.AfterDigitEx);
+            var ipV4Regex = new Regex(@"^" + HostPort.IPv4Ex + HostScanner.AfterDigitEx);
             var match = ipV4Regex.Match("0.0.0.0");
             Assert.IsTrue(match.Success);
         }
@@ -42,7 +42,7 @@ namespace BlueDwarf.Test
         [TestMethod]
         public void ParseIP_255_255_255_255_Test()
         {
-            var ipV4Regex = new Regex(@"^" + HostScanner.IPv4Ex + HostScanner.AfterDigitEx);
+            var ipV4Regex = new Regex(@"^" + HostPort.IPv4Ex + HostScanner.AfterDigitEx);
             var match = ipV4Regex.Match("255.255.255.255");
             Assert.IsTrue(match.Success);
         }

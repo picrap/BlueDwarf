@@ -5,6 +5,9 @@ namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Scans a given text for host+port, given a regex
+    /// </summary>
     public interface IHostScanner
     {
         /// <summary>

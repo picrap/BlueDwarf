@@ -32,7 +32,7 @@ namespace BlueDwarf
             container.RegisterType<IDownloader, Downloader>(AsSingleton());
             container.RegisterType<IHostScanner, HostScanner>(AsSingleton());
             container.RegisterType<IProxyValidator, ProxyValidator>(AsSingleton());
-            container.RegisterType<IProxyScanner, ProxyScanner>(AsSingleton());
+            container.RegisterType<IProxyPageScanner, ProxyPageScanner>(AsSingleton());
         }
     }
 }
