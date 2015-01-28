@@ -354,7 +354,6 @@ namespace BlueDwarf.ViewModel
             TestTargetStatus = StatusCode.None;
         }
 
-
         /// <summary>
         /// Sets the status, given a ProxyRouteException. If no ProxyRouteException, then we consider it's all OK
         /// (right, this is not very nice)
@@ -427,6 +426,11 @@ namespace BlueDwarf.ViewModel
         public void Exit()
         {
             Navigator.Exit(true);
+        }
+
+        public void PickRemoteProxy()
+        {
+            var viewModel = Navigator.Show<ProxyPickerViewModel>();
         }
     }
 }

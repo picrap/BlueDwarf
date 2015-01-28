@@ -33,4 +33,8 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
     </Style>
 
+    <Style x:Key="DialogFrame" TargetType="FrameworkElement">
+        <Setter Property="Margin" Value="8"/>
+    </Style>
+    
 </ResourceDictionary>

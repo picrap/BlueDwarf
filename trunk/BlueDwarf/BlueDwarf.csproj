@@ -112,6 +112,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationOptions.cs" />
+    <Compile Include="Collection\DispatcherObservableCollection.cs" />
     <Compile Include="Controls\UnitConverter.cs" />
     <Compile Include="Resources\Localization\CommonLocale.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -128,9 +129,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProxyAnalysisLocale.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Localization\ProxyPickerLocale.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProxyPickerLocale.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Async.cs" />
+    <Compile Include="Utility\UISync.cs" />
     <Compile Include="Utility\ExclusiveUpdate.cs" />
     <Compile Include="Utility\InstanceData.cs" />
+    <Compile Include="ViewModel\ProxyPickerViewModel.cs" />
     <Compile Include="View\Properties\Attached.cs" />
     <Compile Include="View\Properties\Property.cs" />
     <Compile Include="ViewModel\Properties\DependencyPropertyNotification.cs" />
@@ -176,6 +184,9 @@
       <DependentUpon>ProxyAnalysisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BoolToVisibilityConverter.cs" />
+    <Compile Include="View\ProxyPickerView.xaml.cs">
+      <DependentUpon>ProxyPickerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\WebDownloaderView.xaml.cs">
       <DependentUpon>WebDownloaderView.xaml</DependentUpon>
     </Compile>
@@ -248,6 +259,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ProxyPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\WebDownloaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -290,7 +305,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProxyAnalysisLocale.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Localization\ProxyPickerLocale.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProxyPickerLocale.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
