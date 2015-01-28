@@ -41,21 +41,19 @@ namespace BlueDwarf.Controls
             UpdateAllowedSchemes();
         }
 
+        [ExclusiveUpdate]
         private void UpdateAllowedSchemes()
         {
-            UpdateLock(delegate
-            {
-                var allowedSchemes = AllowedSchemesArray;
+            var allowedSchemes = AllowedSchemesArray;
 
-                var selectedItem = SchemeComboxBox.SelectedItem;
-                SchemeComboxBox.Items.Clear();
-                SchemeComboxBox.Items.AddRange(allowedSchemes);
-                SchemeComboxBox.SelectedItem = selectedItem;
-                SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
-                var manySchemes = allowedSchemes.Length > 1;
-                SchemeTextBlock.Visibility = manySchemes ? Visibility.Collapsed : Visibility.Visible;
-                SchemeComboxBox.Visibility = manySchemes ? Visibility.Visible : Visibility.Collapsed;
-            });
+            var selectedItem = SchemeComboxBox.SelectedItem;
+            SchemeComboxBox.Items.Clear();
+            SchemeComboxBox.Items.AddRange(allowedSchemes);
+            SchemeComboxBox.SelectedItem = selectedItem;
+            SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
+            var manySchemes = allowedSchemes.Length > 1;
+            SchemeTextBlock.Visibility = manySchemes ? Visibility.Collapsed : Visibility.Visible;
+            SchemeComboxBox.Visibility = manySchemes ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void OnSchemeChanged(object sender, SelectionChangedEventArgs e)
@@ -78,86 +76,66 @@ namespace BlueDwarf.Controls
             WriteUri();
         }
 
-        private bool _updating;
-
         /// <summary>
         /// Writes the URI to inner controls.
         /// </summary>
+        [ExclusiveUpdate]
         private void WriteUri()
         {
-            if (_updating)
-                return;
-
-            UpdateLock(delegate
+            var uri = Uri;
+            if (uri != null)
             {
-                var uri = Uri;
-                if (uri != null)
-                {
-                    SchemeTextBlock.Text = uri.Scheme;
-                    SchemeComboxBox.SelectedItem = SchemeComboxBox.Items.OfType<string>().FirstOrDefault(s => s == uri.Scheme);
-                    HostTextBox.Text = uri.Host;
-                    if (!uri.IsDefaultPort)
-                        PortTextBox.Text = uri.Port.ToString();
-                }
-                else
-                {
-                    var allowedSchemes = AllowedSchemesArray;
-                    SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
-                    SchemeComboxBox.SelectedIndex = 0;
-                    HostTextBox.Text = null;
-                    PortTextBox.Text = null;
-                }
-            });
+                SchemeTextBlock.Text = uri.Scheme;
+                SchemeComboxBox.SelectedItem = SchemeComboxBox.Items.OfType<string>().FirstOrDefault(s => s == uri.Scheme);
+                HostTextBox.Text = uri.Host;
+                if (!uri.IsDefaultPort)
+                    PortTextBox.Text = uri.Port.ToString();
+            }
+            else
+            {
+                var allowedSchemes = AllowedSchemesArray;
+                SchemeTextBlock.Text = allowedSchemes.FirstOrDefault();
+                SchemeComboxBox.SelectedIndex = 0;
+                HostTextBox.Text = null;
+                PortTextBox.Text = null;
+            }
         }
 
         /// <summary>
         /// Reads the URI from inner controls and updates dependency property.
         /// </summary>
+        [ExclusiveUpdate]
         private void ReadUri()
         {
-            if (_updating)
-                return;
-
-            UpdateLock(delegate
+            if (HostTextBox.Text.IsNullOrEmpty())
             {
-                if (HostTextBox.Text.IsNullOrEmpty())
-                {
-                    Uri = null;
-                    return;
-                }
+                Uri = null;
+                return;
+            }
 
-                var selectedItem = SchemeComboxBox.SelectedItem as string;
-                var scheme = selectedItem ?? SchemeTextBlock.Text;
-                if (PortTextBox.Text.IsNullOrEmpty())
-                {
-                    var uriString = string.Format("{0}://{1}", scheme, HostTextBox.Text);
-                    Uri = new Uri(uriString);
-                    return;
-                }
-
-                int port;
-                if (!int.TryParse(PortTextBox.Text, out port) || port < 0)
-                    return;
-                var uriStringWithPort = string.Format("{0}://{1}:{2}", scheme, HostTextBox.Text, port);
+            var selectedItem = SchemeComboxBox.SelectedItem as string;
+            var scheme = selectedItem ?? SchemeTextBlock.Text;
+            if (PortTextBox.Text.IsNullOrEmpty())
+            {
+                var uriString = string.Format("{0}://{1}", scheme, HostTextBox.Text);
                 try
                 {
-                    Uri = new Uri(uriStringWithPort);
+                    Uri = new Uri(uriString);
                 }
-                catch (UriFormatException) { }
-            });
-        }
+                catch (UriFormatException)
+                { }
+                return;
+            }
 
-        private void UpdateLock(Action action)
-        {
+            int port;
+            if (!int.TryParse(PortTextBox.Text, out port) || port < 0)
+                return;
+            var uriStringWithPort = string.Format("{0}://{1}:{2}", scheme, HostTextBox.Text, port);
             try
             {
-                _updating = true;
-                action();
+                Uri = new Uri(uriStringWithPort);
             }
-            finally
-            {
-                _updating = false;
-            }
+            catch (UriFormatException) { }
         }
     }
 }
