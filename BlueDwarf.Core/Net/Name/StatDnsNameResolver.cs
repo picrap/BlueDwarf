@@ -83,6 +83,8 @@ namespace BlueDwarf.Net.Name
                 }
 
                 var resolvedAddress = RequestionResolution(name, route);
+                if (resolvedAddress == null)
+                    return null;
                 entry = Tuple.Create(resolvedAddress.Item1, now + TimeSpan.FromSeconds(resolvedAddress.Item2));
                 _entries[name] = entry;
                 return entry.Item1;
