@@ -25,6 +25,7 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="category">The category.</param>
+        [UISync]
         public void OnPropertyChanged(string propertyName, object category = null)
         {
             var onPropertyChanged = PropertyChanged;

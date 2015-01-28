@@ -35,6 +35,7 @@ namespace BlueDwarf
             navigator.Configure<ConfigurationViewModel, ConfigurationView>();
             navigator.Configure<ProxyAnalysisViewModel, ProxyAnalysisView>();
             navigator.Configure<WebDownloaderViewModel, WebDownloaderView>();
+            navigator.Configure<ProxyPickerViewModel, ProxyPickerView>();
         }
     }
 }

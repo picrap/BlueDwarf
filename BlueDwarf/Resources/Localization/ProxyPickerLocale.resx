@@ -117,70 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LocalProxyKeepaliveRefreshIntervalLabel" xml:space="preserve">
-    <value>Refresh interval:</value>
+  <data name="PickProxyLabel" xml:space="preserve">
+    <value>Pick a proxy server:</value>
   </data>
-  <data name="LocalProxyKeepaliveTitle" xml:space="preserve">
-    <value>Local proxy keepalive</value>
+  <data name="ProxyPageLabel" xml:space="preserve">
+    <value>Pick a proxy provider page:</value>
   </data>
-  <data name="LocalProxyKeepaliveURL1Label" xml:space="preserve">
-    <value>Keepalive URL 1:</value>
+  <data name="ProxyPageUrlLabel" xml:space="preserve">
+    <value>URL:</value>
   </data>
-  <data name="LocalProxyKeepaliveURL2Label" xml:space="preserve">
-    <value>Keepalive URL 2:</value>
-  </data>
-  <data name="LocalProxyLabel" xml:space="preserve">
-    <value>Local proxy:</value>
-  </data>
-  <data name="MenuConfigure" xml:space="preserve">
-    <value>Configure</value>
-  </data>
-  <data name="MenuExit" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="ProxyServerConfigurationLegend" xml:space="preserve">
-    <value>This is where you configure the local proxy for your browser and other applications</value>
-  </data>
-  <data name="ProxyServerConfigurationTitle" xml:space="preserve">
-    <value>Proxy server configuration</value>
-  </data>
-  <data name="ProxyTunnelConfigurationLegend" xml:space="preserve">
-    <value>This is where you go out</value>
-  </data>
-  <data name="ProxyTunnelConfigurationTitle" xml:space="preserve">
-    <value>Proxy tunnel configuration</value>
-  </data>
-  <data name="RemoteProxyLabel" xml:space="preserve">
-    <value>Remote proxy:</value>
-  </data>
-  <data name="RemoteProxySite" xml:space="preserve">
-    <value>Find happiness at</value>
-  </data>
-  <data name="s" xml:space="preserve">
-    <value>s</value>
-  </data>
-  <data name="Socks4ServerPort" xml:space="preserve">
-    <value>SOCKS 4 proxy server port:</value>
-  </data>
-  <data name="StatisticsBytesRead" xml:space="preserve">
-    <value>Bytes read:</value>
-  </data>
-  <data name="StatisticsBytesWritten" xml:space="preserve">
-    <value>Bytes written:</value>
-  </data>
-  <data name="StatisticsConnections" xml:space="preserve">
-    <value>Connections so far:</value>
-  </data>
-  <data name="StatisticsTitle" xml:space="preserve">
-    <value>Statistics</value>
-  </data>
-  <data name="TestURL" xml:space="preserve">
-    <value>Test URL:</value>
-  </data>
-  <data name="WizardInvoke" xml:space="preserve">
-    <value>Summon the wizard!</value>
-  </data>
-  <data name="PickRemoteProxy" xml:space="preserve">
-    <value>...</value>
+  <data name="Title" xml:space="preserve">
+    <value>Proxy picker</value>
   </data>
 </root>
