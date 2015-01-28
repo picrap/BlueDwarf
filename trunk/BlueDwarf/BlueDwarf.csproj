@@ -129,6 +129,8 @@
       <DependentUpon>ProxyAnalysisLocale.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\Async.cs" />
+    <Compile Include="Utility\ExclusiveUpdate.cs" />
+    <Compile Include="Utility\InstanceData.cs" />
     <Compile Include="View\Properties\Attached.cs" />
     <Compile Include="View\Properties\Property.cs" />
     <Compile Include="ViewModel\Properties\DependencyPropertyNotification.cs" />
