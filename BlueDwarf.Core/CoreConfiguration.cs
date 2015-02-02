@@ -32,7 +32,7 @@ namespace BlueDwarf
         {
             container.RegisterType<IProxyClient, TunnelProxyClient>(AsSingleton());
             container.RegisterType<IProxyServerFactory, ProxyServerFactory>(AsSingleton());
-            container.RegisterType<INameResolver, StatDnsNameResolver>(AsSingleton());
+            container.RegisterType<INameResolver, DnsNameResolver>(AsSingleton());
             container.RegisterType<IProxyAnalyzer, ProxyAnalyzer>(AsSingleton());
             container.RegisterType<IPersistence, RegistryPersistence>(AsSingleton());
             container.RegisterType<IStartupConfiguration, MenuStartupConfiguration>(AsSingleton());
