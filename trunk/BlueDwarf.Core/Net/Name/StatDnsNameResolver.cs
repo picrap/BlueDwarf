@@ -117,20 +117,26 @@ namespace BlueDwarf.Net.Name
         /// <returns></returns>
         private static Answer Ask(string name, string type, ProxyRoute route)
         {
-            const string host = "api.statdns.com";
-            using (var stream = route.Connect(host, 80, false))
+            try
             {
-                new HttpRequest("GET", string.Format("/{0}/{1}", name, type.ToLower())).AddHeader("Host", host).Write(stream);
-                var contentBytes = HttpResponse.FromStream(stream).ReadContent(stream);
-                using (var memoryStream = new MemoryStream(contentBytes))
+                const string host = "api.statdns.com";
+                using (var stream = route.Connect(host, 80, false))
                 {
-                    var serializer = new DataContractJsonSerializer(typeof(Response));
-                    var response = (Response)serializer.ReadObject(memoryStream);
-                    if (response.Answers == null)
-                        return null;
-                    return response.Answers[0];
+                    new HttpRequest("GET", string.Format("/{0}/{1}", name, type.ToLower())).AddHeader("Host", host).Write(stream);
+                    var contentBytes = HttpResponse.FromStream(stream).ReadContent(stream);
+                    using (var memoryStream = new MemoryStream(contentBytes))
+                    {
+                        var serializer = new DataContractJsonSerializer(typeof(Response));
+                        var response = (Response)serializer.ReadObject(memoryStream);
+                        if (response.Answers == null)
+                            return null;
+                        return response.Answers[0];
+                    }
                 }
             }
+            // TODO: something better here
+            catch { }
+            return null;
         }
     }
 }

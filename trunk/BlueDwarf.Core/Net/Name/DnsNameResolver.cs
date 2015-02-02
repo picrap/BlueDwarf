@@ -3,8 +3,10 @@
 
 namespace BlueDwarf.Net.Name
 {
+    using System;
     using System.Linq;
     using System.Net;
+    using System.Net.Sockets;
     using Annotations;
     using Proxy.Client;
 
@@ -19,8 +21,16 @@ namespace BlueDwarf.Net.Name
         /// <returns></returns>
         public IPAddress Resolve(string name, ProxyRoute route)
         {
-            var address = Dns.GetHostAddresses(name).FirstOrDefault();
-            return address;
+            try
+            {
+                var address = Dns.GetHostAddresses(name).FirstOrDefault();
+                return address;
+            }
+            catch (ArgumentException)
+            { }
+            catch (SocketException)
+            { }
+            return null;
         }
     }
 }
