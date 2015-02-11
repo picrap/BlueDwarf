@@ -3,10 +3,9 @@
 namespace BlueDwarf.View.Properties
 {
     using System;
-    using PostSharp.Aspects;
-    using PostSharp.Aspects.Configuration;
-    using PostSharp.Extensibility;
-    using PostSharp.Reflection;
+    using ArxOne.Weavisor.Advice;
+    using ArxOne.Weavisor.Annotation;
+    using Aspects;
     using ViewModel.Properties;
 
     /// <summary>
@@ -14,10 +13,8 @@ namespace BlueDwarf.View.Properties
     /// See Property for more information
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
-    [Serializable]
-    [LocationInterceptionAspectConfiguration(AspectPriority = Aspects.AspectPriority.DataHolder)]
-    public class Attached : Aspect, ILocationInterceptionAspect
+    [Priority(AspectPriority.DataHolder)]
+    public class Attached : Attribute, IPropertyAdvice, IPropertyInfoAdvice
     {
         /// <summary>
         /// Gets or sets the default value for the dependency property.
@@ -44,29 +41,18 @@ namespace BlueDwarf.View.Properties
 
         private static readonly object[] NoParameter = new object[0];
 
-        public void RuntimeInitialize(LocationInfo locationInfo)
+        public void Advise(PropertyInfoAdviceContext context)
         {
-            var propertyInfo = locationInfo.PropertyInfo;
+            var propertyInfo = context.TargetProperty;
             propertyInfo.CreateDependencyProperty(DefaultValue, Notification);
             if (propertyInfo.GetValue(null, NoParameter) == null)
                 propertyInfo.SetValue(null, Activator.CreateInstance(propertyInfo.PropertyType), NoParameter);
         }
 
-        public void OnGetValue(LocationInterceptionArgs args)
+        public void Advise(PropertyAdviceContext context)
         {
-            SetCurrent(args);
-            args.ProceedGetValue();
-        }
-
-        public void OnSetValue(LocationInterceptionArgs args)
-        {
-            SetCurrent(args);
-            args.ProceedSetValue();
-        }
-
-        private static void SetCurrent(LocationInterceptionArgs args)
-        {
-            CurrentProperty = args.Location.PropertyInfo.GetDependencyProperty();
+            CurrentProperty = context.TargetProperty.GetDependencyProperty();
+            context.Proceed();
         }
     }
 }

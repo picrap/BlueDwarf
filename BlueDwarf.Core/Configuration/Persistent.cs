@@ -4,21 +4,13 @@
 namespace BlueDwarf.Configuration
 {
     using System;
-    using System.Linq;
-    using System.Reflection;
+    using ArxOne.Weavisor.Advice;
+    using ArxOne.Weavisor.Annotation;
     using Aspects;
-    using Microsoft.Practices.Unity;
-    using PostSharp.Aspects;
-    using PostSharp.Aspects.Advices;
-    using PostSharp.Aspects.Configuration;
-    using PostSharp.Extensibility;
-    using PostSharp.Reflection;
 
     [AttributeUsage(AttributeTargets.Property)]
-    [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
-    [Serializable]
-    [LocationInterceptionAspectConfiguration(AspectPriority = Aspects.AspectPriority.DataHolder)]
-    public class Persistent : Aspect, ILocationInterceptionAspect
+    [Priority(AspectPriority.DataHolder)]
+    public class Persistent : Attribute, IPropertyAdvice
     {
         /// <summary>
         /// Gets or sets the name under which the property is serialized.
@@ -44,41 +36,23 @@ namespace BlueDwarf.Configuration
         /// </value>
         public object DefaultValue { get; set; }
 
-        [NonSerialized] private PropertyImporter<IPersistence> _persistence;
+        [NonSerialized]
+        private PropertyImporter<IPersistence> _persistenceProperty;
 
         public Persistent(string name)
         {
             Name = name;
         }
 
-        [Obsolete("Serialization-only ctor")]
-        public Persistent()
+        public void Advise(PropertyAdviceContext context)
         {
-        }
-
-        public void RuntimeInitialize(LocationInfo locationInfo)
-        {
-            _persistence = new PropertyImporter<IPersistence>(locationInfo);
-        }
-
-        /// <summary>
-        /// Method invoked <i>instead</i> of the <c>Get</c> semantic of the field or property to which the current aspect is applied,
-        /// i.e. when the value of this field or property is retrieved.
-        /// </summary>
-        /// <param name="args">Advice arguments.</param>
-        public void OnGetValue(LocationInterceptionArgs args)
-        {
-            args.Value = _persistence.Get(args).GetValue(Name, args.Location.PropertyInfo.PropertyType, DefaultValue);
-        }
-
-        /// <summary>
-        /// Method invoked <i>instead</i> of the <c>Set</c> semantic of the field or property to which the current aspect is applied,
-        /// i.e. when the value of this field or property is changed.
-        /// </summary>
-        /// <param name="args">Advice arguments.</param>
-        public void OnSetValue(LocationInterceptionArgs args)
-        {
-            _persistence.Get(args).SetValue(Name, args.Value, AutoSave);
+            if (_persistenceProperty == null)
+                _persistenceProperty = new PropertyImporter<IPersistence>(context.TargetProperty.DeclaringType);
+            var persistence = _persistenceProperty.Get(context.Target);
+            if (context.IsGetter)
+                context.ReturnValue = persistence.GetValue(Name, context.TargetProperty.PropertyType, DefaultValue);
+            else
+                persistence.SetValue(Name, context.Value, AutoSave);
         }
     }
 }

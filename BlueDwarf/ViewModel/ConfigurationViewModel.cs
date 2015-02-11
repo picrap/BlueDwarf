@@ -13,7 +13,6 @@ namespace BlueDwarf.ViewModel
     using Controls;
     using Microsoft.Practices.Unity;
     using Navigation;
-    using Net;
     using Net.Proxy.Client;
     using Net.Proxy.Scanner;
     using Net.Proxy.Server;
@@ -281,9 +280,6 @@ namespace BlueDwarf.ViewModel
         [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
-            // this is for test
-            //var p = ScanPage(TestTargetUri, ProxyPageProvider.Default[0], LocalProxy);
-
             try
             {
                 SetStatusPending();

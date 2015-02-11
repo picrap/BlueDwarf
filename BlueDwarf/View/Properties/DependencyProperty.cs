@@ -5,10 +5,9 @@ namespace BlueDwarf.View.Properties
 {
     using System;
     using System.Windows;
-    using PostSharp.Aspects;
-    using PostSharp.Aspects.Configuration;
-    using PostSharp.Extensibility;
-    using PostSharp.Reflection;
+    using ArxOne.Weavisor.Advice;
+    using ArxOne.Weavisor.Annotation;
+    using Aspects;
     using Utility;
     using ViewModel.Properties;
 
@@ -17,10 +16,8 @@ namespace BlueDwarf.View.Properties
     /// This attribute is handled by Postsharp, and by some unexplainable magic, works.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    [MulticastAttributeUsage(MulticastTargets.Property, PersistMetaData = true)]
-    [Serializable]
-    [LocationInterceptionAspectConfiguration(AspectPriority = Aspects.AspectPriority.DataHolder)]
-    public class DependencyProperty : Aspect, ILocationInterceptionAspect
+    [Priority(AspectPriority.DataHolder)]
+    public class DependencyProperty : Attribute, IPropertyAdvice, IPropertyInfoAdvice
     {
         /// <summary>
         /// Gets or sets the default value for the dependency property.
@@ -38,43 +35,31 @@ namespace BlueDwarf.View.Properties
         /// </value>
         public DependencyPropertyNotification Notification { get; set; }
 
-        /// <summary>
-        /// Initializes the current aspect.
-        /// </summary>
-        /// <param name="locationInfo">Location to which the current aspect is applied.</param>
-        public void RuntimeInitialize(LocationInfo locationInfo)
+        public void Advise(PropertyInfoAdviceContext context)
         {
-            var propertyInfo = locationInfo.PropertyInfo;
+            var propertyInfo = context.TargetProperty;
             propertyInfo.CreateDependencyProperty(DefaultValue, Notification);
         }
 
-        /// <summary>
-        /// Method invoked <i>instead</i> of the <c>Get</c> semantic of the field or property to which the current aspect is applied,
-        /// i.e. when the value of this field or property is retrieved.
-        /// </summary>
-        /// <param name="args">Advice arguments.</param>
-        public void OnGetValue(LocationInterceptionArgs args)
+        public void Advise(PropertyAdviceContext context)
         {
-            var dependencyProperty = args.Location.PropertyInfo.GetDependencyProperty();
-            var dependencyObject = (DependencyObject)args.Instance;
-            // yes, in the end, it is a GetValue()
-            args.Value = dependencyObject.GetValue(dependencyProperty);
-        }
-
-        /// <summary>
-        /// Method invoked <i>instead</i> of the <c>Set</c> semantic of the field or property to which the current aspect is applied,
-        /// i.e. when the value of this field or property is changed.
-        /// </summary>
-        /// <param name="args">Advice arguments.</param>
-        public void OnSetValue(LocationInterceptionArgs args)
-        {
-            var dependencyProperty = args.Location.PropertyInfo.GetDependencyProperty();
-            var dependencyObject = (DependencyObject)args.Instance;
-            var oldValue = dependencyObject.GetValue(dependencyProperty);
-            var newValue = args.Value;
-            // not sure it is necessary to check for a change
-            if (!oldValue.SafeEquals(newValue))
-                dependencyObject.SetValue(dependencyProperty, newValue);
+            if (context.IsGetter)
+            {
+                var dependencyProperty = context.TargetProperty.GetDependencyProperty();
+                var dependencyObject = (DependencyObject) context.Target;
+                // yes, in the end, it is a GetValue()
+                context.ReturnValue = dependencyObject.GetValue(dependencyProperty);
+            }
+            else
+            {
+                var dependencyProperty = context.TargetProperty.GetDependencyProperty();
+                var dependencyObject = (DependencyObject)context.Target;
+                var oldValue = dependencyObject.GetValue(dependencyProperty);
+                var newValue = context.Value;
+                // not sure it is necessary to check for a change
+                if (!oldValue.SafeEquals(newValue))
+                    dependencyObject.SetValue(dependencyProperty, newValue);
+            }
         }
     }
 }

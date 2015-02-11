@@ -12,10 +12,10 @@ namespace BlueDwarf.Aspects
         /// <summary>
         /// Notification level: the property changes, and we take good note of it
         /// </summary>
-        public const int Notification = 10;
+        public const int Notification = 100;
         /// <summary>
         /// Lowest level, if data is stored virtually (not in the property's backing field)
         /// </summary>
-        public const int DataHolder = 100;
+        public const int DataHolder = 10;
     }
 }

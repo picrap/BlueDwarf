@@ -13,10 +13,10 @@ namespace BlueDwarf.Collection
             BaseOnCollectionChanged(e);
         }
 
-        [UISync]
+        //[UISync]
         private void BaseOnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            base.OnCollectionChanged(e);
+            UISync.Invoke(() => base.OnCollectionChanged(e));
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -24,10 +24,10 @@ namespace BlueDwarf.Collection
             BaseOnPropertyChanged(e);
         }
 
-        [UISync]
+        //[UISync]
         private void BaseOnPropertyChanged(PropertyChangedEventArgs e)
         {
-            base.OnPropertyChanged(e);
+            UISync.Invoke(() => base.OnPropertyChanged(e));
         }
     }
 }
