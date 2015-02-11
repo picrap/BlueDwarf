@@ -73,6 +73,7 @@
     <None Include="..\BlueDwarf.Core\Properties\BlueDwarf.snk">
       <Link>Properties\BlueDwarf.snk</Link>
     </None>
+    <None Include="app.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

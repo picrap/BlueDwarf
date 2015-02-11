@@ -6,38 +6,33 @@ namespace BlueDwarf.Utility
     using System;
     using System.Reflection;
     using System.Threading;
-    using PostSharp.Aspects;
-    using PostSharp.Aspects.Configuration;
-    using PostSharp.Extensibility;
+    using ArxOne.Weavisor.Advice;
 
     /// <summary>
     /// Allows to invoke a method asynchronously (here, in a background thread)
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    [MulticastAttributeUsage(MulticastTargets.Method, PersistMetaData = true)]
-    [Serializable]
-    [MethodInterceptionAspectConfiguration]
-    public class Async : Aspect, IMethodInterceptionAspect
+    public class Async : Attribute, IMethodAdvice, IMethodInfoAdvice
     {
         public bool KillExisting { get; set; }
 
         [NonSerialized]
         private Thread _thread;
 
-        public void RuntimeInitialize(MethodBase method)
+        public void Advise(MethodInfoAdviceContext context)
         {
-            var methodInfo = method as MethodInfo;
+            var methodInfo = context.TargetMethod as MethodInfo;
             if (methodInfo == null)
                 return;
             if (methodInfo.ReturnType != typeof(void))
                 throw new InvalidOperationException("Impossible to run asynchronously a non-void method (you MoFo!)");
         }
 
-        public void OnInvoke(MethodInterceptionArgs args)
+        public void Advise(MethodAdviceContext context)
         {
             if (KillExisting && _thread != null && _thread.IsAlive)
                 _thread.Abort();
-            _thread = new Thread(args.Proceed) { IsBackground = true, Name = args.Method.Name };
+            _thread = new Thread(context.Proceed) { IsBackground = true, Name = context.TargetMethod.Name };
             _thread.Start();
         }
     }

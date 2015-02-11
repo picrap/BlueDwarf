@@ -3,36 +3,34 @@ namespace BlueDwarf.Utility
 {
     using System;
     using System.Reflection;
-    using PostSharp.Aspects;
-    using PostSharp.Aspects.Configuration;
-    using PostSharp.Extensibility;
+    using ArxOne.Weavisor.Advice;
+    using ArxOne.Weavisor.Introduction;
 
     [AttributeUsage(AttributeTargets.Method)]
-    [MulticastAttributeUsage(MulticastTargets.Method, PersistMetaData = true)]
-    [Serializable]
-    [MethodInterceptionAspectConfiguration]
-    public class ExclusiveUpdate : Aspect, IMethodInterceptionAspect
+    public class ExclusiveUpdate : Attribute, IMethodAdvice, IMethodInfoAdvice
     {
-        public void RuntimeInitialize(MethodBase method)
+        public IntroducedField<bool> Locked { get; set; }
+
+        public void Advise(MethodInfoAdviceContext context)
         {
-            var methodInfo = method as MethodInfo;
+            var methodInfo = context.TargetMethod as MethodInfo;
             if (methodInfo != null && methodInfo.ReturnType != (typeof(void)))
                 throw new InvalidOperationException("ExclusiveUpdate can only be applied to void methods");
         }
 
-        public void OnInvoke(MethodInterceptionArgs args)
+        public void Advise(MethodAdviceContext context)
         {
-            var locked = InstanceData.GetData<bool>(args.Instance, "locked");
+            var locked = Locked[context];
             if (locked)
                 return;
             try
             {
-                InstanceData.SetData(args.Instance, "locked", true);
-                args.Proceed();
+                Locked[context] = true;
+                context.Proceed();
             }
             finally
             {
-                InstanceData.SetData(args.Instance, "locked", false);
+                Locked[context] = false;
             }
         }
     }
