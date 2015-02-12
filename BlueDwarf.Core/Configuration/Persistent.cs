@@ -4,8 +4,8 @@
 namespace BlueDwarf.Configuration
 {
     using System;
-    using ArxOne.Weavisor.Advice;
-    using ArxOne.Weavisor.Annotation;
+    using ArxOne.MrAdvice.Advice;
+    using ArxOne.MrAdvice.Annotation;
     using Aspects;
 
     [AttributeUsage(AttributeTargets.Property)]

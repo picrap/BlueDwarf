@@ -5,8 +5,8 @@ namespace BlueDwarf.ViewModel.Properties
 {
     using System;
     using System.Linq;
-    using ArxOne.Weavisor.Advice;
-    using ArxOne.Weavisor.Annotation;
+    using ArxOne.MrAdvice.Advice;
+    using ArxOne.MrAdvice.Annotation;
     using Aspects;
     using Utility;
 

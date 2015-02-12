@@ -3,8 +3,8 @@ namespace BlueDwarf.Utility
 {
     using System;
     using System.Reflection;
-    using ArxOne.Weavisor.Advice;
-    using ArxOne.Weavisor.Introduction;
+    using ArxOne.MrAdvice.Advice;
+    using ArxOne.MrAdvice.Introduction;
 
     [AttributeUsage(AttributeTargets.Method)]
     public class ExclusiveUpdate : Attribute, IMethodAdvice, IMethodInfoAdvice

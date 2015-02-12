@@ -6,7 +6,7 @@ namespace BlueDwarf.Utility
     using System;
     using System.Reflection;
     using System.Threading;
-    using ArxOne.Weavisor.Advice;
+    using ArxOne.MrAdvice.Advice;
 
     /// <summary>
     /// Allows to invoke a method asynchronously (here, in a background thread)
