@@ -1,4 +1,6 @@
-﻿namespace BlueDwarf.Net.Proxy
+﻿// This is the blue dwarf
+// more information at https://github.com/picrap/BlueDwarf
+namespace BlueDwarf.Net.Proxy
 {
     using System;
 

@@ -1,4 +1,5 @@
-﻿
+﻿// This is the blue dwarf
+// more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.ViewModel
 {
     using System;
@@ -26,7 +27,9 @@ namespace BlueDwarf.ViewModel
         [NotifyPropertyChanged]
         public IList<ProxyPageProvider> ProxyPageProviders { get; set; }
 
-        private ProxyPageProvider _proxyPageProvider;
+        // static, because it is application-wide (and retrieved each time the panel is open)
+        // TODO: save in preferences
+        private static ProxyPageProvider _proxyPageProvider;
 
         [NotifyPropertyChanged]
         public ProxyPageProvider ProxyPageProvider
@@ -90,9 +93,15 @@ namespace BlueDwarf.ViewModel
             Locale = new ProxyPickerLocale();
             ProxyServers = new DispatcherObservableCollection<HostPort>();
             ProxyPageProviders = ProxyPageProvider.Default;
-            ProxyPageProvider = ProxyPageProviders[0];
+            if (ProxyPageProvider == null)
+                ProxyPageProvider = ProxyPageProviders[0];
+            else
+                CheckProxyServers();
         }
 
+        /// <summary>
+        /// Scans for proxy servers in given page.
+        /// </summary>
         [Async(KillExisting = true)]
         private void CheckProxyServers()
         {

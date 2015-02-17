@@ -1,11 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// This is the blue dwarf
+// more information at https://github.com/picrap/BlueDwarf
 
 namespace BlueDwarf.Test
 {
     using System.Linq;
     using System.Net;
     using System.Text.RegularExpressions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Net.Proxy.Scanner;
 
     [TestClass]

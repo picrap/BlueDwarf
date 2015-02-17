@@ -1,6 +1,5 @@
 ﻿// This is the blue dwarf
-// more information at https://code.google.com/p/blue-dwarf/
-
+// more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Navigation
 {
     using System;
@@ -9,7 +8,6 @@ namespace BlueDwarf.Navigation
     using System.Windows.Threading;
     using Annotations;
     using Microsoft.Practices.Unity;
-    using View;
     using View.Properties;
     using ViewModel;
 

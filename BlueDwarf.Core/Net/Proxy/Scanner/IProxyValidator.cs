@@ -1,10 +1,8 @@
 // This is the blue dwarf
-// more information at https://code.google.com/p/blue-dwarf/
-
+// more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
-
 
     /// <summary>
     /// Proxy validation

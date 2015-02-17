@@ -1,6 +1,5 @@
 ﻿// This is the blue dwarf
-// more information at https://code.google.com/p/blue-dwarf/
-
+// more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf
 {
     using System;
@@ -9,7 +8,6 @@ namespace BlueDwarf
     using Configuration;
     using Microsoft.Practices.Unity;
     using Navigation;
-    using Net;
     using Net.Proxy;
     using Net.Proxy.Server;
     using Utility;

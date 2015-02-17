@@ -1,3 +1,5 @@
+// This is the blue dwarf
+// more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Configuration
 {
     /// <summary>
