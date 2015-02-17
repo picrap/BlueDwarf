@@ -127,7 +127,7 @@ namespace BlueDwarf.Net.Proxy.Client
                 case ProxyType.Direct:
                     return DirectConnect(stream.Item1, targetHost, targetPort, routeUntilHere);
                 case ProxyType.HttpConnect:
-                    return HttpProxyConnect(stream.Item1, targetHost, targetPort, routeUntilHere);
+                    return HttpProxyConnect(stream.Item1, targetHost, targetPort);
                 case ProxyType.Socks4:
                     return SocksProxyConnect(stream.Item1, targetHost, targetPort, routeUntilHere);
                 default:

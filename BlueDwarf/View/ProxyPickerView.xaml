@@ -23,7 +23,7 @@
             </TextBlock>
         </StackPanel>
         <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.PickProxyLabel}"/>
-        <ListBox ItemsSource="{Binding ProxyServers}" Height="150">
+        <ListBox ItemsSource="{Binding ProxyServers}" Height="150" SelectedItem="{Binding ProxyServer}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

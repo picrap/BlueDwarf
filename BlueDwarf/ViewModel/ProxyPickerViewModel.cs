@@ -3,10 +3,10 @@ namespace BlueDwarf.ViewModel
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using Collection;
     using Configuration;
     using Microsoft.Practices.Unity;
+    using Navigation;
     using Net.Proxy.Scanner;
     using Properties;
     using Resources.Localization;
@@ -19,6 +19,9 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IPersistence Persistence { get; set; }
+
+        [Dependency]
+        public INavigator Navigator { get; set; }
 
         [NotifyPropertyChanged]
         public IList<ProxyPageProvider> ProxyPageProviders { get; set; }
@@ -61,6 +64,26 @@ namespace BlueDwarf.ViewModel
         public Uri LocalProxy { get; set; }
 
         public ProxyPickerLocale Locale { get; set; }
+
+        private HostPort _proxyServer;
+
+        /// <summary>
+        /// Gets or sets the selected proxy server.
+        /// If non null, this causes the window to close
+        /// </summary>
+        /// <value>
+        /// The proxy server.
+        /// </value>
+        [NotifyPropertyChanged]
+        public HostPort ProxyServer
+        {
+            get { return _proxyServer; }
+            set
+            {
+                _proxyServer = value;
+                Navigator.Exit(true);
+            }
+        }
 
         public ProxyPickerViewModel()
         {

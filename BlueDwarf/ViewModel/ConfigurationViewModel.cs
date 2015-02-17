@@ -87,7 +87,7 @@ namespace BlueDwarf.ViewModel
         /// <value>
         /// The test target.
         /// </value>
-        [Persistent("ProxyTest", DefaultValue = "https://google.com")]
+        [Persistent("ProxyTest", DefaultValue = "https://isohunt.to/")]
         [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public string TestTarget { get; set; }
 
@@ -427,6 +427,8 @@ namespace BlueDwarf.ViewModel
         public void PickRemoteProxy()
         {
             var viewModel = Navigator.Show<ProxyPickerViewModel>();
+            if (viewModel != null)
+                RemoteProxy = new Uri(string.Format("http://{0}:{1}", viewModel.ProxyServer.HostOrAddress, viewModel.ProxyServer.Port));
         }
     }
 }
