@@ -35,7 +35,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
             var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, proxyServers);
             if (proxyListingPageText == null)
                 return new HostPort[0];
-            return HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().Where(hp => ProxyValidator.Validate(hp, testTargetHost, testTargetPort, proxyServers));
+            return HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63).Where(hp => ProxyValidator.Validate(hp, testTargetHost, testTargetPort, proxyServers));
         }
 
         /// <summary>
