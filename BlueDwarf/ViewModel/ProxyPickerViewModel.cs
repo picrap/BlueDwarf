@@ -4,6 +4,7 @@ namespace BlueDwarf.ViewModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Collection;
     using Configuration;
     using Microsoft.Practices.Unity;
@@ -25,26 +26,28 @@ namespace BlueDwarf.ViewModel
         public INavigator Navigator { get; set; }
 
         [NotifyPropertyChanged]
-        public IList<ProxyPageProvider> ProxyPageProviders { get; set; }
+        public IList<ProxyPage> ProxyPages { get; set; }
 
-        // static, because it is application-wide (and retrieved each time the panel is open)
-        // TODO: save in preferences
-        private static ProxyPageProvider _proxyPageProvider;
+        private ProxyPage _proxyPage;
+
+        [Persistent("ProxyPage", AutoSave = true)]
+        public Uri ProxyPageUri { get; set; }
 
         [NotifyPropertyChanged]
-        public ProxyPageProvider ProxyPageProvider
+        public ProxyPage ProxyPage
         {
-            get { return _proxyPageProvider; }
+            get { return _proxyPage; }
             set
             {
-                _proxyPageProvider = value;
+                _proxyPage = value;
+                ProxyPageUri = value.PageUri;
                 CheckProxyServers();
             }
         }
 
         public IList<HostPort> ProxyServers { get; set; }
 
-        [Persistent("ProxyTest")]
+        [Persistent("ProxyTest", AutoSave = true)]
         public string TestTarget { get; set; }
 
         public Uri TestTargetUri
@@ -88,15 +91,15 @@ namespace BlueDwarf.ViewModel
             }
         }
 
-        public ProxyPickerViewModel()
+        /// <summary>
+        /// Loads data related to this view-model.
+        /// </summary>
+        public override void Load()
         {
             Locale = new ProxyPickerLocale();
             ProxyServers = new DispatcherObservableCollection<HostPort>();
-            ProxyPageProviders = ProxyPageProvider.Default;
-            if (ProxyPageProvider == null)
-                ProxyPageProvider = ProxyPageProviders[0];
-            else
-                CheckProxyServers();
+            ProxyPages = ProxyPage.Default;
+            ProxyPage = ProxyPages.SingleOrDefault(p => p.PageUri == ProxyPageUri) ?? ProxyPages[0];
         }
 
         /// <summary>
@@ -108,7 +111,7 @@ namespace BlueDwarf.ViewModel
             ProxyServers.Clear();
             var testTargetUri = TestTargetUri;
             if (testTargetUri != null)
-                ProxyPageScanner.ScanPage(ProxyServers, ProxyPageProvider.PageUri, ProxyPageProvider.ParseAsText, ProxyPageProvider.HostPortEx, testTargetUri.Host, testTargetUri.Port, LocalProxy);
+                ProxyPageScanner.ScanPage(ProxyServers, ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, testTargetUri.Host, testTargetUri.Port, LocalProxy);
         }
     }
 }

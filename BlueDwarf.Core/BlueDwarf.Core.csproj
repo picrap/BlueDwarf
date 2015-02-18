@@ -97,7 +97,7 @@
     <Compile Include="Net\Proxy\Scanner\HostScanner.cs" />
     <Compile Include="Net\Proxy\Scanner\IProxyPageScanner.cs" />
     <Compile Include="Net\Proxy\Scanner\IProxyValidator.cs" />
-    <Compile Include="Net\Proxy\Scanner\ProxyPageProvider.cs" />
+    <Compile Include="Net\Proxy\Scanner\ProxyPage.cs" />
     <Compile Include="Net\Proxy\Scanner\ProxyPageScanner.cs" />
     <Compile Include="Net\Proxy\Scanner\ProxyPageScannerExtensions.cs" />
     <Compile Include="Net\Proxy\Scanner\ProxyValidator.cs" />

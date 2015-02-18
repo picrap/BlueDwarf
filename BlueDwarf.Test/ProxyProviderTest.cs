@@ -865,7 +865,7 @@ $(document).ready(function(){
         [TestMethod]
         public void ProxynovaTest()
         {
-            var hostPorts = HostScanner.CreateHostPorts(ProxynovaCountryES, ProxyPageProvider.ProxynovaEx).ToArray();
+            var hostPorts = HostScanner.CreateHostPorts(ProxynovaCountryES, ProxyPage.ProxynovaEx).ToArray();
             Assert.AreEqual(6, hostPorts.Length);
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("62.82.58.99"), 8080)));
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("84.236.134.2"), 8080)));
@@ -878,7 +878,7 @@ $(document).ready(function(){
         [TestMethod]
         public void XroxyTest()
         {
-            var hostPorts = HostScanner.CreateHostPorts(XroxyRSS, ProxyPageProvider.XroxyRssEx).ToArray();
+            var hostPorts = HostScanner.CreateHostPorts(XroxyRSS, ProxyPage.XroxyRssEx).ToArray();
             Assert.AreEqual(4, hostPorts.Length);
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("1.234.23.22"), 8088)));
             Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.1.16.123"), 3128)));

@@ -12,13 +12,13 @@
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.ProxyPageLabel}"/>
-            <ComboBox Width="200" ItemsSource="{Binding ProxyPageProviders}" DisplayMemberPath="Name" SelectedItem="{Binding ProxyPageProvider}" />
+            <ComboBox Width="200" ItemsSource="{Binding ProxyPages}" DisplayMemberPath="Name" SelectedItem="{Binding ProxyPage}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{DynamicResource DialogTextBlock}" >
                 <Run Text="{Binding Locale.ProxyPageUrlLabel, Mode=OneWay}"/>
-                <Hyperlink NavigateUri="{Binding ProxyPageProvider.PageUri, Mode=OneWay}" RequestNavigate="OnHyperlinkRequestNavigate">
-                    <TextBlock Text="{Binding ProxyPageProvider.PageUri, Mode=OneWay}"/>
+                <Hyperlink NavigateUri="{Binding ProxyPage.PageUri, Mode=OneWay}" RequestNavigate="OnHyperlinkRequestNavigate">
+                    <TextBlock Text="{Binding ProxyPage.PageUri, Mode=OneWay}"/>
                 </Hyperlink>
             </TextBlock>
         </StackPanel>

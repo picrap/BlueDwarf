@@ -28,3 +28,7 @@ using System.Windows.Markup;
 
 [assembly: XmlnsPrefix("urn:blue-dwarf/view-model", "vm")]
 [assembly: XmlnsPrefix("urn:blue-dwarf/view", "v")]
+
+#if DEBUG
+[assembly: XmlnsDefinition("debug", "Namespace")]
+#endif

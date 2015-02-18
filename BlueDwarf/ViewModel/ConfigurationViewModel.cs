@@ -294,11 +294,11 @@ namespace BlueDwarf.ViewModel
             }
         }
 
-        private IList<HostPort> ScanPage(Uri testUri, ProxyPageProvider proxyPageProvider, params  Uri[] proxyServers)
+        private IList<HostPort> ScanPage(Uri testUri, ProxyPage proxyPage, params  Uri[] proxyServers)
         {
             try
             {
-                var p = ProxyPageScanner.ScanPage(proxyPageProvider, testUri.Host, testUri.Port, proxyServers).ToArray();
+                var p = ProxyPageScanner.ScanPage(proxyPage, testUri.Host, testUri.Port, proxyServers).ToArray();
                 return p;
             }
             catch

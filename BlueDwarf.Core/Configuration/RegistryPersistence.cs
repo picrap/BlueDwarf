@@ -18,6 +18,13 @@ namespace BlueDwarf.Configuration
 
         private readonly IDictionary<string, object> _values = new Dictionary<string, object>();
 
+        /// <summary>
+        /// Gets a value, or default value.
+        /// Searches in cache first, then loads from registry
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns></returns>
         public object GetValue(string name, object defaultValue)
         {
             lock (_values)
@@ -33,6 +40,12 @@ namespace BlueDwarf.Configuration
             }
         }
 
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="writeNow">if set to <c>true</c> persists the value immediately.</param>
         public void SetValue(string name, object value, bool writeNow)
         {
             _values[name] = value;
@@ -40,6 +53,9 @@ namespace BlueDwarf.Configuration
                 _serializer.Serialize(Key, name, value);
         }
 
+        /// <summary>
+        /// Writes all changes down to registry.
+        /// </summary>
         public void Write()
         {
             foreach (var kv in _values)

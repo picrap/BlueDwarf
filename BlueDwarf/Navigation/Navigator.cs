@@ -26,11 +26,24 @@ namespace BlueDwarf.Navigation
 
         public event EventHandler Exiting;
 
+        /// <summary>
+        /// Configures the specified view model type to be used with view type.
+        /// </summary>
+        /// <param name="viewModelType">Type of the view model.</param>
+        /// <param name="viewType">Type of the view.</param>
         public void Configure(Type viewModelType, Type viewType)
         {
             _viewByViewModel[viewModelType] = viewType;
         }
 
+        /// <summary>
+        /// Shows the specified view model type.
+        /// </summary>
+        /// <param name="viewModelType">Type of the view model.</param>
+        /// <param name="initializer"></param>
+        /// <returns>
+        /// The view model if dialog is OK, null if cancelled
+        /// </returns>
         public object Show(Type viewModelType, Action<object> initializer = null)
         {
             var viewModel = (ViewModel)UnityContainer.Resolve(viewModelType);
@@ -52,6 +65,12 @@ namespace BlueDwarf.Navigation
             return null;
         }
 
+        /// <summary>
+        /// Shows the view/view-model as dialog.
+        /// </summary>
+        /// <param name="window">The window.</param>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
         private object ShowDialog(Window window, ViewModel viewModel)
         {
             window.Owner = _windows.Peek();
@@ -62,6 +81,12 @@ namespace BlueDwarf.Navigation
             return ok ?? (false) ? viewModel : null;
         }
 
+        /// <summary>
+        /// Shows the view/view-model as main window (first window).
+        /// </summary>
+        /// <param name="window">The window.</param>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
         private object ShowMain(Window window, ViewModel viewModel)
         {
             _windows.Push(window);
@@ -86,6 +111,10 @@ namespace BlueDwarf.Navigation
             }
         }
 
+        /// <summary>
+        /// Exits the view.
+        /// </summary>
+        /// <param name="validate">for a dialog, true if the result has to be used</param>
         public void Exit(bool validate)
         {
             var window = _windows.Pop();
