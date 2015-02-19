@@ -4,10 +4,10 @@
         Title="{Binding Locale.Title}" SizeToContent="WidthAndHeight" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
-        xmlns:controls="clr-namespace:BlueDwarf.Controls"
+        xmlns:vm="clr-namespace:BlueDwarf.ViewModel"
+        xmlns:scanner="clr-namespace:BlueDwarf.Net.Proxy.Scanner;assembly=BlueDwarf.Core"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewModel:ProxyPickerViewModel, IsDesignTimeCreatable=false}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+        d:DataContext="{d:DesignInstance Type=vm:ProxyPickerViewModel, IsDesignTimeCreatable=false}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
         <StackPanel Orientation="Horizontal">
@@ -23,18 +23,20 @@
             </TextBlock>
         </StackPanel>
         <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.PickProxyLabel}"/>
-        <ListBox ItemsSource="{Binding ProxyServers}" Height="150" SelectedItem="{Binding ProxyServer}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock >
-                            <Run Text="{Binding HostOrAddress, Mode=OneTime}"/>
-                            <Run Text=":"/>
-                            <Run Text="{Binding Port, Mode=OneTime}"/>
-                        </TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListView ItemsSource="{Binding ProxyServers}" Height="150" SelectedItem="{Binding ProxyServer}" >
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="Proxy" Width="200" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock>
+                                    <Run Text="{Binding HostOrAddress, Mode=OneTime}"/><Run Text=":"/><Run Text="{Binding Port, Mode=OneTime}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </StackPanel>
 </Window>

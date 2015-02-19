@@ -36,5 +36,9 @@
     <Style x:Key="DialogFrame" TargetType="FrameworkElement">
         <Setter Property="Margin" Value="8"/>
     </Style>
-    
+
+    <Style TargetType="GridViewColumnHeader">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
 </ResourceDictionary>

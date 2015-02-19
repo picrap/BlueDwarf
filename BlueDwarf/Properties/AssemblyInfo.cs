@@ -30,5 +30,5 @@ using System.Windows.Markup;
 [assembly: XmlnsPrefix("urn:blue-dwarf/view", "v")]
 
 #if DEBUG
-[assembly: XmlnsDefinition("debug", "Namespace")]
+[assembly: XmlnsDefinition("debug", "BlueDwarf")]
 #endif
