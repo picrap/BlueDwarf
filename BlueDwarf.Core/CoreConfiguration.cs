@@ -5,6 +5,8 @@ namespace BlueDwarf
     using Configuration;
     using Microsoft.Practices.Unity;
     using Net;
+    using Net.Geolocation;
+    using Net.Geolocation.HostIP;
     using Net.Name;
     using Net.Proxy;
     using Net.Proxy.Client;
@@ -40,6 +42,7 @@ namespace BlueDwarf
             container.RegisterType<IHostScanner, HostScanner>(AsSingleton());
             container.RegisterType<IProxyValidator, ProxyValidator>(AsSingleton());
             container.RegisterType<IProxyPageScanner, ProxyPageScanner>(AsSingleton());
+            container.RegisterType<IGeolocation, HostIPGeolocation>(AsSingleton());
         }
     }
 }

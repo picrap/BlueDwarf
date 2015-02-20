@@ -6,12 +6,14 @@ namespace BlueDwarf.ViewModel
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Net;
     using System.Threading;
     using Annotations;
     using Configuration;
     using Controls;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Net.Geolocation;
     using Net.Proxy.Client;
     using Net.Proxy.Scanner;
     using Net.Proxy.Server;
@@ -37,6 +39,9 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IProxyPageScanner ProxyPageScanner { get; set; }
+
+        [Dependency]
+        public IGeolocation Geolocation { get; set; }
 
         public ConfigurationLocale Locale { get; set; }
 
@@ -285,6 +290,10 @@ namespace BlueDwarf.ViewModel
                 var testTargetUri = TestTargetUri;
                 if (testTargetUri != null)
                     ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
+
+                // test
+                //Geolocation.Locate(new IPAddress(new byte[] {8, 8, 8, 8}), ProxyServer.ProxyRoute);
+
                 SetStatus(null);
             }
             catch (ProxyRouteException pre)
@@ -292,19 +301,6 @@ namespace BlueDwarf.ViewModel
                 ProxyServer.ProxyRoute = null;
                 SetStatus(pre);
             }
-        }
-
-        private IList<HostPort> ScanPage(Uri testUri, ProxyPage proxyPage, params  Uri[] proxyServers)
-        {
-            try
-            {
-                var p = ProxyPageScanner.ScanPage(proxyPage, testUri.Host, testUri.Port, proxyServers).ToArray();
-                return p;
-            }
-            catch
-            {
-            }
-            return null;
         }
 
         private readonly object _keepAliveSerialLock = new object();
