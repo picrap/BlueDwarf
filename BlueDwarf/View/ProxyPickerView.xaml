@@ -12,7 +12,7 @@
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.ProxyPageLabel}"/>
-            <ComboBox Width="200" ItemsSource="{Binding ProxyPages}" DisplayMemberPath="Name" SelectedItem="{Binding ProxyPage}" />
+            <ComboBox Width="300" ItemsSource="{Binding ProxyPages}" DisplayMemberPath="Name" SelectedItem="{Binding ProxyPage}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{DynamicResource DialogTextBlock}" >
@@ -29,9 +29,14 @@
                     <GridViewColumn Header="Proxy" Width="200" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock>
-                                    <Run Text="{Binding HostOrAddress, Mode=OneTime}"/><Run Text=":"/><Run Text="{Binding Port, Mode=OneTime}"/>
-                                </TextBlock>
+                                <TextBlock Text="{Binding DisplayName, Mode=OneTime}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Country" Width="200" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding CountryName, Mode=OneTime}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

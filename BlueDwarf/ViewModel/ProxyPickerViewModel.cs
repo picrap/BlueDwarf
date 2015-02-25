@@ -9,6 +9,8 @@ namespace BlueDwarf.ViewModel
     using Configuration;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Net.Geolocation;
+    using Net.Proxy.Client;
     using Net.Proxy.Scanner;
     using Properties;
     using Resources.Localization;
@@ -24,6 +26,12 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public INavigator Navigator { get; set; }
+
+        [Dependency]
+        public IGeolocation Geolocation { get; set; }
+
+        [Dependency]
+        public IProxyClient ProxyClient { get; set; }
 
         [NotifyPropertyChanged]
         public IList<ProxyPage> ProxyPages { get; set; }
@@ -45,7 +53,7 @@ namespace BlueDwarf.ViewModel
             }
         }
 
-        public IList<HostPort> ProxyServers { get; set; }
+        public IList<Proxy> ProxyServers { get; set; }
 
         [Persistent("ProxyTest", AutoSave = true)]
         public string TestTarget { get; set; }
@@ -71,7 +79,7 @@ namespace BlueDwarf.ViewModel
 
         public ProxyPickerLocale Locale { get; set; }
 
-        private HostPort _proxyServer;
+        private Proxy _proxyServer;
 
         /// <summary>
         /// Gets or sets the selected proxy server.
@@ -81,7 +89,7 @@ namespace BlueDwarf.ViewModel
         /// The proxy server.
         /// </value>
         [NotifyPropertyChanged]
-        public HostPort ProxyServer
+        public Proxy ProxyServer
         {
             get { return _proxyServer; }
             set
@@ -97,7 +105,7 @@ namespace BlueDwarf.ViewModel
         public override void Load()
         {
             Locale = new ProxyPickerLocale();
-            ProxyServers = new DispatcherObservableCollection<HostPort>();
+            ProxyServers = new DispatcherObservableCollection<Proxy>();
             ProxyPages = ProxyPage.Default;
             ProxyPage = ProxyPages.SingleOrDefault(p => p.PageUri == ProxyPageUri) ?? ProxyPages[0];
         }
@@ -111,7 +119,15 @@ namespace BlueDwarf.ViewModel
             ProxyServers.Clear();
             var testTargetUri = TestTargetUri;
             if (testTargetUri != null)
-                ProxyPageScanner.ScanPage(ProxyServers, ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, testTargetUri.Host, testTargetUri.Port, LocalProxy);
+            {
+                var proxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy);
+                foreach (var hostPort in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, testTargetUri.Host, testTargetUri.Port, LocalProxy))
+                {
+                    var location = Geolocation.Locate(hostPort.Address, proxyRoute);
+                    var proxy = new Proxy(hostPort, location);
+                    ProxyServers.Add(proxy);
+                }
+            }
         }
     }
 }

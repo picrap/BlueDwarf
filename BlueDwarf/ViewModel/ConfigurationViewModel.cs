@@ -291,9 +291,6 @@ namespace BlueDwarf.ViewModel
                 if (testTargetUri != null)
                     ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
 
-                // test
-                //Geolocation.Locate(new IPAddress(new byte[] {8, 8, 8, 8}), ProxyServer.ProxyRoute);
-
                 SetStatus(null);
             }
             catch (ProxyRouteException pre)
@@ -423,7 +420,7 @@ namespace BlueDwarf.ViewModel
         {
             var viewModel = Navigator.Show<ProxyPickerViewModel>();
             if (viewModel != null)
-                RemoteProxy = new Uri(string.Format("http://{0}:{1}", viewModel.ProxyServer.HostOrAddress, viewModel.ProxyServer.Port));
+                RemoteProxy = new Uri(string.Format("http://{0}:{1}", viewModel.ProxyServer.HostPort.HostOrAddress, viewModel.ProxyServer.HostPort.Port));
         }
     }
 }

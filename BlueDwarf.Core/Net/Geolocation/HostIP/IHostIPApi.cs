@@ -3,6 +3,7 @@
 
 namespace BlueDwarf.Net.Geolocation.HostIP
 {
+    using System.Net;
     using System.ServiceModel;
     using Client;
 
@@ -11,6 +12,6 @@ namespace BlueDwarf.Net.Geolocation.HostIP
     {
         [OperationContract]
         [HttpGet(UriTemplate = "/get_json.php?ip={ip}")]
-        HostIPAddressGeolocation GetJson(string ip);
+        HostIPAddressGeolocation GetJson(IPAddress ip);
     }
 }

@@ -55,7 +55,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
             {
                 // All runs as parallel, since this is a massive network check with no CPU load at all
                 // TODO: parallelize more
-                HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().ForAll(
+                HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63).ForAll(
                        delegate(HostPort hp)
                        {
                            if (ProxyValidator.Validate(hp, testTargetHost, testTargetPort, proxyServers))
