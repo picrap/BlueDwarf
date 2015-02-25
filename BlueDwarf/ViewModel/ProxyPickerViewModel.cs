@@ -41,6 +41,12 @@ namespace BlueDwarf.ViewModel
         [Persistent("ProxyPage", AutoSave = true)]
         public Uri ProxyPageUri { get; set; }
 
+        /// <summary>
+        /// Gets or sets the selected proxy page.
+        /// </summary>
+        /// <value>
+        /// The proxy page.
+        /// </value>
         [NotifyPropertyChanged]
         public ProxyPage ProxyPage
         {
@@ -53,11 +59,23 @@ namespace BlueDwarf.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets the proxy servers list. Selector is bound to this
+        /// </summary>
+        /// <value>
+        /// The proxy servers.
+        /// </value>
         public IList<Proxy> ProxyServers { get; set; }
 
         [Persistent("ProxyTest", AutoSave = true)]
         public string TestTarget { get; set; }
 
+        /// <summary>
+        /// Gets the test target URI.
+        /// </summary>
+        /// <value>
+        /// The test target URI.
+        /// </value>
         public Uri TestTargetUri
         {
             get

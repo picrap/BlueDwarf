@@ -7,6 +7,7 @@ namespace BlueDwarf
     using Net;
     using Net.Geolocation;
     using Net.Geolocation.HostIP;
+    using Net.Geolocation.Telize;
     using Net.Name;
     using Net.Proxy;
     using Net.Proxy.Client;
@@ -42,7 +43,7 @@ namespace BlueDwarf
             container.RegisterType<IHostScanner, HostScanner>(AsSingleton());
             container.RegisterType<IProxyValidator, ProxyValidator>(AsSingleton());
             container.RegisterType<IProxyPageScanner, ProxyPageScanner>(AsSingleton());
-            container.RegisterType<IGeolocation, HostIPGeolocation>(AsSingleton());
+            container.RegisterType<IGeolocation, TelizeGeolocation>(AsSingleton());
         }
     }
 }

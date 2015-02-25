@@ -60,7 +60,7 @@ namespace BlueDwarf.Net.Client
             }
 
             // then create the route and send the request
-            using (var stream = _proxyRoute.Connect(_hostAddress.Host, _hostAddress.Port, false))
+            using (var stream = _proxyRoute.Connect(_hostAddress.Host, _hostAddress.Port, true))
             {
                 var request = new HttpRequest(restCall.Verb, path)
                     .AddHeader("Host", _hostAddress.GetHostAndPort())
