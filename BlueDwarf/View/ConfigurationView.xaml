@@ -22,12 +22,12 @@
         <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{controls:Command {Binding Restore}}">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <mc:AlternateContent>
-                        <!-- just because I always have two instances of blue dwarf running at the same time -->
+                    <!--<mc:AlternateContent>
+                        --><!-- just because I always have two instances of blue dwarf running at the same time --><!--
                         <mc:Choice Requires="debug">
                             <MenuItem Header="(debug)" IsEnabled="False" />
                         </mc:Choice>
-                    </mc:AlternateContent>
+                    </mc:AlternateContent>-->
                     <MenuItem Header="{Binding Locale.MenuConfigure}" Command="{controls:Command {Binding Restore}}" FontWeight="Bold" />
                     <MenuItem Header="{Binding Locale.MenuExit}" Command="{controls:Command {Binding Exit}}" />
                 </ContextMenu>

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="BlueDwarf.View.TunnelConfigurationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:controls="clr-namespace:BlueDwarf.Controls"
+             xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=true}"
+             d:DesignHeight="300" d:DesignWidth="400">
+    <Grid Style="{StaticResource ContentRoot}">
+        <StackPanel Orientation="Vertical" >
+            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyTunnelConfigurationLegend}"/>
+            <Grid Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.LocalProxyLabel}" />
+                <Grid Grid.Column="1" Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
+                    <controls:Status Grid.Column="2" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.RemoteProxyLabel}" />
+                <Grid Grid.Column="1" Grid.Row="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
+                    <Button Grid.Column="1" Content="{Binding Locale.PickRemoteProxy}" Command="{controls:Command {Binding PickRemoteProxy}}" />
+                    <controls:Status Grid.Column="2" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.TestURL}" />
+                <Grid Grid.Column="1" Grid.Row="3" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding TestTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:Status Grid.Column="1" Code="{Binding TestTargetStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                </Grid>
+
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

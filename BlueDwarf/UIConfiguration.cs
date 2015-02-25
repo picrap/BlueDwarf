@@ -31,7 +31,7 @@ namespace BlueDwarf
         private static void ConfigureViews(IUnityContainer container)
         {
             var navigator = container.Resolve<INavigator>();
-            navigator.Configure<ConfigurationViewModel, ConfigurationView>();
+            navigator.Configure<ConfigurationViewModel, HomeView>();
             navigator.Configure<ProxyAnalysisViewModel, ProxyAnalysisView>();
             navigator.Configure<WebDownloaderViewModel, WebDownloaderView>();
             navigator.Configure<ProxyPickerViewModel, ProxyPickerView>();

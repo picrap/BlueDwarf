@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="BlueDwarf.View.StatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=true}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Style="{StaticResource ContentRoot}">
+        <StackPanel Orientation="Vertical" >
+            <TextBlock>
+                        <Run Text="{Binding Locale.StatisticsConnections, Mode=OneTime}"/>
+                        <Run Text=" "/>
+                        <Run FontWeight="Bold" Text="{Binding ConnectionsCount}"/>
+            </TextBlock>
+            <TextBlock>
+                        <Run Text="{Binding Locale.StatisticsBytesRead, Mode=OneTime}"/>
+                        <Run Text=" "/>
+                        <Run FontWeight="Bold" Text="{Binding BytesRead, Converter={StaticResource UnitConverter}, ConverterParameter='B'}"/>
+            </TextBlock>
+            <TextBlock>
+                        <Run Text="{Binding Locale.StatisticsBytesWritten, Mode=OneTime}"/>
+                        <Run Text=" "/>
+                        <Run FontWeight="Bold" Text="{Binding BytesWritten, Converter={StaticResource UnitConverter}, ConverterParameter='B'}"/>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>
