@@ -84,7 +84,7 @@ namespace BlueDwarf
         private static void ShowConfiguration(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized)
         {
             var viewModel = navigator.Show(
-                delegate(ConfigurationViewModel vm)
+                delegate(HomeViewModel vm)
                 {
                     vm.ProxyServer = proxyServer;
                     if (socksListeningPort > 0)

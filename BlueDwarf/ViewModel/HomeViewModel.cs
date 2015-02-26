@@ -26,7 +26,7 @@ namespace BlueDwarf.ViewModel
     /// This is the main view
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public class ConfigurationViewModel : ViewModel
+    public class HomeViewModel : ViewModel
     {
         [Dependency]
         public IProxyClient ProxyClient { get; set; }
@@ -36,12 +36,6 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IPersistence Persistence { get; set; }
-
-        [Dependency]
-        public IProxyPageScanner ProxyPageScanner { get; set; }
-
-        [Dependency]
-        public IGeolocation Geolocation { get; set; }
 
         public ConfigurationLocale Locale { get; set; }
 
@@ -196,9 +190,9 @@ namespace BlueDwarf.ViewModel
         private readonly object _statisticsLock = new object();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationViewModel"/> class.
+        /// Initializes a new instance of the <see cref="HomeViewModel"/> class.
         /// </summary>
-        public ConfigurationViewModel()
+        public HomeViewModel()
         {
             Locale = new ConfigurationLocale();
         }

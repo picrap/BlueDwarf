@@ -3,6 +3,7 @@
 namespace BlueDwarf.Controls
 {
     using System;
+    using System.ComponentModel;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
@@ -85,6 +86,8 @@ namespace BlueDwarf.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this))
+                return;
             if (_silent.HasValue)
                 ActiveXControl.Silent = _silent.Value;
             WebBrowser.LoadCompleted += OnLoadCompleted;

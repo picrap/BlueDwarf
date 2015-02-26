@@ -11,7 +11,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:debug="debug"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
+        d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
         Visibility="Hidden">
     <Grid Margin="8" Width="450">
         <Grid.ColumnDefinitions>

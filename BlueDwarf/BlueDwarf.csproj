@@ -148,8 +148,8 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\LocalProxyKeepaliveView.xaml.cs">
-      <DependentUpon>LocalProxyKeepaliveView.xaml</DependentUpon>
+    <Compile Include="View\HomeLocalProxyKeepaliveView.xaml.cs">
+      <DependentUpon>HomeLocalProxyKeepaliveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Properties\Attached.cs" />
     <Compile Include="View\Properties\Property.cs" />
@@ -196,17 +196,17 @@
       <DependentUpon>ProxyAnalysisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BoolToVisibilityConverter.cs" />
-    <Compile Include="View\ProxyConfigurationView.xaml.cs">
-      <DependentUpon>ProxyConfigurationView.xaml</DependentUpon>
+    <Compile Include="View\HomeProxyConfigurationView.xaml.cs">
+      <DependentUpon>HomeProxyConfigurationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProxyPickerView.xaml.cs">
       <DependentUpon>ProxyPickerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StatusView.xaml.cs">
-      <DependentUpon>StatusView.xaml</DependentUpon>
+    <Compile Include="View\HomeStatusView.xaml.cs">
+      <DependentUpon>HomeStatusView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TunnelConfigurationView.xaml.cs">
-      <DependentUpon>TunnelConfigurationView.xaml</DependentUpon>
+    <Compile Include="View\HomeTunnelConfigurationView.xaml.cs">
+      <DependentUpon>HomeTunnelConfigurationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WebDownloaderView.xaml.cs">
       <DependentUpon>WebDownloaderView.xaml</DependentUpon>
@@ -218,7 +218,7 @@
     <Compile Include="View\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -280,7 +280,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LocalProxyKeepaliveView.xaml">
+    <Page Include="View\HomeLocalProxyKeepaliveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -288,7 +288,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ProxyConfigurationView.xaml">
+    <Page Include="View\HomeProxyConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,11 +296,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StatusView.xaml">
+    <Page Include="View\HomeStatusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TunnelConfigurationView.xaml">
+    <Page Include="View\HomeTunnelConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

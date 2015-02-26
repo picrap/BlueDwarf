@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="BlueDwarf.View.TunnelConfigurationView"
+﻿<UserControl x:Class="BlueDwarf.View.HomeTunnelConfigurationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:BlueDwarf.Controls"
              xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=viewModel:ConfigurationViewModel, IsDesignTimeCreatable=true}"
+             d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}"
              d:DesignHeight="300" d:DesignWidth="400">
     <Grid Style="{StaticResource ContentRoot}">
         <StackPanel Orientation="Vertical" >
