@@ -3,19 +3,14 @@
 namespace BlueDwarf.ViewModel
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Net;
     using System.Threading;
     using Annotations;
     using Configuration;
     using Controls;
     using Microsoft.Practices.Unity;
     using Navigation;
-    using Net.Geolocation;
     using Net.Proxy.Client;
-    using Net.Proxy.Scanner;
     using Net.Proxy.Server;
     using Properties;
     using Resources.Localization;

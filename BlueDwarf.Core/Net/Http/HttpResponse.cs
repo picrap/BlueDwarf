@@ -55,6 +55,7 @@ namespace BlueDwarf.Net.Http
                 {
                     _headers = (from line in Lines.Skip(1)
                                 let kvp = line.Split(new[] { ':' }, 2)
+                                where kvp.Length == 2
                                 let kv = Tuple.Create(kvp[0], kvp[1])
                                 select kv).ToDictionary(kv => kv.Item1.Trim(), kv => kv.Item2.Trim(), StringComparer.InvariantCultureIgnoreCase);
                 }

@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CountryColumnHeader" xml:space="preserve">
+    <value>Country</value>
+  </data>
   <data name="PickProxyLabel" xml:space="preserve">
     <value>Pick a proxy server:</value>
+  </data>
+  <data name="ProxyColumnHeader" xml:space="preserve">
+    <value>Proxy</value>
   </data>
   <data name="ProxyPageLabel" xml:space="preserve">
     <value>Pick a proxy provider page:</value>

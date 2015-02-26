@@ -10,7 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <StackPanel Orientation="Vertical" >
-            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyTunnelConfigurationLegend}" TextWrapping="Wrap" />
+            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyServerConfigurationLegend}" TextWrapping="Wrap" />
             <Grid Margin="0,4,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -27,8 +27,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
                        Text="{Binding Locale.Socks4ServerPort}" />
-                <TextBox Grid.Column="1" Grid.Row="0"  Style="{DynamicResource DialogTextBox}" IsEnabled="{Binding CanSetSocksListeningPort}"
-                                 Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Grid.Column="1" Grid.Row="0" IsEnabled="{Binding CanSetSocksListeningPort}"
+                         Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Width="100" HorizontalAlignment="Left"/>
             </Grid>
         </StackPanel>
     </Grid>

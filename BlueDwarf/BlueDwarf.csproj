@@ -149,6 +149,7 @@
     <Compile Include="Utility\InstanceData.cs" />
     <Compile Include="ViewModel\Proxy.cs" />
     <Compile Include="ViewModel\ProxyPickerViewModel.cs" />
+    <Compile Include="View\GridViewSort.cs" />
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -220,9 +221,6 @@
   <ItemGroup>
     <Compile Include="UIConfiguration.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
-    <Compile Include="View\ConfigurationView.xaml.cs">
-      <DependentUpon>ConfigurationView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -274,10 +272,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\UrlBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -178,10 +178,10 @@
     <value>Test URL:</value>
   </data>
   <data name="WizardInvoke" xml:space="preserve">
-    <value>Summon the wizard!</value>
+    <value>Wizard...</value>
   </data>
   <data name="PickRemoteProxy" xml:space="preserve">
-    <value>...</value>
+    <value>Pick...</value>
   </data>
   <data name="ConfigurationTitle" xml:space="preserve">
     <value>Configuration</value>

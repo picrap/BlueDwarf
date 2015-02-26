@@ -15,7 +15,7 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Column="0" x:Name="SchemeComboxBox" SelectionChanged="OnSchemeChanged" VerticalAlignment="Stretch"/>
+        <ComboBox Grid.Column="0" x:Name="SchemeComboxBox" SelectionChanged="OnSchemeChanged" VerticalAlignment="Stretch" Width="60"/>
         <TextBlock Grid.Column="0" x:Name="SchemeTextBlock" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="1" Text="://" VerticalAlignment="Center"/>
         <TextBox Grid.Column="2" x:Name="HostTextBox" TextChanged="OnHostChanged" VerticalAlignment="Stretch" />
