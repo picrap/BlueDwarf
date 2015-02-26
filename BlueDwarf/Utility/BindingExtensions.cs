@@ -5,17 +5,26 @@ namespace BlueDwarf.Utility
 {
     using System.Windows.Data;
 
+    /// <summary>
+    /// Extensions to binding
+    /// </summary>
     internal static class BindingExtensions
     {
-        public static object GetValue(this Binding binding, object dataItem)
+        /// <summary>
+        /// Gets the value of binding related to data context.
+        /// </summary>
+        /// <param name="binding">The binding.</param>
+        /// <param name="dataContext">The data item.</param>
+        /// <returns></returns>
+        public static object GetValue(this Binding binding, object dataContext)
         {
-            if (binding == null || dataItem == null)
+            if (binding == null || dataContext == null)
                 return null;
 
             var bindingPath = binding.Path.Path;
             var properties = bindingPath.Split('.');
 
-            var currentObject = dataItem;
+            var currentObject = dataContext;
 
             foreach (string property in properties)
             {

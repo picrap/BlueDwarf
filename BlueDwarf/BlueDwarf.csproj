@@ -141,7 +141,6 @@
     </Compile>
     <Compile Include="Utility\Async.cs" />
     <Compile Include="Utility\BindingExtensions.cs" />
-    <Compile Include="Utility\BindingReader.cs" />
     <Compile Include="Utility\UISync.cs" />
     <Compile Include="Utility\ExclusiveUpdate.cs" />
     <Compile Include="Utility\InstanceData.cs" />
