@@ -8,7 +8,8 @@
     </Style>
 
     <Style x:Key="DialogTextBlock" TargetType="TextBlock" BasedOn="{StaticResource DialogElement}">
-        <Setter Property="Margin" Value="0,3,8,4"/>
+        <Setter Property="Margin" Value="0,0,8,1"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
     <Style x:Key="LegendTextBlock" TargetType="TextBlock" BasedOn="{StaticResource DialogElement}">

@@ -11,7 +11,7 @@
                   mc:Ignorable="d" 
                   Title="{Binding Locale.Title}" IsTitleVisible="True"
                   d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
-                  Width="600" Height="300"
+                  Width="600" Height="300" Icon="/Resources/key.ico"
                   ContentSource="/View/HomeTunnelConfigurationView.xaml" ResizeMode="NoResize"  >
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="{v:BindAny {Binding Locale.ConfigurationTitle}}">

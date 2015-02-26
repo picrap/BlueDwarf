@@ -7,6 +7,9 @@
              d:DesignWidth="400" d:DesignHeight="30"
              VerticalAlignment="Stretch"
              >
+    <UserControl.Resources>
+        <Thickness x:Key="TextBlockMargin">0,0,0,4</Thickness>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -16,10 +19,10 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <ComboBox Grid.Column="0" x:Name="SchemeComboxBox" SelectionChanged="OnSchemeChanged" VerticalAlignment="Stretch" Width="60"/>
-        <TextBlock Grid.Column="0" x:Name="SchemeTextBlock" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Text="://" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="0" x:Name="SchemeTextBlock" Margin="{StaticResource TextBlockMargin}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Text="://" Margin="{StaticResource TextBlockMargin}" VerticalAlignment="Center"/>
         <TextBox Grid.Column="2" x:Name="HostTextBox" TextChanged="OnHostChanged" VerticalAlignment="Stretch" />
-        <TextBlock Grid.Column="3" Text=":" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="3" Text=":" Margin="{StaticResource TextBlockMargin}" VerticalAlignment="Center"/>
         <TextBox Grid.Column="4" x:Name="PortTextBox" TextChanged="OnPortChanged" VerticalAlignment="Stretch" Width="50"/>
     </Grid>
 </UserControl>
