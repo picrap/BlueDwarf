@@ -26,20 +26,15 @@ namespace BlueDwarf.Utility
 
             var currentObject = dataContext;
 
-            foreach (string property in properties)
+            foreach (var property in properties)
             {
                 var currentType = currentObject.GetType();
                 var propertyInfo = currentType.GetProperty(property);
                 if (propertyInfo == null)
-                {
-                    currentObject = null;
-                    break;
-                }
+                    return null;
                 currentObject = propertyInfo.GetValue(currentObject, null);
                 if (currentObject == null)
-                {
-                    break;
-                }
+                    return null;
             }
 
             return currentObject;

@@ -2,22 +2,10 @@
 // more information at https://github.com/picrap/BlueDwarf
 
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows.Markup;
 
 [assembly: AssemblyTitle("BlueDwarf")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("BlueDwarf")]
-[assembly: AssemblyCopyright("Copyright © None Corp. 2014")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-
-[assembly: ComVisible(false)]
-
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyDescription("UI for Blue Dwarf")]
 
 // Why the hell does the following not work on VS2010? Too old?
 

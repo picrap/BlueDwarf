@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignWidth="400"
+             d:DesignWidth="400" d:DesignHeight="30"
+             VerticalAlignment="Stretch"
              >
-    <Grid >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -14,11 +15,11 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Column="0" x:Name="SchemeComboxBox" SelectionChanged="OnSchemeChanged" VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="0" x:Name="SchemeComboxBox" SelectionChanged="OnSchemeChanged" VerticalAlignment="Stretch"/>
         <TextBlock Grid.Column="0" x:Name="SchemeTextBlock" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="1" Text="://" VerticalAlignment="Center"/>
-        <TextBox Grid.Column="2" x:Name="HostTextBox" TextChanged="OnHostChanged" VerticalAlignment="Center" />
+        <TextBox Grid.Column="2" x:Name="HostTextBox" TextChanged="OnHostChanged" VerticalAlignment="Stretch" />
         <TextBlock Grid.Column="3" Text=":" VerticalAlignment="Center"/>
-        <TextBox Grid.Column="4" x:Name="PortTextBox" TextChanged="OnPortChanged" VerticalAlignment="Center" Width="50"/>
+        <TextBox Grid.Column="4" x:Name="PortTextBox" TextChanged="OnPortChanged" VerticalAlignment="Stretch" Width="50"/>
     </Grid>
 </UserControl>

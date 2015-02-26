@@ -9,9 +9,9 @@
                   xmlns:tb="http://www.hardcodet.net/taskbar"
                   xmlns:debug="debug"
                   mc:Ignorable="d" 
-                  d:DesignHeight="300" d:DesignWidth="300"
                   Title="{Binding Locale.Title}" IsTitleVisible="True"
                   d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
+                  Width="600" Height="300"
                   ContentSource="/View/HomeTunnelConfigurationView.xaml" ResizeMode="NoResize"  >
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="{v:BindAny {Binding Locale.ConfigurationTitle}}">

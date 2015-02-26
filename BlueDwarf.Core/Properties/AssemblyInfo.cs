@@ -5,19 +5,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("BlueDwarf.Core")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("BlueDwarf.Core")]
-[assembly: AssemblyCopyright("Copyright © None Corp. 2014")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTitle("BlueDwarf Core")]
+[assembly: AssemblyDescription("Core engine for Blue Dwarf")]
 
 [assembly: ComVisible(false)]
-
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("BlueDwarf.Test, PublicKey="
     + "00240000048000009400000006020000002400005253413100040000010001004f7a980f6539c6"

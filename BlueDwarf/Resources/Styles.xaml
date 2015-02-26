@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:v="urn:blue-dwarf/view">
+                    xmlns:v="urn:blue-dwarf/view"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <Style x:Key="DialogElement" TargetType="FrameworkElement">
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -39,6 +40,13 @@
 
     <Style TargetType="GridViewColumnHeader">
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <GridLength x:Key="EmptyRowHeight">10</GridLength>
+    <Thickness x:Key="LeftMargin">10,0,0,0</Thickness>
+    
+    <Style x:Key="DialogRowDefinition" TargetType="RowDefinition">
+        <Setter Property="Height" Value="40"/>
     </Style>
 
 </ResourceDictionary>

@@ -116,6 +116,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\BlueDwarf.Core\Properties\ProductInfo.cs">
+      <Link>Properties\ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="ApplicationOptions.cs" />
     <Compile Include="Collection\DispatcherObservableCollection.cs" />
     <Compile Include="Controls\UnitConverter.cs" />

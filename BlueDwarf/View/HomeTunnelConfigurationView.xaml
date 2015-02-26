@@ -18,39 +18,37 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition SharedSizeGroup="Fields"/>
+                    <RowDefinition Height="{StaticResource EmptyRowHeight}"/>
+                    <RowDefinition SharedSizeGroup="Fields"/>
+                    <RowDefinition Height="{StaticResource EmptyRowHeight}"/>
+                    <RowDefinition SharedSizeGroup="Fields"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.LocalProxyLabel}" />
                 <Grid Grid.Column="1" Grid.Row="0" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="55" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
                     <controls:Status Grid.Column="2" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 
-                <TextBlock Grid.Column="0" Grid.Row="1" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.RemoteProxyLabel}" />
-                <Grid Grid.Column="1" Grid.Row="1" >
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.RemoteProxyLabel}" />
+                <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="55" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
-                    <Button Grid.Column="1" Content="{Binding Locale.PickRemoteProxy}" Command="{controls:Command {Binding PickRemoteProxy}}" />
+                    <Button Grid.Column="1" Content="{Binding Locale.PickRemoteProxy}" Command="{controls:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 
-                <TextBlock Grid.Column="0" Grid.Row="3" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.TestURL}" />
-                <Grid Grid.Column="1" Grid.Row="3" >
+                <TextBlock Grid.Column="0" Grid.Row="4" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.TestURL}" />
+                <Grid Grid.Column="1" Grid.Row="4" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />

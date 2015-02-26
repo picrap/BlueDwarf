@@ -141,6 +141,7 @@
     <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
     <Compile Include="Net\Proxy\Server\ProxyStream.cs" />
     <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
+    <Compile Include="Properties\ProductInfo.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ObjectReader.cs" />
