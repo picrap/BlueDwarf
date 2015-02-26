@@ -142,13 +142,13 @@
     <value>This is where you configure the local proxy for your browser and other applications</value>
   </data>
   <data name="ProxyServerConfigurationTitle" xml:space="preserve">
-    <value>Proxy server configuration</value>
+    <value>Proxy</value>
   </data>
   <data name="ProxyTunnelConfigurationLegend" xml:space="preserve">
     <value>This is where you go out</value>
   </data>
   <data name="ProxyTunnelConfigurationTitle" xml:space="preserve">
-    <value>Proxy tunnel configuration</value>
+    <value>Tunnel</value>
   </data>
   <data name="RemoteProxyLabel" xml:space="preserve">
     <value>Remote proxy:</value>
@@ -182,5 +182,14 @@
   </data>
   <data name="PickRemoteProxy" xml:space="preserve">
     <value>...</value>
+  </data>
+  <data name="ConfigurationTitle" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="StatusTitle" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>The Blue Dwarf</value>
   </data>
 </root>

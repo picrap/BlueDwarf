@@ -140,6 +140,8 @@
       <DependentUpon>ProxyPickerLocale.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\Async.cs" />
+    <Compile Include="Utility\BindingExtensions.cs" />
+    <Compile Include="Utility\BindingReader.cs" />
     <Compile Include="Utility\UISync.cs" />
     <Compile Include="Utility\ExclusiveUpdate.cs" />
     <Compile Include="Utility\InstanceData.cs" />
@@ -152,6 +154,7 @@
       <DependentUpon>HomeLocalProxyKeepaliveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Properties\Attached.cs" />
+    <Compile Include="Controls\BindAnyExtension.cs" />
     <Compile Include="View\Properties\Property.cs" />
     <Compile Include="ViewModel\Properties\DependencyPropertyNotification.cs" />
     <Compile Include="ViewModel\Properties\NotifyPropertyChanged.cs" />

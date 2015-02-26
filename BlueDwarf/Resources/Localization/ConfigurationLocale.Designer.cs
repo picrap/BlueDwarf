@@ -61,6 +61,15 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Configuration.
+        /// </summary>
+        public static string ConfigurationTitle {
+            get {
+                return ResourceManager.GetString("ConfigurationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Refresh interval:.
         /// </summary>
         public static string LocalProxyKeepaliveRefreshIntervalLabel {
@@ -142,7 +151,7 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Proxy server configuration.
+        ///   Recherche une chaîne localisée semblable à Proxy.
         /// </summary>
         public static string ProxyServerConfigurationTitle {
             get {
@@ -160,7 +169,7 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Proxy tunnel configuration.
+        ///   Recherche une chaîne localisée semblable à Tunnel.
         /// </summary>
         public static string ProxyTunnelConfigurationTitle {
             get {
@@ -241,11 +250,29 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Status.
+        /// </summary>
+        public static string StatusTitle {
+            get {
+                return ResourceManager.GetString("StatusTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Test URL:.
         /// </summary>
         public static string TestURL {
             get {
                 return ResourceManager.GetString("TestURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The Blue Dwarf.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

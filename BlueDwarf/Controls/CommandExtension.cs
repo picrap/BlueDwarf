@@ -38,7 +38,7 @@ namespace BlueDwarf.Controls
                     return;
 
                 var parameter = _parameter;
-                var bindingParameter = parameter as Binding;
+                var bindingParameter = parameter as System.Windows.Data.Binding;
                 // because we bind to a method, this allows us to have a syntax control in XAML editor
                 if (bindingParameter != null)
                     parameter = viewModel.GetType().GetMember(bindingParameter.Path.Path).FirstOrDefault();

@@ -148,6 +148,7 @@
     <Compile Include="Utility\CustomAttributeProviderExtensions.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\EventHandlerExtensions.cs" />
+    <Compile Include="Utility\MemberInfoExtensions.cs" />
     <Compile Include="Utility\MethodBaseExtensions.cs" />
     <Compile Include="Utility\ObjectExtensions.cs" />
     <Compile Include="Utility\ObjectTypeConverter.cs" />

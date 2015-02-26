@@ -4,26 +4,26 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-                  xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
-                  xmlns:controls="clr-namespace:BlueDwarf.Controls"
+                  xmlns:vm="clr-namespace:BlueDwarf.ViewModel"
+                  xmlns:v="clr-namespace:BlueDwarf.Controls"
                   xmlns:tb="http://www.hardcodet.net/taskbar"
                   xmlns:debug="debug"
                   mc:Ignorable="d" 
                   d:DesignHeight="300" d:DesignWidth="300"
-                  Title="Blue Dwarf" IsTitleVisible="True"
-                  d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
+                  Title="{Binding Locale.Title}" IsTitleVisible="True"
+                  d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
                   ContentSource="/View/HomeTunnelConfigurationView.xaml" ResizeMode="NoResize"  >
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="Configuration">
+        <mui:LinkGroup DisplayName="{v:BindAny {Binding Locale.ConfigurationTitle}}">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Tunnel" Source="/View/HomeTunnelConfigurationView.xaml" />
-                <mui:Link DisplayName="Proxy" Source="/View/HomeProxyConfigurationView.xaml" />
-                <mui:Link DisplayName="Keepalive" Source="/View/HomeLocalProxyKeepaliveView.xaml" />
+                <mui:Link DisplayName="{v:BindAny {Binding Locale.ProxyTunnelConfigurationTitle}}" Source="/View/HomeTunnelConfigurationView.xaml" />
+                <mui:Link DisplayName="{v:BindAny {Binding Locale.ProxyServerConfigurationTitle}}" Source="/View/HomeProxyConfigurationView.xaml" />
+                <mui:Link DisplayName="{v:BindAny {Binding Locale.LocalProxyKeepaliveTitle}}" Source="/View/HomeLocalProxyKeepaliveView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="Status">
+        <mui:LinkGroup DisplayName="{v:BindAny {Binding Locale.StatusTitle}}">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="Keepalive" Source="/View/HomeStatusView.xaml" />
+                <mui:Link DisplayName="{v:BindAny {Binding Locale.StatisticsTitle}}" Source="/View/HomeStatusView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
@@ -31,7 +31,7 @@
     <mui:ModernWindow.BackgroundContent>
         <!-- Those controls are not visible, so here was a good place to put them -->
         <Grid Opacity="0.001">
-            <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{controls:Command {Binding Restore}}">
+            <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{v:Command {Binding Restore}}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
                         <mc:AlternateContent>
@@ -40,19 +40,19 @@
                                 <MenuItem Header="(debug)" IsEnabled="False" />
                             </mc:Choice>
                         </mc:AlternateContent>
-                        <MenuItem Header="{Binding Locale.MenuConfigure}" Command="{controls:Command {Binding Restore}}" FontWeight="Bold" />
-                        <MenuItem Header="{Binding Locale.MenuExit}" Command="{controls:Command {Binding Exit}}" />
+                        <MenuItem Header="{Binding Locale.MenuConfigure}" Command="{v:Command {Binding Restore}}" FontWeight="Bold" />
+                        <MenuItem Header="{Binding Locale.MenuExit}" Command="{v:Command {Binding Exit}}" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
-            <controls:CloseButton Command="{controls:Command {Binding Minimize}}" />
-            <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive1FullUri, Mode=OneWay}" Silent="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
-            <controls:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive2FullUri, Mode=OneWay}" Silent="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+            <v:CloseButton Command="{v:Command {Binding Minimize}}" />
+            <v:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive1FullUri, Mode=OneWay}" Silent="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+            <v:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive2FullUri, Mode=OneWay}" Silent="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
         </Grid>
     </mui:ModernWindow.BackgroundContent>
 
     <Grid>
         <!-- This one here, because it has to be shown at startup -->
-        <controls:Hider Show="{Binding Show, Mode=OneWay}" />
+        <v:Hider Show="{Binding Show, Mode=OneWay}" />
     </Grid>
 </mui:ModernWindow>
