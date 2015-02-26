@@ -1,4 +1,4 @@
-﻿<Window x:Class="BlueDwarf.View.ProxyAnalysisView"
+﻿<mui:ModernDialog x:Class="BlueDwarf.View.ProxyAnalysisView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Analysis" SizeToContent="WidthAndHeight" 
@@ -6,6 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:ProxyAnalysisViewModel, IsDesignTimeCreatable=true}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 
@@ -54,11 +55,13 @@
                 <TextBlock Text="{Binding Locale.WorkWithTwoProxy}" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
                 <TextBlock Text="{Binding Locale.WorkWithSomethingElse}" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                <Button Style="{DynamicResource DialogButton}" Content="{Binding Locale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
-                <Button Style="{DynamicResource DialogButton}" Content="{Binding Locale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
-            </StackPanel>
         </StackPanel>
         <controls:Loading Show="{Binding Loading}" />
     </Grid>
-</Window>
+    <mui:ModernDialog.Buttons>
+        <x:Array Type="Button">
+            <Button Content="{Binding Locale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
+            <Button Content="{Binding Locale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
+        </x:Array>
+    </mui:ModernDialog.Buttons>
+</mui:ModernDialog>
