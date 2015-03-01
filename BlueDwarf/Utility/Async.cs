@@ -27,6 +27,10 @@ namespace BlueDwarf.Utility
                 throw new InvalidOperationException("Impossible to run asynchronously a non-void method (you MoFo!)");
         }
 
+        /// <summary>
+        /// Launches the target method in a separate thread
+        /// </summary>
+        /// <param name="context">The method advice context.</param>
         public void Advise(MethodAdviceContext context)
         {
             if (KillExisting && _thread != null && _thread.IsAlive)

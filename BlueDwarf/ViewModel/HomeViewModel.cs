@@ -34,9 +34,16 @@ namespace BlueDwarf.ViewModel
 
         public ConfigurationLocale Locale { get; set; }
 
+        /// <summary>
+        /// Gets or sets the proxy server.
+        /// This property is injected directly by the caller (the application)
+        /// </summary>
+        /// <value>
+        /// The proxy server.
+        /// </value>
         public IProxyServer ProxyServer { get; set; }
 
-        public enum Category
+        private enum Category
         {
             None = 0,
             ProxyTunnel,
@@ -273,19 +280,23 @@ namespace BlueDwarf.ViewModel
         [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
-            try
+            for (; ; )
             {
-                SetStatusPending();
-                var testTargetUri = TestTargetUri;
-                if (testTargetUri != null)
-                    ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
+                try
+                {
+                    SetStatusPending();
+                    var testTargetUri = TestTargetUri;
+                    if (testTargetUri != null)
+                        ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
 
-                SetStatus(null);
-            }
-            catch (ProxyRouteException pre)
-            {
-                ProxyServer.ProxyRoute = null;
-                SetStatus(pre);
+                    SetStatus(null);
+                }
+                catch (ProxyRouteException pre)
+                {
+                    ProxyServer.ProxyRoute = null;
+                    SetStatus(pre);
+                }
+                Thread.Sleep(TimeSpan.FromMinutes(5));
             }
         }
 
