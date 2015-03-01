@@ -41,6 +41,10 @@ namespace BlueDwarf.View.Properties
 
         private static readonly object[] NoParameter = new object[0];
 
+        /// <summary>
+        /// Invoked once per property, when assembly is loaded
+        /// </summary>
+        /// <param name="context">The property info advice context</param>
         public void Advise(PropertyInfoAdviceContext context)
         {
             var propertyInfo = context.TargetProperty;

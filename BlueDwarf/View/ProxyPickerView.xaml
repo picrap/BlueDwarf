@@ -8,6 +8,7 @@
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   xmlns:v="clr-namespace:BlueDwarf.Controls"
                   xmlns:util="clr-namespace:Wpf.Util"
+                  xmlns:view="clr-namespace:BlueDwarf.View"
                   mc:Ignorable="d" 
                   d:DataContext="{d:DesignInstance Type=vm:ProxyPickerViewModel, IsDesignTimeCreatable=false}" 
                   ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" >
@@ -17,7 +18,7 @@
             <Button Content="{Binding Locale.CloseButton}" Command="{v:Command {Binding Close}}" />
         </x:Array>
     </mui:ModernDialog.Buttons>
-    
+
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.ProxyPageLabel}"/>
@@ -32,7 +33,7 @@
             </TextBlock>
         </StackPanel>
         <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.PickProxyLabel}"/>
-        <ListView ItemsSource="{Binding ProxyServers}" Height="150" SelectedItem="{Binding ProxyServer}"
+        <ListView ItemsSource="{Binding ProxyServers}" Height="200" SelectedItem="{Binding ProxyServer}"
                   util:GridViewSort.AutoSort="True">
             <ListView.View>
                 <GridView>
@@ -46,7 +47,11 @@
                     <GridViewColumn Header="{Binding Locale.CountryColumnHeader}" util:GridViewSort.PropertyName="CountryName" Width="200" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock Text="{Binding CountryName, Mode=OneTime}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image view:ImageSource.Uri="{Binding CountryCode, Converter={StaticResource LowerCaseConverter}, StringFormat=http://flagpedia.net/data/flags/small/{0}.png}" 
+                                           MinWidth="30" Height="16" RenderOptions.BitmapScalingMode="Fant" />
+                                    <TextBlock Margin="{StaticResource LeftMargin}" Text="{Binding CountryName, Mode=OneTime}"/>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

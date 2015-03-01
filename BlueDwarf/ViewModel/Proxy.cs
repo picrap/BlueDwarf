@@ -29,6 +29,14 @@ namespace BlueDwarf.ViewModel
         public string CountryName { get { return Geolocation.CountryName; } }
 
         /// <summary>
+        /// Gets the country code.
+        /// </summary>
+        /// <value>
+        /// The country code.
+        /// </value>
+        public string CountryCode { get { return Geolocation.CountryCode; } }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Proxy"/> class.
         /// </summary>
         /// <param name="hostPort">The host port.</param>

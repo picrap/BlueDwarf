@@ -97,7 +97,7 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick a proxy provider page:.
+        ///   Looks up a localized string similar to Select a proxy provider page:.
         /// </summary>
         public static string ProxyPageLabel {
             get {

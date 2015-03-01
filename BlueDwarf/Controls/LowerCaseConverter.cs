@@ -1,16 +1,16 @@
 ﻿// This is the blue dwarf
 // more information at https://github.com/picrap/BlueDwarf
+
 namespace BlueDwarf.Controls
 {
     using System;
     using System.Globalization;
-    using System.Windows;
     using System.Windows.Data;
 
     /// <summary>
-    /// Converts boolean to visibility
+    /// Converts a string to lower case
     /// </summary>
-    public class BoolToVisibilityConverter : IValueConverter
+    public class LowerCaseConverter: IValueConverter
     {
         /// <summary>
         /// Converts a value.
@@ -24,11 +24,9 @@ namespace BlueDwarf.Controls
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var boolValue = (bool)value;
-            var stringParameter = parameter as string;
-            if (stringParameter == "not")
-                boolValue = !boolValue;
-            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+            if (value == null)
+                return null;
+            return value.ToString().ToLower();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

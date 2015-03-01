@@ -130,7 +130,7 @@
     <value>Proxy</value>
   </data>
   <data name="ProxyPageLabel" xml:space="preserve">
-    <value>Pick a proxy provider page:</value>
+    <value>Select a proxy provider page:</value>
   </data>
   <data name="ProxyPageUrlLabel" xml:space="preserve">
     <value>URL:</value>

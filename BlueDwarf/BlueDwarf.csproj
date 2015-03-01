@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="ApplicationOptions.cs" />
     <Compile Include="Collection\DispatcherObservableCollection.cs" />
+    <Compile Include="Controls\LowerCaseConverter.cs" />
     <Compile Include="Controls\UnitConverter.cs" />
     <Compile Include="Resources\Localization\CommonLocale.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -170,6 +171,7 @@
     <Compile Include="Utility\InstanceData.cs" />
     <Compile Include="ViewModel\Proxy.cs" />
     <Compile Include="ViewModel\ProxyPickerViewModel.cs" />
+    <Compile Include="View\ImageSource.cs" />
     <Compile Include="View\GridViewSort.cs" />
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>

@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <controls:LowerCaseConverter x:Key="LowerCaseConverter"/>
             <controls:UnitConverter x:Key="UnitConverter"/>
             <!-- WPF 4.0 workaround -->
             <Style TargetType="{x:Type Rectangle}" />
