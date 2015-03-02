@@ -6,7 +6,6 @@ A small application allowing to discretely go outdoor, when your corporate proxy
 * Handles HTTP or SOCKS proxy server (SOCKS to be done)
 * Exposes a local SOCKS proxy server
 * Uses IE to send keepalive signal to corporate proxy
-* Shows a small blue dward in it UI...
 
 ## Download
 
