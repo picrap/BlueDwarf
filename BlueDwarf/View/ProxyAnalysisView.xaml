@@ -7,6 +7,7 @@
         xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
         xmlns:controls="clr-namespace:BlueDwarf.Controls"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:ProxyAnalysisViewModel, IsDesignTimeCreatable=true}" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 
@@ -24,44 +25,44 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="8">
             <TextBlock Visibility="{Binding DoesNotRequireProxy, Converter={StaticResource BoolToVisibilityConverter}}"
-                   Text="{Binding Locale.DoesNotRequireProxy}"/>
+                   Text="{x:Static l:ProxyAnalysisLocale.DoesNotRequireProxy}"/>
             <StackPanel Orientation="Vertical" Visibility="{Binding RequiresProxy, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock>
                 <TextBlock>
-                    <Run Text="{Binding Locale.DefaultProxyPrefix, Mode=OneTime}"/>
+                    <Run Text="{x:Static l:ProxyAnalysisLocale.DefaultProxyPrefix}"/>
                     <Run Text=" "/>
                     <Run Text="{Binding DefaultProxy}" FontWeight="Bold"/>
-                    <Run Text="{Binding Locale.DefaultProxySuffix, Mode=OneTime}"/>
+                    <Run Text="{x:Static l:ProxyAnalysisLocale.DefaultProxySuffix}"/>
                 </TextBlock>
             </TextBlock>
-                <TextBlock Text="{Binding Locale.ProxyAllowsSensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyAllowsSensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Locale.ProxyDoesNotAllowSensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyDoesNotAllowSensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
-                <TextBlock Text="{Binding Locale.DnsResolvesLocally}" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsResolvesLocally}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Locale.DnsDoesNotResolveLocally}" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsDoesNotResolveLocally}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
-                <TextBlock Text="{Binding Locale.DnsResolvesLocallySensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsResolvesLocallySensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Locale.DnsDoesNotResolveLocallySensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsDoesNotResolveLocallySensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
-                <TextBlock Text="{Binding Locale.ProxyConnectsToSensitiveIPs}" Style="{DynamicResource ValidResultTextBlock}"
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyConnectsToSensitiveIPs}" Style="{DynamicResource ValidResultTextBlock}"
                        Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding Locale.ProxyDoesNotConnectToSensitiveIPs}" Style="{DynamicResource InvalidResultTextBlock}" 
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyDoesNotConnectToSensitiveIPs}" Style="{DynamicResource InvalidResultTextBlock}" 
                        Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
 
-                <TextBlock Text="{Binding Locale.WorkWithLocalProxy}" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Text="{Binding Locale.WorkWithTwoProxy}" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Text="{Binding Locale.WorkWithSomethingElse}" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithLocalProxy}" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithTwoProxy}" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithSomethingElse}" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
         </StackPanel>
         <controls:Loading Show="{Binding Loading}" />
     </Grid>
     <mui:ModernDialog.Buttons>
         <x:Array Type="Button">
-            <Button Content="{Binding Locale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
-            <Button Content="{Binding Locale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
+            <Button Content="{x:Static l:ProxyAnalysisLocale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
+            <Button Content="{x:Static l:ProxyAnalysisLocale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
         </x:Array>
     </mui:ModernDialog.Buttons>
 </mui:ModernDialog>

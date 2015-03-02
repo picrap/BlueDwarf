@@ -8,22 +8,23 @@
                   xmlns:v="clr-namespace:BlueDwarf.Controls"
                   xmlns:tb="http://www.hardcodet.net/taskbar"
                   xmlns:debug="debug"
+                  xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
                   mc:Ignorable="d" 
-                  Title="{Binding Locale.Title}" IsTitleVisible="True"
+                  Title="{x:Static l:HomeLocale.Title}" IsTitleVisible="True"
                   d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
                   Width="600" Height="300" Icon="/Resources/key.ico"
                   ContentSource="/View/HomeTunnelConfigurationView.xaml" ResizeMode="NoResize"  >
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="{v:BindAny {Binding Locale.ConfigurationTitle}}">
+        <mui:LinkGroup DisplayName="{x:Static l:HomeLocale.ConfigurationTitle}">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="{v:BindAny {Binding Locale.ProxyTunnelConfigurationTitle}}" Source="/View/HomeTunnelConfigurationView.xaml" />
-                <mui:Link DisplayName="{v:BindAny {Binding Locale.ProxyServerConfigurationTitle}}" Source="/View/HomeProxyConfigurationView.xaml" />
-                <mui:Link DisplayName="{v:BindAny {Binding Locale.LocalProxyKeepaliveTitle}}" Source="/View/HomeLocalProxyKeepaliveView.xaml" />
+                <mui:Link DisplayName="{x:Static l:HomeLocale.ProxyTunnelConfigurationTitle}" Source="/View/HomeTunnelConfigurationView.xaml" />
+                <mui:Link DisplayName="{x:Static l:HomeLocale.ProxyServerConfigurationTitle}" Source="/View/HomeProxyConfigurationView.xaml" />
+                <mui:Link DisplayName="{x:Static l:HomeLocale.LocalProxyKeepaliveTitle}" Source="/View/HomeLocalProxyKeepaliveView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="{v:BindAny {Binding Locale.StatusTitle}}">
+        <mui:LinkGroup DisplayName="{x:Static l:HomeLocale.StatusTitle}">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="{v:BindAny {Binding Locale.StatisticsTitle}}" Source="/View/HomeStatusView.xaml" />
+                <mui:Link DisplayName="{x:Static l:HomeLocale.StatisticsTitle}" Source="/View/HomeStatusView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
@@ -34,8 +35,8 @@
             <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{v:Command {Binding Restore}}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{Binding Locale.MenuConfigure}" Command="{v:Command {Binding Restore}}" FontWeight="Bold" />
-                        <MenuItem Header="{Binding Locale.MenuExit}" Command="{v:Command {Binding Exit}}" />
+                        <MenuItem Header="{x:Static l:HomeLocale.MenuConfigure}" Command="{v:Command {Binding Restore}}" FontWeight="Bold" />
+                        <MenuItem Header="{x:Static l:HomeLocale.MenuExit}" Command="{v:Command {Binding Exit}}" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>

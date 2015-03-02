@@ -5,23 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+             xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <StackPanel Orientation="Vertical" >
             <TextBlock>
-                        <Run Text="{Binding Locale.StatisticsConnections, Mode=OneTime}"/>
+                        <Run Text="{x:Static l:HomeLocale.StatisticsConnections}"/>
                         <Run Text=" "/>
                         <Run FontWeight="Bold" Text="{Binding ConnectionsCount}"/>
             </TextBlock>
             <TextBlock>
-                        <Run Text="{Binding Locale.StatisticsBytesRead, Mode=OneTime}"/>
+                        <Run Text="{x:Static l:HomeLocale.StatisticsBytesRead}"/>
                         <Run Text=" "/>
                         <Run FontWeight="Bold" Text="{Binding BytesRead, Converter={StaticResource UnitConverter}, ConverterParameter='B'}"/>
             </TextBlock>
             <TextBlock>
-                        <Run Text="{Binding Locale.StatisticsBytesWritten, Mode=OneTime}"/>
+                        <Run Text="{x:Static l:HomeLocale.StatisticsBytesWritten}"/>
                         <Run Text=" "/>
                         <Run FontWeight="Bold" Text="{Binding BytesWritten, Converter={StaticResource UnitConverter}, ConverterParameter='B'}"/>
             </TextBlock>

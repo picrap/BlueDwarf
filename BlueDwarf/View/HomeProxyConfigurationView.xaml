@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+             xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
              d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <StackPanel Orientation="Vertical" >
-            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyServerConfigurationLegend}" TextWrapping="Wrap" />
+            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{x:Static l:HomeLocale.ProxyServerConfigurationLegend}" TextWrapping="Wrap" />
             <Grid Margin="0,4,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -26,7 +27,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" 
-                       Text="{Binding Locale.Socks4ServerPort}" />
+                       Text="{x:Static l:HomeLocale.Socks4ServerPort}" />
                 <TextBox Grid.Column="1" Grid.Row="0" IsEnabled="{Binding CanSetSocksListeningPort}"
                          Text="{Binding SocksListeningPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Width="100" HorizontalAlignment="Left"/>

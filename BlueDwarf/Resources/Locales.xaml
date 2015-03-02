@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:l="clr-namespace:BlueDwarf.Resources.Localization">
+
+    <l:HomeLocale x:Key="HomeLocale"/>
+    <l:ProxyAnalysisLocale x:Key="ProxyAnalysisLocale"/>
+    <l:ProxyPickerLocale x:Key="ProxyPickerLocale"/>
+
+</ResourceDictionary>

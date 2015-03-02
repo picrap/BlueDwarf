@@ -19,8 +19,6 @@ namespace BlueDwarf.ViewModel
         [Dependency]
         public IProxyAnalyzer ProxyAnalyzer { get; set; }
 
-        public ProxyAnalysisLocale Locale { get; set; }
-
         [NotifyPropertyChanged]
         public bool RequiresProxy { get; set; }
 
@@ -50,11 +48,6 @@ namespace BlueDwarf.ViewModel
 
         [NotifyPropertyChanged]
         public bool WorkWithSomethingElse { get; set; }
-
-        public ProxyAnalysisViewModel()
-        {
-            Locale = new ProxyAnalysisLocale();
-        }
 
         public override void Load()
         {

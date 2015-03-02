@@ -6,12 +6,13 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:controls="clr-namespace:BlueDwarf.Controls"
              xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
+             xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}"
              d:DesignHeight="300" d:DesignWidth="400">
     <Grid Style="{StaticResource ContentRoot}">
         <StackPanel Orientation="Vertical" >
-            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{Binding Locale.ProxyTunnelConfigurationLegend}"/>
+            <TextBlock Style="{DynamicResource LegendTextBlock}" Text="{x:Static l:HomeLocale.ProxyTunnelConfigurationLegend}"/>
             <Grid Margin="0,4,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -24,7 +25,7 @@
                     <RowDefinition Height="{StaticResource EmptyRowHeight}"/>
                     <RowDefinition SharedSizeGroup="Fields"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.LocalProxyLabel}" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:HomeLocale.LocalProxyLabel}" />
                 <Grid Grid.Column="1" Grid.Row="0" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -32,11 +33,11 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
-                    <Button Grid.Column="1" Content="{Binding Locale.WizardInvoke}" Command="{controls:Command {Binding AnalyzeProxy}}" Margin="{StaticResource LeftMargin}" />
+                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.WizardInvoke}" Command="{controls:Command {Binding AnalyzeProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.RemoteProxyLabel}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:HomeLocale.RemoteProxyLabel}" />
                 <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -44,11 +45,11 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
-                    <Button Grid.Column="1" Content="{Binding Locale.PickRemoteProxy}" Command="{controls:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
+                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.PickRemoteProxy}" Command="{controls:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 
-                <TextBlock Grid.Column="0" Grid.Row="4" Style="{DynamicResource DialogTextBlock}" Text="{Binding Locale.TestURL}" />
+                <TextBlock Grid.Column="0" Grid.Row="4" Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:HomeLocale.TestURL}" />
                 <Grid Grid.Column="1" Grid.Row="4" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

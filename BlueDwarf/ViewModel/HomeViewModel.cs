@@ -32,8 +32,6 @@ namespace BlueDwarf.ViewModel
         [Dependency]
         public IPersistence Persistence { get; set; }
 
-        public ConfigurationLocale Locale { get; set; }
-
         /// <summary>
         /// Gets or sets the proxy server.
         /// This property is injected directly by the caller (the application)
@@ -190,14 +188,6 @@ namespace BlueDwarf.ViewModel
         public long BytesWritten { get; set; }
 
         private readonly object _statisticsLock = new object();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HomeViewModel"/> class.
-        /// </summary>
-        public HomeViewModel()
-        {
-            Locale = new ConfigurationLocale();
-        }
 
         /// <summary>
         /// Loads preferences and intializes proxy from them.

@@ -95,8 +95,6 @@ namespace BlueDwarf.ViewModel
         [Persistent("Proxy1")]
         public Uri LocalProxy { get; set; }
 
-        public ProxyPickerLocale Locale { get; set; }
-
         private Proxy _proxyServer;
 
         /// <summary>
@@ -122,7 +120,6 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         public override void Load()
         {
-            Locale = new ProxyPickerLocale();
             ProxyServers = new DispatcherObservableCollection<Proxy>();
             ProxyPages = ProxyPage.Default;
             ProxyPage = ProxyPages.SingleOrDefault(p => p.PageUri == ProxyPageUri) ?? ProxyPages[0];

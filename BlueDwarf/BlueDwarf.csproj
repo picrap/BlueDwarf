@@ -18,7 +18,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PublishUrl>ftp://openstore.craponne.fr:2305/www/</PublishUrl>
+    <PublishUrl>D:\Documents\Pascal Craponne\IIS-ClickOnce\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>0.6.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -90,6 +90,13 @@
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>Custom</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine">
       <HintPath>..\packages\CommandLineParser20.2.0.0.0\lib\net40\CommandLine.dll</HintPath>
@@ -142,6 +149,7 @@
     </Compile>
     <Compile Include="ApplicationOptions.cs" />
     <Compile Include="Collection\DispatcherObservableCollection.cs" />
+    <Compile Include="Controls\LocaleExtension.cs" />
     <Compile Include="Controls\LowerCaseConverter.cs" />
     <Compile Include="Controls\UnitConverter.cs" />
     <Compile Include="Resources\Localization\CommonLocale.Designer.cs">
@@ -149,10 +157,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonLocale.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Localization\ConfigurationLocale.Designer.cs">
+    <Compile Include="Resources\Localization\HomeLocale.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ConfigurationLocale.resx</DependentUpon>
+      <DependentUpon>HomeLocale.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Localization\ProxyAnalysisLocale.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -258,12 +266,12 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 et x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -297,6 +305,10 @@
     <Page Include="Controls\UrlBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Locales.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\HomeView.xaml">
       <SubType>Designer</SubType>
@@ -338,6 +350,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\app.manifest" />
     <None Include="Resources\passe300.png" />
   </ItemGroup>
   <ItemGroup>
@@ -360,9 +373,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonLocale.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Localization\ConfigurationLocale.resx">
+    <EmbeddedResource Include="Resources\Localization\HomeLocale.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConfigurationLocale.Designer.cs</LastGenOutput>
+      <LastGenOutput>HomeLocale.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\ProxyAnalysisLocale.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
