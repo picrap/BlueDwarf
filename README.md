@@ -9,8 +9,9 @@ A small application allowing to discretely go outdoor, when your corporate proxy
 
 ## Download
 
-You can find the application **[here](http://openstore.craponne.fr/BlueDwarf.application)**.
-It will start again next time you open your session.
+### If your proxy and firewall are cool enough
+You can use the **[ClickOnce installer](http://openstore.craponne.fr/BlueDwarf.application)**.
 
-## ... And also
-Project statistics on Open HUB: https://www.openhub.net/p/BlueDwarf
+### If it is not cool enough to allow ClickOnce
+You can still **[download the application directly](http://openstore.craponne.fr/BlueDwarf.exe)**.  
+Then, simply launch the application, it will register to start automatically next time.
