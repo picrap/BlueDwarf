@@ -3,9 +3,11 @@
 namespace BlueDwarf.Net.Proxy.Client
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using Server;
+    using Utility;
 
     /// <summary>
     /// Represents a route to target
@@ -73,6 +75,19 @@ namespace BlueDwarf.Net.Proxy.Client
         public SocketStream Connect(IPAddress target, int targetPort)
         {
             return _connectAddress(target, targetPort, this);
+        }
+
+        /// <summary>
+        /// Connects the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns></returns>
+        public Stream Connect(Uri uri)
+        {
+            Stream stream = Connect(uri.Host, uri.Port);
+            if (string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase))
+                stream = stream.AsSsl(uri.Host);
+            return stream;
         }
     }
 }

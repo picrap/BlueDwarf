@@ -159,6 +159,7 @@
     <Compile Include="Utility\ObjectTypeConverter.cs" />
     <Compile Include="Utility\PropertyInfoExtensions.cs" />
     <Compile Include="Utility\SocketExtensions.cs" />
+    <Compile Include="Utility\StreamExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\TypeExtensions.cs" />
     <Compile Include="Utility\UriExtensions.cs" />

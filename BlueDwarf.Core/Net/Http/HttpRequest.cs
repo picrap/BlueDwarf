@@ -2,9 +2,11 @@
 // more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Net.Http
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using Utility;
 
     /// <summary>
     /// Simple HTTP request
@@ -42,6 +44,27 @@ namespace BlueDwarf.Net.Http
             Verb = verb;
             TargetPath = targetPath;
             TargetPort = targetPort;
+        }
+
+        /// <summary>
+        /// Creates a GET HttpRequest.
+        /// </summary>
+        /// <param name="uri">The URI.</param>
+        /// <returns></returns>
+        public static HttpRequest CreateGet(Uri uri)
+        {
+            return new HttpRequest("GET", uri.AbsolutePath).AddHeader("Host", uri.GetHostAndPort()).AddHeader("Connection", "Close");
+        }
+
+        /// <summary>
+        /// Creates a CONNECT HttpRequest.
+        /// </summary>
+        /// <param name="host">The host.</param>
+        /// <param name="port">The port.</param>
+        /// <returns></returns>
+        public static HttpRequest CreateConnect(string host, int port)
+        {
+            return new HttpRequest("CONNECT", host, port).AddHeader("Proxy-Connection", "Keep-Alive");
         }
 
         public HttpRequest AddHeader(string key, string value)

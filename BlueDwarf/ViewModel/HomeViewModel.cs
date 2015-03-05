@@ -10,10 +10,11 @@ namespace BlueDwarf.ViewModel
     using Controls;
     using Microsoft.Practices.Unity;
     using Navigation;
+    using Net.Http;
     using Net.Proxy.Client;
+    using Net.Proxy.Scanner;
     using Net.Proxy.Server;
     using Properties;
-    using Resources.Localization;
     using Utility;
 
     /// <summary>
@@ -31,6 +32,9 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IPersistence Persistence { get; set; }
+
+        [Dependency]
+        public IProxyValidator ProxyValidator { get; set; }
 
         /// <summary>
         /// Gets or sets the proxy server.
@@ -280,10 +284,7 @@ namespace BlueDwarf.ViewModel
                     var testTargetUri = TestTargetUri;
                     var route = ProxyClient.CreateRoute(LocalProxy, RemoteProxy);
                     if (testTargetUri != null)
-                    {
-                        // result does not matter
-                        using (route.Connect(testTargetUri.Host, testTargetUri.Port)) { }
-                    }
+                        ProxyValidator.Validate(route, testTargetUri);
                     ProxyServer.Route = route;
 
                     SetStatus(null);

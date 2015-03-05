@@ -54,8 +54,7 @@ namespace BlueDwarf.Net
             {
                 using (var requestStream = route.Connect(uri.Host, uri.Port))
                 {
-                    new HttpRequest("GET", uri.AbsolutePath).AddHeader("Host", uri.GetHostAndPort()).AddHeader("Connection", "Close").Write(requestStream);
-
+                    HttpRequest.CreateGet(uri).Write(requestStream);
                     var response = HttpResponse.FromStream(requestStream);
                     var rawContent = response.ReadContentString(requestStream);
 

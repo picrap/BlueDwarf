@@ -144,7 +144,7 @@ namespace BlueDwarf.ViewModel
             if (testTargetUri != null)
             {
                 var route = ProxyClient.CreateRoute(LocalProxy);
-                foreach (var hostPort in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, testTargetUri.Host, testTargetUri.Port, route))
+                foreach (var hostPort in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, route, testTargetUri))
                 {
                     var location = Geolocation.Locate(hostPort.Address, route);
                     var proxy = new Proxy(hostPort, location);

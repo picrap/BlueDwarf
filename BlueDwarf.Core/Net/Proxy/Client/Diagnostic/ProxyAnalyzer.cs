@@ -12,6 +12,7 @@ namespace BlueDwarf.Net.Proxy.Client.Diagnostic
 
     /// <summary>
     /// Proxy analyzer implementation
+    /// This analyzes a single proxy (the system proxy)
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class ProxyAnalyzer : IProxyAnalyzer
