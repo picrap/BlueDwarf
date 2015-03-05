@@ -25,7 +25,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
                 // validation is simple: if route creation succeeds, then the proxy is valid
                 var newRoute = route + proxyUri;
                 // we don't care much about connexion
-                using (newRoute.Connect(testTargetHost, testTargetPort, true))
+                using (newRoute.Connect(testTargetHost, testTargetPort))
                 {
                 }
                 return true;

@@ -7,7 +7,7 @@ namespace BlueDwarf.Net.Geolocation.HostIP
     using System.ServiceModel;
     using Client;
 
-    [ServiceContract]
+    [ServiceContract(Namespace = "http://api.hostip.info")]
     public interface IHostIPApi
     {
         [OperationContract]

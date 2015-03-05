@@ -6,7 +6,6 @@ namespace BlueDwarf
     using Microsoft.Practices.Unity;
     using Net;
     using Net.Geolocation;
-    using Net.Geolocation.HostIP;
     using Net.Geolocation.Telize;
     using Net.Name;
     using Net.Proxy;
@@ -34,7 +33,7 @@ namespace BlueDwarf
         {
             container.RegisterType<IProxyClient, TunnelProxyClient>(AsSingleton());
             container.RegisterType<IProxyServerFactory, ProxyServerFactory>(AsSingleton());
-            container.RegisterType<INameResolver, DnsNameResolver>(AsSingleton());
+            container.RegisterType<INameResolver, MultiNameResolver>(AsSingleton());
             container.RegisterType<IProxyAnalyzer, ProxyAnalyzer>(AsSingleton());
             container.RegisterType<IPersistence, RegistryPersistence>(AsSingleton());
             container.RegisterType<IStartupConfiguration, MenuStartupConfiguration>(AsSingleton());

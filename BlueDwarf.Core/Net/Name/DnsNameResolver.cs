@@ -20,15 +20,27 @@ namespace BlueDwarf.Net.Name
         /// <returns></returns>
         public IPAddress Resolve(string name, Route route)
         {
+            return LocalResolve(name);
+        }
+
+        /// <summary>
+        /// Resolves the specified name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public static IPAddress LocalResolve(string name)
+        {
             try
             {
                 var address = Dns.GetHostAddresses(name).FirstOrDefault();
                 return address;
             }
             catch (ArgumentException)
-            { }
+            {
+            }
             catch (SocketException)
-            { }
+            {
+            }
             return null;
         }
     }

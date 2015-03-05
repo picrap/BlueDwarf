@@ -1,15 +1,12 @@
 ﻿// This is the blue dwarf
 // more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Net.Name
+namespace BlueDwarf.Net.Name.StatDns
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Net;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Json;
     using Annotations;
-    using Http;
+    using Client;
     using Proxy.Client;
 
     /// <summary>
@@ -18,45 +15,6 @@ namespace BlueDwarf.Net.Name
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class StatDnsNameResolver : INameResolver
     {
-        [DataContract]
-        public class Question
-        {
-            [DataMember(Name = "name")]
-            public string Name { get; set; }
-            [DataMember(Name = "type")]
-            public string Type { get; set; }
-            [DataMember(Name = "class")]
-            public string Class { get; set; }
-        }
-
-        [DataContract]
-        public class Answer
-        {
-            [DataMember(Name = "name")]
-            public string Name { get; set; }
-            [DataMember(Name = "type")]
-            public string Type { get; set; }
-            [DataMember(Name = "class")]
-            public string Class { get; set; }
-            [DataMember(Name = "ttl")]
-            public int TTL { get; set; }
-            [DataMember(Name = "rdlength")]
-            public int RDLength { get; set; }
-            [DataMember(Name = "rdata")]
-            public string RData { get; set; }
-        }
-
-        [DataContract]
-        public class Response
-        {
-            [DataMember(Name = "question")]
-            public Question[] Questions { get; set; }
-            [DataMember(Name = "answer")]
-            public Answer[] Answers { get; set; }
-            [DataMember(Name = "authority")]
-            public Answer[] Authorities { get; set; }
-        }
-
         private readonly IDictionary<string, Tuple<IPAddress, DateTime>> _entries = new Dictionary<string, Tuple<IPAddress, DateTime>>();
 
         /// <summary>
@@ -90,6 +48,13 @@ namespace BlueDwarf.Net.Name
             }
         }
 
+        /// <summary>
+        /// Requestions the resolution.
+        /// This can be done by following multiple resolutions (since CNAME may lead to other CNAME or A)
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="route">The route.</param>
+        /// <returns></returns>
         private static Tuple<IPAddress, int> RequestionResolution(string name, Route route)
         {
             for (int hop = 0; hop < 100; hop++)
@@ -118,20 +83,11 @@ namespace BlueDwarf.Net.Name
         {
             try
             {
-                const string host = "api.statdns.com";
-                using (var stream = route.Connect(host, 80, false))
-                {
-                    new HttpRequest("GET", string.Format("/{0}/{1}", name, type.ToLower())).AddHeader("Host", host).Write(stream);
-                    var contentBytes = HttpResponse.FromStream(stream).ReadContent(stream);
-                    using (var memoryStream = new MemoryStream(contentBytes))
-                    {
-                        var serializer = new DataContractJsonSerializer(typeof(Response));
-                        var response = (Response)serializer.ReadObject(memoryStream);
-                        if (response.Answers == null)
-                            return null;
-                        return response.Answers[0];
-                    }
-                }
+                var client = Rest.Client<IStatDns>(route);
+                var response = client.Ask(name, type);
+                if (response.Answers == null)
+                    return null;
+                return response.Answers[0];
             }
             // TODO: something better here
             catch { }

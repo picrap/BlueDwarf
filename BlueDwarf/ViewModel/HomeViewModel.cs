@@ -282,7 +282,7 @@ namespace BlueDwarf.ViewModel
                     if (testTargetUri != null)
                     {
                         // result does not matter
-                        using (route.Connect(testTargetUri.Host, testTargetUri.Port, true)) { }
+                        using (route.Connect(testTargetUri.Host, testTargetUri.Port)) { }
                     }
                     ProxyServer.Route = route;
 

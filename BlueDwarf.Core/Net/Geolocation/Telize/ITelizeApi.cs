@@ -7,7 +7,7 @@ namespace BlueDwarf.Net.Geolocation.Telize
     using System.ServiceModel;
     using Client;
 
-    [ServiceContract]
+    [ServiceContract(Namespace = "http://www.telize.com/")]
     public interface ITelizeApi
     {
         [OperationContract]

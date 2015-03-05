@@ -7,9 +7,11 @@ namespace BlueDwarf.Net.Client
     using System.IO;
     using System.Reflection;
     using System.Runtime.Serialization.Json;
+    using System.ServiceModel;
     using System.Text;
     using ArxOne.MrAdvice.Advice;
     using Http;
+    using Name;
     using Proxy.Client;
     using Utility;
 
@@ -24,10 +26,10 @@ namespace BlueDwarf.Net.Client
         private readonly Route _route;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RestAdvice"/> class.
+        /// Initializes a new instance of the <see cref="RestAdvice" /> class.
         /// </summary>
         /// <param name="hostAddress">The host address.</param>
-        /// <param name="Route">The proxy route.</param>
+        /// <param name="route">The route.</param>
         public RestAdvice(Uri hostAddress, Route route)
         {
             _hostAddress = hostAddress;
@@ -60,10 +62,17 @@ namespace BlueDwarf.Net.Client
             }
 
             // then create the route and send the request
-            using (var stream = _route.Connect(_hostAddress.Host, _hostAddress.Port, true))
+            var hostAddress = _hostAddress;
+            if (hostAddress == null)
+            {
+                var serviceContractAttribute = context.TargetType.GetCustomAttribute<ServiceContractAttribute>();
+                hostAddress = new Uri(serviceContractAttribute.Namespace);
+            }
+            var target = DnsNameResolver.LocalResolve(hostAddress.Host);
+            using (var stream = _route.Connect(target, hostAddress.Port))
             {
                 var request = new HttpRequest(restCall.Verb, path)
-                    .AddHeader("Host", _hostAddress.GetHostAndPort())
+                    .AddHeader("Host", hostAddress.GetHostAndPort())
                     .AddHeader("Connection", "Close")
                     .AddHeader("Proxy-Connection", "Keep-Alive");
                 request.Write(stream);

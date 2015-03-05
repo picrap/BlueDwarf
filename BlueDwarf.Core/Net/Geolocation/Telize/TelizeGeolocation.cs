@@ -5,17 +5,19 @@ namespace BlueDwarf.Net.Geolocation.Telize
 {
     using System;
     using System.Net;
+    using Annotations;
     using Client;
     using Proxy.Client;
 
     /// <summary>
     /// Geolocation using Telize
     /// </summary>
-    internal  class TelizeGeolocation: IGeolocation
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    internal class TelizeGeolocation : IGeolocation
     {
       public AddressGeolocation Locate(IPAddress address, Route route)
       {
-          var telizeApi = Rest.Client<ITelizeApi>(new Uri("http://www.telize.com/"), route);
+          var telizeApi = Rest.Client<ITelizeApi>(route);
           var result = telizeApi.GeoIP(address);
           return new AddressGeolocation(address, result.CountryCode, result.Country);
       }

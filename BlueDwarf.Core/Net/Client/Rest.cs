@@ -13,10 +13,10 @@ namespace BlueDwarf.Net.Client
         /// Gets a client bound for specific address.
         /// </summary>
         /// <typeparam name="TClient">The type of the client.</typeparam>
+        /// <param name="route">The route.</param>
         /// <param name="hostAddress">The host address.</param>
-        /// <param name="Route">The proxy route.</param>
         /// <returns></returns>
-        public static TClient Client<TClient>(Uri hostAddress, Route route)
+        public static TClient Client<TClient>(Route route, Uri hostAddress = null)
         {
             var restAdvice = new RestAdvice(hostAddress, route);
             return restAdvice.Handle<TClient>();

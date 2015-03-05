@@ -16,7 +16,7 @@ namespace BlueDwarf.Net.Geolocation.HostIP
     {
         public AddressGeolocation Locate(IPAddress address, Route route)
         {
-            var hostIPApi = Rest.Client<IHostIPApi>(new Uri("http://api.hostip.info"), route);
+            var hostIPApi = Rest.Client<IHostIPApi>(route);
             var result = hostIPApi.GetJson(address);
             return new AddressGeolocation(address, result.CountryCode, result.CountryName);
         }

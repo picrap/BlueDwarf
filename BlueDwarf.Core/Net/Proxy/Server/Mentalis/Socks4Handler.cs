@@ -101,7 +101,7 @@ namespace Org.Mentalis.Proxy.Socks
                     //RemoteConnection.BeginConnect(new IPEndPoint(RemoteIP, RemotePort), new AsyncCallback(this.OnConnected), RemoteConnection);
                     try
                     {
-                        RemoteConnection = Listener.Route.Connect(RemoteIP.ToString(), RemotePort, true).Socket;
+                        RemoteConnection = Listener.Route.Connect(RemoteIP.ToString(), RemotePort).Socket;
                         Dispose(90);
                     }
                     catch
