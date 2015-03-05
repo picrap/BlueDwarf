@@ -2,6 +2,7 @@
 // more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Net.Proxy.Client
 {
+    using System.IO;
     using System.Net;
     using Http;
     using Server;
@@ -17,18 +18,24 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         private SocketStream HttpProxyConnect(SocketStream stream, IPAddress target, int targetPort)
         {
-            HttpRequest.CreateConnect(target.ToString(), targetPort).Write(stream);
-            var httpResponse = HttpResponse.FromStream(stream);
-            if (httpResponse.StatusCode != 200)
+            try
             {
+                HttpRequest.CreateConnect(target.ToString(), targetPort).Write(stream);
+                var httpResponse = HttpResponse.FromStream(stream);
+                if (httpResponse.StatusCode != 200)
+                {
 #if DEBUG
-                var content = httpResponse.ReadContentString(stream);
+                    var content = httpResponse.ReadContentString(stream);
 #endif
-                //var bc = new BlueCoatHttpAuthentication();
-                //bc.Handle(stream, httpResponse, content, networkCredential, routeUntilHere);
-                return null;
+                    //var bc = new BlueCoatHttpAuthentication();
+                    //bc.Handle(stream, httpResponse, content, networkCredential, routeUntilHere);
+                    return null;
+                }
+                return stream;
             }
-            return stream;
+            catch (IOException)
+            { }
+            return null;
         }
     }
 }

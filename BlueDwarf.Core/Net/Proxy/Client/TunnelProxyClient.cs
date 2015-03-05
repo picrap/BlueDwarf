@@ -44,7 +44,6 @@ namespace BlueDwarf.Net.Proxy.Client
         {
             var stream = TunnelConnect(route);
             var newStream = Connect(stream, targetHost, targetPort, route);
-
             if (newStream == null)
                 throw new ProxyRouteException(targetHost);
 
@@ -65,7 +64,6 @@ namespace BlueDwarf.Net.Proxy.Client
         {
             var stream = TunnelConnect(route);
             var newStream = Connect(stream, target, targetPort);
-
             if (newStream == null)
                 throw new ProxyRouteException(target.ToString());
 

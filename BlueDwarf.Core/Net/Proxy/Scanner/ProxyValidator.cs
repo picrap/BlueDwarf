@@ -3,6 +3,7 @@
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
+    using System.IO;
     using Annotations;
     using Client;
     using Http;
@@ -26,10 +27,13 @@ namespace BlueDwarf.Net.Proxy.Scanner
                 Validate(routeToProxy + proxyUri, testTarget, tryCount);
                 return true;
             }
+            catch (IOException)
+            {
+            }
             catch (ProxyRouteException)
             {
-                return false;
             }
+            return false;
         }
 
         /// <summary>

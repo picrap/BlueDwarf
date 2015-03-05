@@ -5,6 +5,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using Annotations;
     using Client;
     using Microsoft.Practices.Unity;
@@ -34,8 +35,40 @@ namespace BlueDwarf.Net.Proxy.Scanner
         {
             var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, route);
             if (proxyListingPageText == null)
-                return new HostPort[0];
-            return HostScanner.Scan(proxyListingPageText, hostPortEx)/*.AsParallel().WithDegreeOfParallelism(63)*/.Where(hp => ProxyValidator.ValidateHttpConnect(hp, testTarget, route));
+                yield break;
+
+            var results = new Queue<HostPort>();
+            var waitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
+            var thread = new Thread(delegate()
+            {
+                HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63)
+                    .ForAll(delegate(HostPort hostPort)
+                    {
+                        if (!ProxyValidator.ValidateHttpConnect(hostPort, testTarget, route))
+                            return;
+                        lock (results)
+                            results.Enqueue(hostPort);
+                        waitHandle.Set();
+                    });
+                lock (results)
+                    results.Enqueue(null);
+                waitHandle.Set();
+            });
+            thread.Start();
+            for (; ; )
+            {
+                waitHandle.WaitOne();
+                lock (results)
+                {
+                    while (results.Count > 0)
+                    {
+                        var result = results.Dequeue();
+                        if (result == null)
+                            yield break;
+                        yield return result;
+                    }
+                }
+            }
         }
 
         /// <summary>
