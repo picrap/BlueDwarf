@@ -133,7 +133,7 @@
     <value>Local proxy:</value>
   </data>
   <data name="MenuConfigure" xml:space="preserve">
-    <value>Configure</value>
+    <value>Associate</value>
   </data>
   <data name="MenuExit" xml:space="preserve">
     <value>Exit</value>

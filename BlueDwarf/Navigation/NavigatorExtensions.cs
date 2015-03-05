@@ -12,7 +12,7 @@ namespace BlueDwarf.Navigation
             where TViewModel : ViewModel
             where TView : FrameworkElement
         {
-            navigator.Configure(typeof(TViewModel), typeof(TView));
+            navigator.Associate(typeof(TViewModel), typeof(TView));
         }
 
         public static TViewModel Show<TViewModel>(this INavigator navigator, Action<TViewModel> initializer = null)

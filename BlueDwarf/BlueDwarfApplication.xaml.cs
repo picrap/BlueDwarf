@@ -58,9 +58,12 @@ namespace BlueDwarf
         {
             StartupConfiguration.Register(GetType().Assembly, "-m");
             var proxyServer = ProxyServerFactory.CreateSocksProxyServer();
-            ShowConfiguration(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized);
+            ShowHome(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized);
         }
 
+        /// <summary>
+        /// Configures the unity container.
+        /// </summary>
         private void ConfigureContainer()
         {
             var container = new UnityContainer();
@@ -69,6 +72,13 @@ namespace BlueDwarf
             container.BuildUp(this);
         }
 
+        /// <summary>
+        /// Downloads the file.
+        /// </summary>
+        /// <param name="navigator">The navigator.</param>
+        /// <param name="downloadUri">The download URI.</param>
+        /// <param name="saveTextPath">The save text path.</param>
+        /// <param name="proxy">The proxy.</param>
         private void DownloadFile(INavigator navigator, string downloadUri, string saveTextPath, Uri proxy)
         {
             if (proxy != null)
@@ -81,7 +91,14 @@ namespace BlueDwarf
                 });
         }
 
-        private static void ShowConfiguration(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized)
+        /// <summary>
+        /// Shows the home view.
+        /// </summary>
+        /// <param name="navigator">The navigator.</param>
+        /// <param name="proxyServer">The proxy server.</param>
+        /// <param name="socksListeningPort">The socks listening port.</param>
+        /// <param name="minimized">if set to <c>true</c> [minimized].</param>
+        private static void ShowHome(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized)
         {
             var viewModel = navigator.Show(
                 delegate(HomeViewModel vm)
@@ -98,6 +115,11 @@ namespace BlueDwarf
                 viewModel.Show = true;
         }
 
+        /// <summary>
+        /// Called on <see cref="INavigator.Exiting"/>.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnNavigatorExiting(object sender, EventArgs e)
         {
             StartupConfiguration.Unregister(GetType().Assembly);

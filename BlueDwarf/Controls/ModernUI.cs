@@ -30,8 +30,9 @@ namespace BlueDwarf.Controls
 
         private static void OnSetDialogButtons(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var modernDialog = d.GetLogicalSelfAndParents().OfType<ModernDialog>().First();
-            modernDialog.Buttons = (IEnumerable<Button>)e.NewValue;
+            var modernDialog = d.GetLogicalSelfAndParents().OfType<ModernDialog>().FirstOrDefault();
+            if (modernDialog != null)
+                modernDialog.Buttons = (IEnumerable<Button>)e.NewValue;
         }
     }
 }

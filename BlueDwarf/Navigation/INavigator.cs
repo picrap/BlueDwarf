@@ -16,10 +16,12 @@ namespace BlueDwarf.Navigation
 
         /// <summary>
         /// Configures the specified view model type to be used with view type.
+        /// This step is unnecessary if view/view-model pairs types use the suffix "View" and "ViewModel"
+        /// (convention over configuration)
         /// </summary>
         /// <param name="viewModelType">Type of the view model.</param>
         /// <param name="viewType">Type of the view.</param>
-        void Configure(Type viewModelType, Type viewType);
+        void Associate(Type viewModelType, Type viewType);
 
         /// <summary>
         /// Shows the specified view model type.

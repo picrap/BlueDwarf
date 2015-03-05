@@ -4,8 +4,6 @@ namespace BlueDwarf
 {
     using Microsoft.Practices.Unity;
     using Navigation;
-    using View;
-    using ViewModel;
 
     public static class UIConfiguration
     {
@@ -25,16 +23,6 @@ namespace BlueDwarf
         public static void Configure(IUnityContainer container)
         {
             container.RegisterType<INavigator, Navigator>(AsSingleton());
-            ConfigureViews(container);
-        }
-
-        private static void ConfigureViews(IUnityContainer container)
-        {
-            var navigator = container.Resolve<INavigator>();
-            navigator.Configure<HomeViewModel, HomeView>();
-            navigator.Configure<ProxyAnalysisViewModel, ProxyAnalysisView>();
-            navigator.Configure<WebDownloaderViewModel, WebDownloaderView>();
-            navigator.Configure<ProxyPickerViewModel, ProxyPickerView>();
         }
     }
 }

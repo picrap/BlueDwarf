@@ -4,13 +4,19 @@ namespace BlueDwarf.Navigation
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Threading;
     using Annotations;
     using Microsoft.Practices.Unity;
+    using Utility;
     using View.Properties;
     using ViewModel;
 
+    /// <summary>
+    /// The navigator implements navigation logic
+    /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class Navigator : INavigator
     {
@@ -31,7 +37,7 @@ namespace BlueDwarf.Navigation
         /// </summary>
         /// <param name="viewModelType">Type of the view model.</param>
         /// <param name="viewType">Type of the view.</param>
-        public void Configure(Type viewModelType, Type viewType)
+        public void Associate(Type viewModelType, Type viewType)
         {
             _viewByViewModel[viewModelType] = viewType;
         }
@@ -52,7 +58,7 @@ namespace BlueDwarf.Navigation
                 initializer(viewModel);
             // load comes second
             viewModel.Load();
-            var viewType = _viewByViewModel[viewModelType];
+            var viewType = GetViewType(viewModelType);
             var view = (FrameworkElement)UnityContainer.Resolve(viewType);
             view.DataContext = viewModel;
             var window = view as Window;
@@ -63,6 +69,80 @@ namespace BlueDwarf.Navigation
                 return ShowDialog(window, viewModel);
             }
             return null;
+        }
+
+        /// <summary>
+        /// Gets the type of the view matching the view-model.
+        /// There are two ways of doing so: by dictionary or convention
+        /// </summary>
+        /// <param name="viewModelType">Type of the view model.</param>
+        /// <returns></returns>
+        private Type GetViewType(Type viewModelType)
+        {
+            return GetViewTypeFromRegistration(viewModelType) ?? GetViewTypeFromConvention(viewModelType);
+        }
+
+        /// <summary>
+        /// Gets the view type from naming convention.
+        /// </summary>
+        /// <param name="viewModelType">Type of the view model.</param>
+        /// <returns></returns>
+        private Type GetViewTypeFromConvention(Type viewModelType)
+        {
+            var viewType = GetViewTypeFromConvention(viewModelType, "ViewModel", "View");
+            if (viewType == null)
+                return null;
+            _viewByViewModel[viewModelType] = viewType;
+            return viewType;
+        }
+
+        /// <summary>
+        /// Gets the view type from naming convention.
+        /// </summary>
+        /// <param name="viewModelType">Type of the view model.</param>
+        /// <param name="viewModelSuffix">The view model suffix.</param>
+        /// <param name="viewSuffix">The view suffix.</param>
+        /// <returns></returns>
+        private static Type GetViewTypeFromConvention(Type viewModelType, string viewModelSuffix, string viewSuffix)
+        {
+            if (!viewModelType.Name.EndsWith(viewModelSuffix))
+                return null;
+            var rawName = viewModelType.Name.Substring(0, viewModelType.Name.Length - viewModelSuffix.Length);
+            var viewTypeName = rawName + viewSuffix;
+            return FindViewType(viewModelType.Namespace, viewTypeName) ?? FindViewType(viewModelType.Assembly, viewTypeName) ?? FindViewType(viewTypeName);
+        }
+
+        /// <summary>
+        /// Finds the view type given a name and namespace.
+        /// </summary>
+        /// <param name="ns">The ns.</param>
+        /// <param name="viewTypeName">Name of the view type.</param>
+        /// <returns></returns>
+        private static Type FindViewType(string ns, string viewTypeName)
+        {
+            return Type.GetType(ns + "." + viewTypeName);
+        }
+
+        private static Type FindViewType(Assembly assembly, string viewTypeName)
+        {
+            return assembly.GetTypes().SingleOrDefault(t => t.Name == viewTypeName);
+        }
+
+        private static Type FindViewType(string viewTypeName)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().Select(assembly => FindViewType(assembly, viewTypeName)).FirstOrDefault(viewType => viewType != null);
+        }
+
+        /// <summary>
+        /// Gets the view type from registration.
+        /// </summary>
+        /// <param name="viewModelType">Type of the view model.</param>
+        /// <returns></returns>
+        private Type GetViewTypeFromRegistration(Type viewModelType)
+        {
+            Type viewType;
+            _viewByViewModel.TryGetValue(viewModelType, out viewType);
+            return viewType;
         }
 
         /// <summary>
@@ -100,6 +180,11 @@ namespace BlueDwarf.Navigation
             return viewModel;
         }
 
+        /// <summary>
+        /// Called when the visible property has changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var window = (Window)sender;
@@ -120,9 +205,7 @@ namespace BlueDwarf.Navigation
             var window = _windows.Pop();
             if (_windows.Count == 0)
             {
-                var onExiting = Exiting;
-                if (onExiting != null)
-                    onExiting(this, EventArgs.Empty);
+                Exiting.Raise(this);
                 // this is not something I'm very proud of
                 // TODO: have a nice exit
                 Application.Current.DispatcherUnhandledException += delegate(object sender, DispatcherUnhandledExceptionEventArgs e) { e.Handled = true; };

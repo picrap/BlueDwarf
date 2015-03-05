@@ -115,7 +115,7 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure.
+        ///   Looks up a localized string similar to Associate.
         /// </summary>
         public static string MenuConfigure {
             get {
