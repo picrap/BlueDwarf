@@ -13,14 +13,14 @@
                   mc:Ignorable="d" 
                   d:DataContext="{d:DesignInstance Type=vm:ProxyPickerViewModel, IsDesignTimeCreatable=false}" 
                   ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" >
-
-    <mui:ModernDialog.Buttons>
-        <x:Array Type="Button">
-            <Button Content="{x:Static l:ProxyPickerLocale.CloseButton}" Command="{v:Command {Binding Close}}" />
-        </x:Array>
-    </mui:ModernDialog.Buttons>
-
+   
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
+        <v:ModernUI.DialogButtons>
+            <x:Array Type="Button">
+                <Button Content="{x:Static l:ProxyPickerLocale.CloseButton}" Command="{v:Command {Binding Close}}" />
+            </x:Array>
+        </v:ModernUI.DialogButtons>
+
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:ProxyPickerLocale.ProxyPageLabel}"/>
             <ComboBox Width="300" ItemsSource="{Binding ProxyPages}" DisplayMemberPath="Name" SelectedItem="{Binding ProxyPage}" />

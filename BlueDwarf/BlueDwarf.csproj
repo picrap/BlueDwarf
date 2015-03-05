@@ -151,6 +151,7 @@
     <Compile Include="Collection\DispatcherObservableCollection.cs" />
     <Compile Include="Controls\LocaleExtension.cs" />
     <Compile Include="Controls\LowerCaseConverter.cs" />
+    <Compile Include="Controls\ModernUI.cs" />
     <Compile Include="Controls\UnitConverter.cs" />
     <Compile Include="Resources\Localization\CommonLocale.Designer.cs">
       <AutoGen>True</AutoGen>

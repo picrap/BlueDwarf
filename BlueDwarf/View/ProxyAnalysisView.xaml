@@ -23,6 +23,12 @@
     </Window.Resources>
 
     <Grid>
+        <controls:ModernUI.DialogButtons>
+            <x:Array Type="Button">
+                <Button Content="{x:Static l:ProxyAnalysisLocale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
+                <Button Content="{x:Static l:ProxyAnalysisLocale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
+            </x:Array>
+        </controls:ModernUI.DialogButtons>
         <StackPanel Orientation="Vertical" Margin="8">
             <TextBlock Visibility="{Binding DoesNotRequireProxy, Converter={StaticResource BoolToVisibilityConverter}}"
                    Text="{x:Static l:ProxyAnalysisLocale.DoesNotRequireProxy}"/>
@@ -59,10 +65,4 @@
         </StackPanel>
         <controls:Loading Show="{Binding Loading}" />
     </Grid>
-    <mui:ModernDialog.Buttons>
-        <x:Array Type="Button">
-            <Button Content="{x:Static l:ProxyAnalysisLocale.ApplyButtonText}" Command="{controls:Command {Binding Apply}}"/>
-            <Button Content="{x:Static l:ProxyAnalysisLocale.CancelButtonText}" Command="{controls:Command {Binding Cancel}}"/>
-        </x:Array>
-    </mui:ModernDialog.Buttons>
 </mui:ModernDialog>

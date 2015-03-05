@@ -11,21 +11,21 @@ namespace BlueDwarf.Utility
 
     public static class UIElementExtensions
     {
-        public static IEnumerable<UIElement> GetVisualSelfAndParents(this UIElement uiElement)
+        public static IEnumerable<DependencyObject> GetVisualSelfAndParents(this DependencyObject dependencyObject)
         {
-            while (uiElement != null)
+            while (dependencyObject != null)
             {
-                yield return uiElement;
-                uiElement = (UIElement)VisualTreeHelper.GetParent(uiElement);
+                yield return dependencyObject;
+                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
             }
         }
 
-        public static IEnumerable<UIElement> GetLogicalSelfAndParents(this UIElement uiElement)
+        public static IEnumerable<DependencyObject> GetLogicalSelfAndParents(this DependencyObject dependencyObject)
         {
-            while (uiElement != null)
+            while (dependencyObject != null)
             {
-                yield return uiElement;
-                uiElement = (UIElement)LogicalTreeHelper.GetParent(uiElement);
+                yield return dependencyObject;
+                dependencyObject = LogicalTreeHelper.GetParent(dependencyObject);
             }
         }
 
