@@ -270,6 +270,8 @@ namespace BlueDwarf.ViewModel
         [Async(KillExisting = true)]
         private void CheckProxyTunnel()
         {
+            var validTunnelSleep = TimeSpan.FromMinutes(5);
+            var invalidTunnelSleep = TimeSpan.FromSeconds(10);
             for (; ; )
             {
                 try
@@ -280,13 +282,14 @@ namespace BlueDwarf.ViewModel
                         ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
 
                     SetStatus(null);
+                    Thread.Sleep(validTunnelSleep);
                 }
                 catch (ProxyRouteException pre)
                 {
                     ProxyServer.ProxyRoute = null;
                     SetStatus(pre);
+                    Thread.Sleep(invalidTunnelSleep);
                 }
-                Thread.Sleep(TimeSpan.FromMinutes(5));
             }
         }
 
