@@ -65,7 +65,7 @@ namespace BlueDwarf.Net.Name
         /// <param name="name">The name.</param>
         /// <param name="route">The route.</param>
         /// <returns></returns>
-        public IPAddress Resolve(string name, ProxyRoute route)
+        public IPAddress Resolve(string name, Route route)
         {
             IPAddress address;
             if (IPAddress.TryParse(name, out address))
@@ -90,7 +90,7 @@ namespace BlueDwarf.Net.Name
             }
         }
 
-        private static Tuple<IPAddress, int> RequestionResolution(string name, ProxyRoute route)
+        private static Tuple<IPAddress, int> RequestionResolution(string name, Route route)
         {
             for (int hop = 0; hop < 100; hop++)
             {
@@ -114,7 +114,7 @@ namespace BlueDwarf.Net.Name
         /// <param name="type">The type.</param>
         /// <param name="route">The route.</param>
         /// <returns></returns>
-        private static Answer Ask(string name, string type, ProxyRoute route)
+        private static Answer Ask(string name, string type, Route route)
         {
             try
             {

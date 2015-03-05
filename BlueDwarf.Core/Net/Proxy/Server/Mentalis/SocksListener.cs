@@ -46,7 +46,7 @@ namespace Org.Mentalis.Proxy.Socks
     public sealed class SocksListener : Listener
     {
         public INameResolver NameResolver { get; set; }
-        public ProxyRoute ProxyRoute { get; set; }
+        public Route Route { get; set; }
 
         public event EventHandler ClientConnected;
         public event EventHandler<ClientReceivedEventArgs> ClientReceived;

@@ -14,11 +14,11 @@ namespace BlueDwarf.Net.Client
         /// </summary>
         /// <typeparam name="TClient">The type of the client.</typeparam>
         /// <param name="hostAddress">The host address.</param>
-        /// <param name="proxyRoute">The proxy route.</param>
+        /// <param name="Route">The proxy route.</param>
         /// <returns></returns>
-        public static TClient Client<TClient>(Uri hostAddress, ProxyRoute proxyRoute)
+        public static TClient Client<TClient>(Uri hostAddress, Route route)
         {
-            var restAdvice = new RestAdvice(hostAddress, proxyRoute);
+            var restAdvice = new RestAdvice(hostAddress, route);
             return restAdvice.Handle<TClient>();
         }
     }

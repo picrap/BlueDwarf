@@ -4,6 +4,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
     using System.Collections.Generic;
+    using Client;
 
     /// <summary>
     /// Scans pages for proxy servers and validates them
@@ -18,9 +19,9 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="hostPortEx">The custom parsing expression (providing "address" or "host" and "port" tags) or null to use default</param>
         /// <param name="testTargetHost"></param>
         /// <param name="testTargetPort"></param>
-        /// <param name="proxyServers"></param>
+        /// <param name="route"></param>
         /// <returns></returns>
-        IEnumerable<HostPort> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, params Uri[] proxyServers);
+        IEnumerable<HostPort> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, Route route);
 
         /// <summary>
         /// Scans a given page for proxy servers.
@@ -31,7 +32,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="hostPortEx">The host port ex.</param>
         /// <param name="testTargetHost">The test target host.</param>
         /// <param name="testTargetPort">The test target port.</param>
-        /// <param name="proxyServers">The proxy servers.</param>
-        void ScanPage(IList<HostPort> hostPorts, Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, params Uri[] proxyServers);
+        /// <param name="route"></param>
+        void ScanPage(IList<HostPort> hostPorts, Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, Route route);
     }
 }

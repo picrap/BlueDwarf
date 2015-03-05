@@ -6,6 +6,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
     using System.Collections.Generic;
     using System.Linq;
     using Annotations;
+    using Client;
     using Microsoft.Practices.Unity;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
@@ -28,14 +29,14 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="hostPortEx">The custom parsing expression (providing "address" or "host" and "port" tags) or null to use default</param>
         /// <param name="testTargetHost"></param>
         /// <param name="testTargetPort"></param>
-        /// <param name="proxyServers"></param>
+        /// <param name="route"></param>
         /// <returns></returns>
-        public IEnumerable<HostPort> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, params Uri[] proxyServers)
+        public IEnumerable<HostPort> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, Route route)
         {
-            var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, proxyServers);
+            var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, route);
             if (proxyListingPageText == null)
                 return new HostPort[0];
-            return HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63).Where(hp => ProxyValidator.Validate(hp, testTargetHost, testTargetPort, proxyServers));
+            return HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63).Where(hp => ProxyValidator.ValidateHttpConnect(hp, testTargetHost, testTargetPort, route));
         }
 
         /// <summary>
@@ -47,10 +48,10 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="hostPortEx">The host port ex.</param>
         /// <param name="testTargetHost">The test target host.</param>
         /// <param name="testTargetPort">The test target port.</param>
-        /// <param name="proxyServers">The proxy servers.</param>
-        public void ScanPage(IList<HostPort> hostPorts, Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, params Uri[] proxyServers)
+        /// <param name="route"></param>
+        public void ScanPage(IList<HostPort> hostPorts, Uri proxyListingPage, bool parseAsRawText, string hostPortEx, string testTargetHost, int testTargetPort, Route route)
         {
-            var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, proxyServers);
+            var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, route);
             if (proxyListingPageText != null)
             {
                 // All runs as parallel, since this is a massive network check with no CPU load at all
@@ -58,7 +59,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
                 HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63).ForAll(
                        delegate(HostPort hp)
                        {
-                           if (ProxyValidator.Validate(hp, testTargetHost, testTargetPort, proxyServers))
+                           if (ProxyValidator.ValidateHttpConnect(hp, testTargetHost, testTargetPort, route))
                            {
                                lock (hostPorts)
                                    hostPorts.Add(hp);

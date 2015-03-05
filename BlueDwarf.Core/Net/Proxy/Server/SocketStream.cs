@@ -9,26 +9,26 @@ namespace BlueDwarf.Net.Proxy.Server
     /// <summary>
     /// Because of some twisted implementations, we had to expose the underlying socket
     /// </summary>
-    public class ProxyStream : NetworkStream
+    public class SocketStream : NetworkStream
     {
         public new Socket Socket { get { return base.Socket; } }
 
-        public ProxyStream([NotNull] Socket socket)
+        public SocketStream([NotNull] Socket socket)
             : base(socket)
         {
         }
 
-        public ProxyStream([NotNull] Socket socket, bool ownsSocket)
+        public SocketStream([NotNull] Socket socket, bool ownsSocket)
             : base(socket, ownsSocket)
         {
         }
 
-        public ProxyStream([NotNull] Socket socket, FileAccess access)
+        public SocketStream([NotNull] Socket socket, FileAccess access)
             : base(socket, access)
         {
         }
 
-        public ProxyStream([NotNull] Socket socket, FileAccess access, bool ownsSocket)
+        public SocketStream([NotNull] Socket socket, FileAccess access, bool ownsSocket)
             : base(socket, access, ownsSocket)
         {
         }

@@ -21,17 +21,17 @@ namespace BlueDwarf.Net.Client
     internal class RestAdvice : Attribute, IMethodAdvice
     {
         private readonly Uri _hostAddress;
-        private readonly ProxyRoute _proxyRoute;
+        private readonly Route _route;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RestAdvice"/> class.
         /// </summary>
         /// <param name="hostAddress">The host address.</param>
-        /// <param name="proxyRoute">The proxy route.</param>
-        public RestAdvice(Uri hostAddress, ProxyRoute proxyRoute)
+        /// <param name="Route">The proxy route.</param>
+        public RestAdvice(Uri hostAddress, Route route)
         {
             _hostAddress = hostAddress;
-            _proxyRoute = proxyRoute;
+            _route = route;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace BlueDwarf.Net.Client
             }
 
             // then create the route and send the request
-            using (var stream = _proxyRoute.Connect(_hostAddress.Host, _hostAddress.Port, true))
+            using (var stream = _route.Connect(_hostAddress.Host, _hostAddress.Port, true))
             {
                 var request = new HttpRequest(restCall.Verb, path)
                     .AddHeader("Host", _hostAddress.GetHostAndPort())

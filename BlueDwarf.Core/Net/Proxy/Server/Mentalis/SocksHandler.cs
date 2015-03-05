@@ -150,7 +150,7 @@ internal abstract class SocksHandler {
 
     protected IPAddress Resolve(string name)
     {
-        return Listener.NameResolver.Resolve(name, Listener.ProxyRoute);
+        return Listener.NameResolver.Resolve(name, Listener.Route);
     }
 
 	///<summary>Called when we receive some bytes from the client.</summary>

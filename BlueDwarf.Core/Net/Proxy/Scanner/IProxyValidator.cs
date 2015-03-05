@@ -3,6 +3,7 @@
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
+    using Client;
 
     /// <summary>
     /// Proxy validation
@@ -16,8 +17,8 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="proxyHostPort">The proxy host port.</param>
         /// <param name="testTargetHost"></param>
         /// <param name="testTargetPort"></param>
-        /// <param name="routeToProxy">The route to proxy.</param>
+        /// <param name="route"></param>
         /// <returns></returns>
-        bool Validate(HostPort proxyHostPort, string testTargetHost, int testTargetPort, params Uri[] routeToProxy);
+        bool ValidateHttpConnect(HostPort proxyHostPort, string testTargetHost, int testTargetPort, Route route);
     }
 }

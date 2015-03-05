@@ -3,32 +3,32 @@
 namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
-    using System.Linq;
     using Annotations;
     using Client;
-    using Microsoft.Practices.Unity;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ProxyValidator : IProxyValidator
     {
-        [Dependency]
-        public IProxyClient ProxyClient { get; set; }
-
         /// <summary>
         /// Validates the specified proxy host port as a HTTP CONNECT proxy.
         /// </summary>
         /// <param name="proxyHostPort">The proxy host port.</param>
         /// <param name="testTargetHost"></param>
         /// <param name="testTargetPort"></param>
-        /// <param name="routeToProxy">The route to proxy.</param>
+        /// <param name="route"></param>
         /// <returns></returns>
-        public bool Validate(HostPort proxyHostPort, string testTargetHost, int testTargetPort, params Uri[] routeToProxy)
+        public bool ValidateHttpConnect(HostPort proxyHostPort, string testTargetHost, int testTargetPort, Route route)
         {
             var proxyUri = new Uri(string.Format("http://{0}:{1}", proxyHostPort.Host ?? proxyHostPort.Address.ToString(), proxyHostPort.Port));
             try
             {
                 // validation is simple: if route creation succeeds, then the proxy is valid
-                return ProxyClient.CreateRoute(testTargetHost, testTargetPort, routeToProxy.Concat(new[] { proxyUri }).ToArray()) != null;
+                var newRoute = route + proxyUri;
+                // we don't care much about connexion
+                using (newRoute.Connect(testTargetHost, testTargetPort, true))
+                {
+                }
+                return true;
             }
             catch (ProxyRouteException)
             {

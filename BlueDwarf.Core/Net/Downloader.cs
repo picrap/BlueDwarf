@@ -19,24 +19,18 @@ namespace BlueDwarf.Net
         [Dependency]
         public IProxyServerFactory ProxyServerFactory { get; set; }
 
-        [Dependency]
-        public IProxyClient ProxyClient { get; set; }
-
         /// <summary>
         /// Downloads the page as text (extracts significant text from page) using the specified route.
         /// </summary>
         /// <param name="uri">The URI.</param>
-        /// <param name="proxyServers"></param>
+        /// <param name="route">The route.</param>
         /// <returns></returns>
-        public string DownloadText(Uri uri, params Uri[] proxyServers)
+        public string DownloadText(Uri uri, Route route)
         {
-            var proxyRoute = ProxyClient.SafeCreateRoute(uri.Host, uri.Port, proxyServers);
-            if (proxyRoute == null)
-                return null;
             using (var proxyServer = ProxyServerFactory.CreateSocksProxyServer())
             {
                 proxyServer.Port = 0; // auto-select
-                proxyServer.ProxyRoute = proxyRoute;
+                proxyServer.Route = route;
                 var textFilePath = Path.GetTempFileName();
                 var path = Assembly.GetEntryAssembly().Location;
                 var arguments = string.Format("--download={0} --save-text={1} --proxy=socks://localhost:{2}", uri, textFilePath, proxyServer.Port);
@@ -52,17 +46,13 @@ namespace BlueDwarf.Net
         /// Downloads the page as raw.
         /// </summary>
         /// <param name="uri">The URI.</param>
-        /// <param name="proxyServers">The proxy servers.</param>
+        /// <param name="route">The route.</param>
         /// <returns></returns>
-        public string DownloadRaw(Uri uri, params Uri[] proxyServers)
+        public string DownloadRaw(Uri uri, Route route)
         {
-            var proxyRoute = ProxyClient.SafeCreateRoute(uri.Host, uri.Port, proxyServers);
-            if (proxyRoute == null)
-                return null;
-
             for (; ; )
             {
-                using (var requestStream = proxyRoute.Connect(uri.Host, uri.Port, true))
+                using (var requestStream = route.Connect(uri.Host, uri.Port, true))
                 {
                     new HttpRequest("GET", uri.AbsolutePath).AddHeader("Host", uri.GetHostAndPort()).AddHeader("Connection", "Close").Write(requestStream);
 

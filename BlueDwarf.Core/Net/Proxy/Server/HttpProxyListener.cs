@@ -10,7 +10,7 @@ namespace BlueDwarf.Net.Proxy.Server
     ///<summary>Listens on a specific port on the proxy server and forwards all incoming HTTP traffic to the appropriate server.</summary>
     public class HttpProxyListener : Listener
     {
-        public ProxyRoute ProxyRoute { get; set; }
+        public Route Route { get; set; }
 
         ///<summary>Initializes a new instance of the HttpListener class.</summary>
         ///<param name="port">The port to listen on.</param>

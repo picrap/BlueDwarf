@@ -8,6 +8,6 @@ namespace BlueDwarf.Net.Geolocation
 
     public interface IGeolocation
     {
-        AddressGeolocation Locate(IPAddress address, ProxyRoute proxyRoute);
+        AddressGeolocation Locate(IPAddress address, Route route);
     }
 }

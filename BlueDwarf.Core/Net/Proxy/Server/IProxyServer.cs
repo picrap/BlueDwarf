@@ -36,6 +36,6 @@ namespace BlueDwarf.Net.Proxy.Server
         /// <value>
         /// The proxy route.
         /// </value>
-        ProxyRoute ProxyRoute { get; set; }
+        Route Route { get; set; }
     }
 }

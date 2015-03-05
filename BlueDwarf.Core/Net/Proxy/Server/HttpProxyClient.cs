@@ -161,7 +161,7 @@ namespace BlueDwarf.Net.Proxy.Server
             {
                 //IPEndPoint DestinationEndPoint = new IPEndPoint(Dns.Resolve(Host).AddressList[0], Port);
                 //DestinationSocket = new Socket(DestinationEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                var stream = Listener.ProxyRoute.Connect(Host, Port, true);
+                var stream = Listener.Route.Connect(Host, Port, true);
                 DestinationSocket=stream.Socket;
                 if (HeaderFields.ContainsKey("Proxy-Connection") && HeaderFields["Proxy-Connection"].ToLower().Equals("keep-alive"))
                     DestinationSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, 1);

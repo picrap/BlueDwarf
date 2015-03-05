@@ -278,15 +278,20 @@ namespace BlueDwarf.ViewModel
                 {
                     SetStatusPending();
                     var testTargetUri = TestTargetUri;
+                    var route = ProxyClient.CreateRoute(LocalProxy, RemoteProxy);
                     if (testTargetUri != null)
-                        ProxyServer.ProxyRoute = ProxyClient.CreateRoute(testTargetUri.Host, testTargetUri.Port, LocalProxy, RemoteProxy);
+                    {
+                        // result does not matter
+                        using (route.Connect(testTargetUri.Host, testTargetUri.Port, true)) { }
+                    }
+                    ProxyServer.Route = route;
 
                     SetStatus(null);
                     Thread.Sleep(validTunnelSleep);
                 }
                 catch (ProxyRouteException pre)
                 {
-                    ProxyServer.ProxyRoute = null;
+                    ProxyServer.Route = null;
                     SetStatus(pre);
                     Thread.Sleep(invalidTunnelSleep);
                 }

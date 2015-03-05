@@ -14,7 +14,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="targetHost">The target host.</param>
         /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
-        private ProxyStream HttpProxyConnect(ProxyStream stream, string targetHost, int targetPort)
+        private SocketStream HttpProxyConnect(SocketStream stream, string targetHost, int targetPort)
         {
             new HttpRequest("CONNECT", targetHost, targetPort).AddHeader("Proxy-Connection", "Keep-Alive").Write(stream);
             var httpResponse = HttpResponse.FromStream(stream);

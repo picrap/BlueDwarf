@@ -18,7 +18,7 @@ namespace BlueDwarf.Net.Name
         /// <param name="name">The name.</param>
         /// <param name="route">The route.</param>
         /// <returns></returns>
-        public IPAddress Resolve(string name, ProxyRoute route)
+        public IPAddress Resolve(string name, Route route)
         {
             try
             {

@@ -119,7 +119,7 @@
     <Compile Include="Net\Proxy\Server\IProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerFactory.cs" />
     <Compile Include="Net\Proxy\Server\ProxyServerTransferEventArgs.cs" />
-    <Compile Include="Net\Proxy\Client\ProxyRoute.cs" />
+    <Compile Include="Net\Proxy\Client\Route.cs" />
     <Compile Include="Net\Proxy\Client\ProxyRouteException.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.cs" />
     <Compile Include="Net\Proxy\Client\TunnelProxyClient.Http.cs" />
@@ -139,7 +139,7 @@
     <Compile Include="Net\Proxy\Server\Mentalis\SocksClient.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksHandler.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
-    <Compile Include="Net\Proxy\Server\ProxyStream.cs" />
+    <Compile Include="Net\Proxy\Server\SocketStream.cs" />
     <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
     <Compile Include="Properties\ProductInfo.cs" />
     <Compile Include="Properties\Annotations.cs" />

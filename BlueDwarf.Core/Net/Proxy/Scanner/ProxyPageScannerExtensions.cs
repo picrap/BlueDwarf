@@ -4,6 +4,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
 {
     using System;
     using System.Collections.Generic;
+    using Client;
 
     public static class ProxyPageScannerExtensions
     {
@@ -14,11 +15,11 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="proxyPage">The proxy page provider.</param>
         /// <param name="testTargetHost">The test target host.</param>
         /// <param name="testTargetPort">The test target port.</param>
-        /// <param name="proxyServers">The proxy servers.</param>
+        /// <param name="route">The route.</param>
         /// <returns></returns>
-        public static IEnumerable<HostPort> ScanPage(this IProxyPageScanner proxyPageScanner, ProxyPage proxyPage, string testTargetHost, int testTargetPort, params  Uri[] proxyServers)
+        public static IEnumerable<HostPort> ScanPage(this IProxyPageScanner proxyPageScanner, ProxyPage proxyPage, string testTargetHost, int testTargetPort, Route route)
         {
-            return proxyPageScanner.ScanPage(proxyPage.PageUri, proxyPage.ParseAsText, proxyPage.HostPortEx, testTargetHost, testTargetPort, proxyServers);
+            return proxyPageScanner.ScanPage(proxyPage.PageUri, proxyPage.ParseAsText, proxyPage.HostPortEx, testTargetHost, testTargetPort, route);
         }
     }
 }

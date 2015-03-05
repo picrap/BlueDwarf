@@ -7,7 +7,7 @@ namespace BlueDwarf.Net.Proxy.Client
 
     partial class TunnelProxyClient
     {
-        private ProxyStream SocksProxyConnect(ProxyStream stream, string targetHost, int targetPort, ProxyRoute routeUntilHere)
+        private SocketStream SocksProxyConnect(SocketStream stream, string targetHost, int targetPort, Route routeUntilHere)
         {
             throw new NotImplementedException();
         }
