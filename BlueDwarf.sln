@@ -14,6 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Core", "BlueDwarf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Test", "BlueDwarf.Test\BlueDwarf.Test.csproj", "{4E026AAC-764E-4A65-80FD-C41371EB8D8F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B931890B-6776-4A3B-B5EC-CD6D7B4088A7}"
+	ProjectSection(SolutionItems) = preProject
+		ci-build.bat = ci-build.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
