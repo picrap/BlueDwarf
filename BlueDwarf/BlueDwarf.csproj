@@ -121,8 +121,9 @@
     <Reference Include="Microsoft.Windows.Shell">
       <HintPath>..\packages\ModernUI.WPF.1.0.6\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="MrAdvice">
-      <HintPath>..\packages\MrAdvice.Fody.0.3.14.0\lib\portable-net40+sl5+wp8\MrAdvice.dll</HintPath>
+    <Reference Include="MrAdvice, Version=0.3.15.0, Culture=neutral, PublicKeyToken=c0e7e6eab6f293d8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MrAdvice.Fody.0.3.15\lib\portable-net40+sl5+wp8\MrAdvice.dll</HintPath>
     </Reference>
     <Reference Include="MrAdvice.MVVM">
       <HintPath>..\packages\MrAdvice.MVVM.0.1.0.0\lib\net40-Client\MrAdvice.MVVM.dll</HintPath>

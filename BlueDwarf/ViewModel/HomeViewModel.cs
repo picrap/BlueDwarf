@@ -420,7 +420,7 @@ namespace BlueDwarf.ViewModel
         public void PickRemoteProxy()
         {
             var viewModel = Navigator.Show<ProxyPickerViewModel>();
-            if (viewModel != null)
+            if (viewModel != null && viewModel.ProxyServer != null)
                 RemoteProxy = new Uri(string.Format("http://{0}:{1}", viewModel.ProxyServer.HostPort.HostOrAddress, viewModel.ProxyServer.HostPort.Port));
         }
     }
