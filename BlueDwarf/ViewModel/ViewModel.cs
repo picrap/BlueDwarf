@@ -3,77 +3,25 @@
 namespace BlueDwarf.ViewModel
 {
     using System;
-    using System.ComponentModel;
     using System.Reflection;
-    using System.Windows.Input;
     using ArxOne.MrAdvice.MVVM.Properties;
     using ArxOne.MrAdvice.MVVM.Threading;
-    using ArxOne.MrAdvice.MVVM.ViewModel;
     using Properties;
 
     /// <summary>
     /// View-model base (in case we write more than one).
     /// </summary>
-    public class ViewModel : ICommand, ILoadViewModel, INotifyPropertyChangedViewModel
+    public class ViewModel : ArxOne.MrAdvice.MVVM.ViewModel.ViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChanged]
         public bool Loading { get; set; }
 
-        /// <summary>
-        /// Called when property changed.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <param name="category">The category.</param>
         [UISync]
-        public void OnPropertyChanged(string propertyName, object category = null)
+        public override void OnPropertyChanged(PropertyInfo propertyInfo, NotifyPropertyChanged sender)
         {
-            var onPropertyChanged = PropertyChanged;
-            if (onPropertyChanged != null)
-                onPropertyChanged(this, new CategoryPropertyChangedEventArgs(propertyName, category));
-        }
-
-        [UISync]
-        public void OnPropertyChanged(PropertyInfo propertyInfo, NotifyPropertyChanged sender)
-        {
-            var onPropertyChanged = PropertyChanged;
-            if (onPropertyChanged != null)
-            {
-                var categoryNotifyPropertyChanged = sender as CategoryNotifyPropertyChanged;
-                var category = categoryNotifyPropertyChanged != null ? categoryNotifyPropertyChanged.Category : null;
-                onPropertyChanged(this, new CategoryPropertyChangedEventArgs(propertyInfo.Name, category));
-            }
-        }
-
-
-        /// <summary>
-        /// Loads data related to this view-model.
-        /// </summary>
-        public virtual void Load()
-        { }
-
-        // TODO
-        public event EventHandler CanExecuteChanged;
-
-        // TODO
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        private static readonly object[] NoParameter = new object[0];
-
-        /// <summary>
-        /// Invokes the command.
-        /// </summary>
-        /// <param name="parameter">Optional parameter.</param>
-        public void Execute(object parameter)
-        {
-            var methodBase = parameter as MethodBase;
-            if (methodBase != null)
-                methodBase.Invoke(this, NoParameter);
-            else
-                throw new InvalidOperationException("Can not handle simple messages now (and maybe never)");
+            var categoryNotifyPropertyChanged = sender as CategoryNotifyPropertyChanged;
+            var category = categoryNotifyPropertyChanged != null ? categoryNotifyPropertyChanged.Category : null;
+            OnPropertyChanged(new CategoryPropertyChangedEventArgs(propertyInfo.Name, category));
         }
 
         /// <summary>

@@ -148,8 +148,6 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationOptions.cs" />
-    <Compile Include="Collection\DispatcherObservableCollection.cs" />
-    <Compile Include="Controls\LocaleExtension.cs" />
     <Compile Include="Controls\LowerCaseConverter.cs" />
     <Compile Include="Controls\ModernUI.cs" />
     <Compile Include="Controls\UnitConverter.cs" />
@@ -186,7 +184,6 @@
     <Compile Include="View\HomeLocalProxyKeepaliveView.xaml.cs">
       <DependentUpon>HomeLocalProxyKeepaliveView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BindAnyExtension.cs" />
     <Compile Include="ViewModel\Properties\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="ViewModel\Properties\CategoryPropertyChangedEventArgs.cs" />
     <Compile Include="BlueDwarfApplication.xaml.cs">

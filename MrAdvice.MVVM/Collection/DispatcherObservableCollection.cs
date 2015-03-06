@@ -1,13 +1,10 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-
-namespace BlueDwarf.Collection
+﻿
+namespace ArxOne.MrAdvice.Collection
 {
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.ComponentModel;
-    using ArxOne.MrAdvice.MVVM.Threading;
-    using Utility;
+    using MVVM.Threading;
 
     public class DispatcherObservableCollection<TItem> : ObservableCollection<TItem>
     {
