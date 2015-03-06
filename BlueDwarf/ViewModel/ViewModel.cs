@@ -6,16 +6,17 @@ namespace BlueDwarf.ViewModel
     using System.ComponentModel;
     using System.Reflection;
     using System.Windows.Input;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using ArxOne.MrAdvice.MVVM.Threading;
+    using ArxOne.MrAdvice.MVVM.ViewModel;
     using Properties;
-    using Utility;
 
     /// <summary>
     /// View-model base (in case we write more than one).
     /// </summary>
-    public class ViewModel : INotifyPropertyChanged, ICommand
+    public class ViewModel : ICommand, ILoadViewModel, INotifyPropertyChangedViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
         [NotifyPropertyChanged]
         public bool Loading { get; set; }
 
@@ -31,6 +32,19 @@ namespace BlueDwarf.ViewModel
             if (onPropertyChanged != null)
                 onPropertyChanged(this, new CategoryPropertyChangedEventArgs(propertyName, category));
         }
+
+        [UISync]
+        public void OnPropertyChanged(PropertyInfo propertyInfo, NotifyPropertyChanged sender)
+        {
+            var onPropertyChanged = PropertyChanged;
+            if (onPropertyChanged != null)
+            {
+                var categoryNotifyPropertyChanged = sender as CategoryNotifyPropertyChanged;
+                var category = categoryNotifyPropertyChanged != null ? categoryNotifyPropertyChanged.Category : null;
+                onPropertyChanged(this, new CategoryPropertyChangedEventArgs(propertyInfo.Name, category));
+            }
+        }
+
 
         /// <summary>
         /// Loads data related to this view-model.

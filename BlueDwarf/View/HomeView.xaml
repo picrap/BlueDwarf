@@ -9,6 +9,7 @@
                   xmlns:tb="http://www.hardcodet.net/taskbar"
                   xmlns:debug="debug"
                   xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
+                  xmlns:mrAdvice="urn:MrAdvice/View"
                   mc:Ignorable="d" 
                   Title="{x:Static l:HomeLocale.Title}" IsTitleVisible="True"
                   d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
@@ -32,15 +33,15 @@
     <mui:ModernWindow.BackgroundContent>
         <!-- Those controls are not visible, so here was a good place to put them -->
         <Grid Opacity="0.001">
-            <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{v:Command {Binding Restore}}">
+            <tb:TaskbarIcon IconSource="/Resources/key.ico" DoubleClickCommand="{mrAdvice:Command {Binding Restore}}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="{x:Static l:HomeLocale.MenuConfigure}" Command="{v:Command {Binding Restore}}" FontWeight="Bold" />
-                        <MenuItem Header="{x:Static l:HomeLocale.MenuExit}" Command="{v:Command {Binding Exit}}" />
+                        <MenuItem Header="{x:Static l:HomeLocale.MenuConfigure}" Command="{mrAdvice:Command {Binding Restore}}" FontWeight="Bold" />
+                        <MenuItem Header="{x:Static l:HomeLocale.MenuExit}" Command="{mrAdvice:Command {Binding Exit}}" />
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
-            <v:CloseButton Command="{v:Command {Binding Minimize}}" />
+            <v:CloseButton Command="{mrAdvice:Command {Binding Minimize}}" />
             <v:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive1FullUri, Mode=OneWay}" Silent="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
             <v:ExtendedWebBrowser Width="1" Height="1" Opacity="0.1" Uri="{Binding KeepAlive2FullUri, Mode=OneWay}" Silent="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
         </Grid>

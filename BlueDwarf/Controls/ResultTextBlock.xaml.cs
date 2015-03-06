@@ -3,7 +3,7 @@
 namespace BlueDwarf.Controls
 {
     using System.Windows.Controls;
-    using View.Properties;
+    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     /// <summary>
     /// ResultTextBlock.xaml

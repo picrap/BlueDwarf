@@ -1,6 +1,5 @@
-// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.ViewModel.Properties
+
+namespace ArxOne.MrAdvice.MVVM.Properties
 {
     /// <summary>
     /// Notification type for DependencyPropertyChanged

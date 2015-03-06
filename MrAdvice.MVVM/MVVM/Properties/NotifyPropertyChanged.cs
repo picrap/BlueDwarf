@@ -1,12 +1,11 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.ViewModel.Properties
+﻿
+namespace ArxOne.MrAdvice.MVVM.Properties
 {
     using System;
     using System.Linq;
-    using ArxOne.MrAdvice.Advice;
-    using ArxOne.MrAdvice.Annotation;
-    using Aspects;
+    using Advice;
+    using Annotation;
+    using ViewModel;
     using Utility;
 
     /// <summary>
@@ -16,14 +15,6 @@ namespace BlueDwarf.ViewModel.Properties
     [Priority(AspectPriority.Notification)]
     public class NotifyPropertyChanged : Attribute, IPropertyAdvice
     {
-        /// <summary>
-        /// Gets or sets the category, a custom value used by notifications
-        /// </summary>
-        /// <value>
-        /// The category.
-        /// </value>
-        public object Category { get; set; }
-
         public void Advise(PropertyAdviceContext context)
         {
             if (context.IsGetter)
@@ -39,8 +30,10 @@ namespace BlueDwarf.ViewModel.Properties
                 var newValue = context.Value;
                 if (!oldValue.SafeEquals(newValue))
                 {
-                    var viewModel = (ViewModel)context.Target;
-                    viewModel.OnPropertyChanged(context.TargetProperty.Name, Category);
+                    var viewModel = context.Target as INotifyPropertyChangedViewModel;
+                    if (viewModel == null)
+                        throw new InvalidOperationException("ViewModel must implement INotifyPropertyChangedViewModel");
+                    viewModel.OnPropertyChanged(context.TargetProperty, this);
                 }
             }
         }

@@ -8,17 +8,18 @@ namespace BlueDwarf.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Navigation;
-    using ViewModel.Properties;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     /// <summary>
     /// Extensions to web browser. Unfortunately the WebBrowser class can not be overriden (WTF?)
     /// </summary>
     public partial class ExtendedWebBrowser
     {
-        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [View.Properties.DependencyProperty]
+        [DependencyProperty]
         public string Text { get; set; }
 
         /// <summary>

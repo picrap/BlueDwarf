@@ -173,11 +173,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProxyPickerLocale.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utility\Async.cs" />
     <Compile Include="Utility\BindingExtensions.cs" />
-    <Compile Include="Utility\UISync.cs" />
     <Compile Include="Utility\ExclusiveUpdate.cs" />
-    <Compile Include="Utility\InstanceData.cs" />
+    <Compile Include="ViewModel\Properties\CategoryNotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\Proxy.cs" />
     <Compile Include="ViewModel\ProxyPickerViewModel.cs" />
     <Compile Include="View\ImageSource.cs" />
@@ -188,19 +186,11 @@
     <Compile Include="View\HomeLocalProxyKeepaliveView.xaml.cs">
       <DependentUpon>HomeLocalProxyKeepaliveView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Properties\Attached.cs" />
     <Compile Include="Controls\BindAnyExtension.cs" />
-    <Compile Include="View\Properties\Property.cs" />
-    <Compile Include="ViewModel\Properties\DependencyPropertyNotification.cs" />
-    <Compile Include="ViewModel\Properties\NotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\Properties\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="ViewModel\Properties\CategoryPropertyChangedEventArgs.cs" />
     <Compile Include="BlueDwarfApplication.xaml.cs">
       <DependentUpon>BlueDwarfApplication.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="View\Properties\DependencyProperty.cs" />
-    <Compile Include="View\Properties\DependencyProperties.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\ExtendedWebBrowser.xaml.cs">
@@ -219,15 +209,10 @@
     <Compile Include="Controls\UrlBox.xaml.cs">
       <DependentUpon>UrlBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Navigation\INavigator.cs" />
-    <Compile Include="Navigation\Navigator.cs" />
-    <Compile Include="Navigation\NavigatorExtensions.cs" />
     <Compile Include="Utility\CollectionExtensions.cs" />
     <Compile Include="Utility\ServiceProviderExtensions.cs" />
-    <Compile Include="Utility\UIElementExtensions.cs" />
     <Compile Include="ViewModel\ProxyAnalysisViewModel.cs" />
     <Compile Include="Controls\CloseButton.cs" />
-    <Compile Include="Controls\CommandExtension.cs" />
     <Compile Include="Controls\Hider.cs" />
     <Compile Include="ViewModel\WebDownloaderViewModel.cs" />
     <Compile Include="View\ProxyAnalysisView.xaml.cs">
@@ -364,6 +349,10 @@
     <ProjectReference Include="..\BlueDwarf.Core\BlueDwarf.Core.csproj">
       <Project>{BBD1E465-0350-44DA-9D4C-485DA9670703}</Project>
       <Name>BlueDwarf.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MrAdvice.MVVM\MrAdvice.MVVM.csproj">
+      <Project>{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}</Project>
+      <Name>MrAdvice.MVVM</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

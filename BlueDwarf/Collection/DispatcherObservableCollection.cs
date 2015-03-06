@@ -6,6 +6,7 @@ namespace BlueDwarf.Collection
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using ArxOne.MrAdvice.MVVM.Threading;
     using Utility;
 
     public class DispatcherObservableCollection<TItem> : ObservableCollection<TItem>

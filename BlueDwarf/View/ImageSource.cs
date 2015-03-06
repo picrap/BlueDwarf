@@ -6,8 +6,6 @@ namespace BlueDwarf.View
     using System;
     using System.Windows;
     using System.Windows.Controls;
-    using Properties;
-    using ViewModel.Properties;
     using DependencyProperty = System.Windows.DependencyProperty;
 
     public class ImageSource

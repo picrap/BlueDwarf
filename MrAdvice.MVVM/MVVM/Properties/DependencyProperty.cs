@@ -1,14 +1,11 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.View.Properties
+﻿
+namespace ArxOne.MrAdvice.MVVM.Properties
 {
     using System;
     using System.Windows;
     using ArxOne.MrAdvice.Advice;
     using ArxOne.MrAdvice.Annotation;
-    using Aspects;
-    using Utility;
-    using ViewModel.Properties;
+    using ArxOne.MrAdvice.Utility;
 
     /// <summary>
     /// Marks a simple auto property to be bound to a DependencyProperty

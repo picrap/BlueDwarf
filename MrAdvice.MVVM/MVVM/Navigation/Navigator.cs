@@ -1,6 +1,5 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Navigation
+﻿
+namespace ArxOne.MrAdvice.MVVM.Navigation
 {
     using System;
     using System.Collections.Generic;
@@ -8,11 +7,12 @@ namespace BlueDwarf.Navigation
     using System.Reflection;
     using System.Windows;
     using System.Windows.Threading;
-    using Annotations;
-    using Microsoft.Practices.Unity;
-    using Utility;
-    using View.Properties;
-    using ViewModel;
+    using ArxOne.MrAdvice.MVVM.Annotations;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using ArxOne.MrAdvice.MVVM.ViewModel;
+    using ArxOne.MrAdvice.Utility;
+    using Microsoft.Practices.ServiceLocation;
+    using ViewModel = System.Object;
 
     /// <summary>
     /// The navigator implements navigation logic
@@ -20,9 +20,6 @@ namespace BlueDwarf.Navigation
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class Navigator : INavigator
     {
-        [Dependency]
-        public IUnityContainer UnityContainer { get; set; }
-
         [Attached]
         public static Property<Window, bool> WasShown { get; set; }
 
@@ -52,14 +49,16 @@ namespace BlueDwarf.Navigation
         /// </returns>
         public object Show(Type viewModelType, Action<object> initializer = null)
         {
-            var viewModel = (ViewModel)UnityContainer.Resolve(viewModelType);
+            var viewModel = (ViewModel)GetOrCreateInstance(viewModelType);
             // initializer comes first
             if (initializer != null)
                 initializer(viewModel);
             // load comes second
-            viewModel.Load();
+            var loadViewModel = viewModel as ILoadViewModel;
+            if (loadViewModel != null)
+                loadViewModel.Load();
             var viewType = GetViewType(viewModelType);
-            var view = (FrameworkElement)UnityContainer.Resolve(viewType);
+            var view = (FrameworkElement)GetOrCreateInstance(viewType);
             view.DataContext = viewModel;
             var window = view as Window;
             if (window != null)
@@ -69,6 +68,19 @@ namespace BlueDwarf.Navigation
                 return ShowDialog(window, viewModel);
             }
             return null;
+        }
+
+        /// <summary>
+        /// Gets or create an instance of given type.
+        /// This may use the CommonServiceLocator, assuming it's been correctly configured
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        private static object GetOrCreateInstance(Type type)
+        {
+            if (!ServiceLocator.IsLocationProviderSet)
+                return Activator.CreateInstance(type);
+            return ServiceLocator.Current.GetOrCreateInstance(type);
         }
 
         /// <summary>
@@ -205,7 +217,9 @@ namespace BlueDwarf.Navigation
             var window = _windows.Pop();
             if (_windows.Count == 0)
             {
-                Exiting.Raise(this);
+                var onExiting = Exiting;
+                if (onExiting != null)
+                    onExiting(this, EventArgs.Empty);
                 // this is not something I'm very proud of
                 // TODO: have a nice exit
                 Application.Current.DispatcherUnhandledException += delegate(object sender, DispatcherUnhandledExceptionEventArgs e) { e.Handled = true; };

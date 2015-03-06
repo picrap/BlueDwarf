@@ -1,6 +1,5 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Utility
+﻿
+namespace ArxOne.MrAdvice.Utility
 {
     using System;
     using System.Collections.Generic;
@@ -46,7 +45,6 @@ namespace BlueDwarf.Utility
 
             if (propertyName == null)
                 return false;
-
 
             if (commandSetter != null)
             {

@@ -6,10 +6,12 @@ namespace BlueDwarf.ViewModel
     using System.ComponentModel;
     using System.Threading;
     using Annotations;
+    using ArxOne.MrAdvice.MVVM.Navigation;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using ArxOne.MrAdvice.MVVM.Threading;
     using Configuration;
     using Controls;
     using Microsoft.Practices.Unity;
-    using Navigation;
     using Net.Http;
     using Net.Proxy.Client;
     using Net.Proxy.Scanner;
@@ -61,7 +63,7 @@ namespace BlueDwarf.ViewModel
         /// The local proxy.
         /// </value>
         [Persistent("Proxy1")]
-        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri LocalProxy { get; set; }
 
         [NotifyPropertyChanged]
@@ -76,7 +78,7 @@ namespace BlueDwarf.ViewModel
         /// The remote proxy.
         /// </value>
         [Persistent("Proxy2")]
-        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public Uri RemoteProxy { get; set; }
 
         [NotifyPropertyChanged]
@@ -90,7 +92,7 @@ namespace BlueDwarf.ViewModel
         /// The test target.
         /// </value>
         [Persistent("ProxyTest", DefaultValue = "https://isohunt.to/")]
-        [NotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyTunnel)]
         public string TestTarget { get; set; }
 
         public Uri TestTargetUri
@@ -120,28 +122,28 @@ namespace BlueDwarf.ViewModel
         /// The keep alive1.
         /// </value>
         [Persistent("KeepAlive1", DefaultValue = "https://google.com")]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive1 { get; set; }
 
         [Persistent("KeepAlive1Interval", DefaultValue = 120)]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive1Interval { get; set; }
 
         [NotifyPropertyChanged]
         public Uri KeepAlive1FullUri { get; set; }
 
         [Persistent("KeepAlive2")]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public Uri KeepAlive2 { get; set; }
 
         [Persistent("KeepAlive2Interval", DefaultValue = 120)]
-        [NotifyPropertyChanged(Category = Category.ProxyKeepalive)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyKeepalive)]
         public int KeepAlive2Interval { get; set; }
 
         [NotifyPropertyChanged]
         public Uri KeepAlive2FullUri { get; set; }
 
-        [NotifyPropertyChanged(Category = Category.ProxyServer)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyServer)]
         public int SocksListeningPort { get; set; }
 
         [Persistent("SocksListeningPort", DefaultValue = 1080)]

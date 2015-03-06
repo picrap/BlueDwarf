@@ -6,18 +6,19 @@ namespace BlueDwarf.Controls
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using ArxOne.MrAdvice.MVVM.Properties;
     using Utility;
-    using ViewModel.Properties;
+    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     /// <summary>
     /// UrlBox.xaml code behind
     /// </summary>
     public partial class UrlBox
     {
-        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public Uri Uri { get; set; }
 
-        [View.Properties.DependencyProperty(DefaultValue = "http", Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(DefaultValue = "http", Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public string AllowedSchemes { get; set; }
 
         private string[] AllowedSchemesArray

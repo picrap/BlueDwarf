@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:BlueDwarf.Controls"
              xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
              xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
+             xmlns:mrAdvice="urn:MrAdvice/View"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel, IsDesignTimeCreatable=true}"
              d:DesignHeight="300" d:DesignWidth="400">
@@ -33,7 +34,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
-                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.WizardInvoke}" Command="{controls:Command {Binding AnalyzeProxy}}" Margin="{StaticResource LeftMargin}" />
+                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.WizardInvoke}" Command="{mrAdvice:Command {Binding AnalyzeProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 
@@ -45,7 +46,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
-                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.PickRemoteProxy}" Command="{controls:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
+                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.PickRemoteProxy}" Command="{mrAdvice:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 

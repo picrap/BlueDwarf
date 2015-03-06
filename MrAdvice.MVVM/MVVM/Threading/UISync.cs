@@ -1,6 +1,5 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Utility
+﻿
+namespace ArxOne.MrAdvice.MVVM.Threading
 {
     using System;
     using System.Reflection;

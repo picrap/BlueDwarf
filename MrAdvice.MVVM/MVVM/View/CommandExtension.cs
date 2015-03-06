@@ -1,6 +1,5 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Controls
+﻿
+namespace ArxOne.MrAdvice.MVVM.View
 {
     using System;
     using System.Linq;
@@ -8,7 +7,6 @@ namespace BlueDwarf.Controls
     using System.Windows.Data;
     using System.Windows.Markup;
     using Utility;
-    using ViewModel;
 
     /// <summary>
     /// Allows to bind commands directly to view-model methods
@@ -16,16 +14,18 @@ namespace BlueDwarf.Controls
     /// </summary>
     public class CommandExtension : MarkupExtension
     {
-        private readonly object _parameter;
+        private readonly object _name;
 
-        public CommandExtension(object parameter)
+        public object Parameter { get; set; }
+
+        public CommandExtension(object name)
         {
-            _parameter = parameter;
+            _name = name;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var provideValueTarget = serviceProvider.GetService<IProvideValueTarget>();
+            var provideValueTarget = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
             var element = provideValueTarget.TargetObject as FrameworkElement;
             if (element == null)
                 return null;
@@ -33,17 +33,18 @@ namespace BlueDwarf.Controls
             var targetProperty = provideValueTarget.TargetProperty;
             element.DataContextChanged += delegate
             {
-                var viewModel = element.DataContext as ViewModel;
+                var viewModel = element.DataContext;
                 if (viewModel == null)
                     return;
 
-                var parameter = _parameter;
-                var bindingParameter = parameter as System.Windows.Data.Binding;
+                var name = _name;
+                var bindingParameter = name as Binding;
                 // because we bind to a method, this allows us to have a syntax control in XAML editor
                 if (bindingParameter != null)
-                    parameter = viewModel.GetType().GetMember(bindingParameter.Path.Path).FirstOrDefault();
+                    name = viewModel.GetType().GetMember(bindingParameter.Path.Path).FirstOrDefault();
 
-                element.SetCommand(targetProperty, viewModel, parameter);
+                var command = new Command(viewModel, name);
+                element.SetCommand(targetProperty, command, Parameter);
             };
 
             return null;

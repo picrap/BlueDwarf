@@ -5,6 +5,7 @@ namespace BlueDwarf.Controls
     using System;
     using System.Globalization;
     using System.Windows.Data;
+    using ArxOne.MrAdvice.Utility;
     using Resources.Localization;
     using Utility;
 

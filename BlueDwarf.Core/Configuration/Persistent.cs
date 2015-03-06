@@ -5,6 +5,7 @@ namespace BlueDwarf.Configuration
     using System;
     using ArxOne.MrAdvice.Advice;
     using ArxOne.MrAdvice.Annotation;
+    using ArxOne.MrAdvice.MVVM.Properties;
     using Aspects;
 
     [AttributeUsage(AttributeTargets.Property)]

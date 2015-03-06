@@ -3,11 +3,12 @@
 namespace BlueDwarf.Controls
 {
     using System.Windows;
-    using ViewModel.Properties;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     public partial class Status
     {
-        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public StatusCode Code { get; set; }
 
         public Status()

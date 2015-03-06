@@ -4,12 +4,14 @@ namespace BlueDwarf.Controls
 {
     using System.Linq;
     using System.Windows;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using ArxOne.MrAdvice.Utility;
     using Utility;
-    using ViewModel.Properties;
+    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     public class Hider : FrameworkElement
     {
-        [View.Properties.DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
+        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
         public bool Show { get; set; }
 
         /// <summary>

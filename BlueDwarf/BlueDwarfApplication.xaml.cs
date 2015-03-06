@@ -4,10 +4,11 @@ namespace BlueDwarf
 {
     using System;
     using System.Windows;
+    using ArxOne.MrAdvice.MVVM.Navigation;
     using CommandLine;
     using Configuration;
+    using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
-    using Navigation;
     using Net.Proxy;
     using Net.Proxy.Server;
     using Utility;
@@ -67,6 +68,8 @@ namespace BlueDwarf
         private void ConfigureContainer()
         {
             var container = new UnityContainer();
+            // Dude, I just realized that this is not automatic (Why?)
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
             UIConfiguration.Configure(container);
             CoreConfiguration.Configure(container);
             container.BuildUp(this);

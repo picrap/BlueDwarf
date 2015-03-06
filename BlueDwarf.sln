@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf", "BlueDwarf\BlueDwarf.csproj", "{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A7DB477-41AA-40D9-80C3-FC9BF20D9286}"
@@ -15,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Core", "BlueDwarf.Core\BlueDwarf.Core.csproj", "{BBD1E465-0350-44DA-9D4C-485DA9670703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Test", "BlueDwarf.Test\BlueDwarf.Test.csproj", "{4E026AAC-764E-4A65-80FD-C41371EB8D8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrAdvice.MVVM", "MrAdvice.MVVM\MrAdvice.MVVM.csproj", "{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +34,10 @@ Global
 		{4E026AAC-764E-4A65-80FD-C41371EB8D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E026AAC-764E-4A65-80FD-C41371EB8D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E026AAC-764E-4A65-80FD-C41371EB8D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

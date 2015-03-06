@@ -10,6 +10,7 @@
                   xmlns:util="clr-namespace:Wpf.Util"
                   xmlns:view="clr-namespace:BlueDwarf.View"
                   xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
+                  xmlns:mrAdvice="urn:MrAdvice/View"
                   mc:Ignorable="d" 
                   d:DataContext="{d:DesignInstance Type=vm:ProxyPickerViewModel, IsDesignTimeCreatable=false}" 
                   ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" >
@@ -17,7 +18,7 @@
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
         <v:ModernUI.DialogButtons>
             <x:Array Type="Button">
-                <Button Content="{x:Static l:ProxyPickerLocale.CloseButton}" Command="{v:Command {Binding Close}}" />
+                <Button Content="{x:Static l:ProxyPickerLocale.CloseButton}" Command="{mrAdvice:Command {Binding Close}}" />
             </x:Array>
         </v:ModernUI.DialogButtons>
 

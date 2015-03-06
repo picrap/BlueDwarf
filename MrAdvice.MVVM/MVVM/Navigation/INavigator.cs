@@ -1,6 +1,5 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Navigation
+﻿
+namespace ArxOne.MrAdvice.MVVM.Navigation
 {
     using System;
 

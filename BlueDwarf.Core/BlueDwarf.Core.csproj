@@ -65,7 +65,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aspects\AspectPriority.cs" />
     <Compile Include="Aspects\PropertyImporter.cs" />
     <Compile Include="Configuration\IPersistence.cs" />
     <Compile Include="Configuration\IStartupConfiguration.cs" />
@@ -156,7 +155,6 @@
     <Compile Include="Utility\MemberInfoExtensions.cs" />
     <Compile Include="Utility\MethodBaseExtensions.cs" />
     <Compile Include="Utility\ObjectExtensions.cs" />
-    <Compile Include="Utility\ObjectTypeConverter.cs" />
     <Compile Include="Utility\PropertyInfoExtensions.cs" />
     <Compile Include="Utility\SocketExtensions.cs" />
     <Compile Include="Utility\StreamExtensions.cs" />
@@ -173,7 +171,12 @@
     <Content Include="FodyWeavers.xml" />
     <Content Include="ReadMe.MrAdvice.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MrAdvice.MVVM\MrAdvice.MVVM.csproj">
+      <Project>{3CC33C7B-65E5-47F0-AE8A-1A473D8720E1}</Project>
+      <Name>MrAdvice.MVVM</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

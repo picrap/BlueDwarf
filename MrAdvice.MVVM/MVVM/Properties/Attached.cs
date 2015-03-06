@@ -1,12 +1,9 @@
-// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.View.Properties
+
+namespace ArxOne.MrAdvice.MVVM.Properties
 {
     using System;
     using ArxOne.MrAdvice.Advice;
     using ArxOne.MrAdvice.Annotation;
-    using Aspects;
-    using ViewModel.Properties;
 
     /// <summary>
     /// Aspect for attached properties

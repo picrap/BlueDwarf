@@ -7,6 +7,7 @@ namespace BlueDwarf.Controls
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using ArxOne.MrAdvice.Utility;
     using FirstFloor.ModernUI.Windows.Controls;
     using Utility;
 

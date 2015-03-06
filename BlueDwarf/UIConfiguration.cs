@@ -2,8 +2,10 @@
 // more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf
 {
+    using System.Windows;
+    using ArxOne.MrAdvice.MVVM.Navigation;
+    using ArxOne.MrAdvice.Utility;
     using Microsoft.Practices.Unity;
-    using Navigation;
 
     public static class UIConfiguration
     {
@@ -22,7 +24,7 @@ namespace BlueDwarf
         /// <param name="container">The container.</param>
         public static void Configure(IUnityContainer container)
         {
-            container.RegisterType<INavigator, Navigator>(AsSingleton());
+            container.RegisterInstance(typeof(INavigator), Application.Current.GetNavigator());
         }
     }
 }

@@ -6,6 +6,7 @@ namespace BlueDwarf.Controls
     using System.Linq;
     using System.Windows;
     using System.Windows.Input;
+    using ArxOne.MrAdvice.Utility;
     using Utility;
 
     public class CloseButton : FrameworkElement

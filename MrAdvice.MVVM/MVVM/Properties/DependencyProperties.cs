@@ -1,13 +1,11 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.View.Properties
+﻿
+namespace ArxOne.MrAdvice.MVVM.Properties
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Windows;
-    using Utility;
-    using ViewModel.Properties;
+    using ArxOne.MrAdvice.Utility;
 
     /// <summary>
     /// This class holds all auto DependencyProperties, grouped by control type

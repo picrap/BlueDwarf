@@ -1,7 +1,9 @@
-﻿// This is the blue dwarf
-// more information at https://github.com/picrap/BlueDwarf
+﻿
 namespace BlueDwarf.Utility
 {
+    using System;
+    using System.Reflection;
+
     /// <summary>
     /// Extensions to object
     /// </summary>

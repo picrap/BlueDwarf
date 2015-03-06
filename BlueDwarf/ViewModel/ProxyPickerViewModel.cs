@@ -5,10 +5,12 @@ namespace BlueDwarf.ViewModel
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using ArxOne.MrAdvice.MVVM.Navigation;
+    using ArxOne.MrAdvice.MVVM.Properties;
+    using ArxOne.MrAdvice.MVVM.Threading;
     using Collection;
     using Configuration;
     using Microsoft.Practices.Unity;
-    using Navigation;
     using Net.Geolocation;
     using Net.Proxy.Client;
     using Net.Proxy.Scanner;

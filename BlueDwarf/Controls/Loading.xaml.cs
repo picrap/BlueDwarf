@@ -2,7 +2,7 @@
 // more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Controls
 {
-    using View.Properties;
+    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     /// <summary>
     /// Logique d'interaction pour Loading.xaml

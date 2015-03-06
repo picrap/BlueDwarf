@@ -7,6 +7,7 @@ namespace BlueDwarf.Serialization
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
+    using ArxOne.MrAdvice.Utility;
     using Utility;
 
     /// <summary>

@@ -4,8 +4,9 @@ namespace BlueDwarf.ViewModel
 {
     using System.IO;
     using Annotations;
+    using ArxOne.MrAdvice.MVVM.Navigation;
+    using ArxOne.MrAdvice.MVVM.Properties;
     using Microsoft.Practices.Unity;
-    using Navigation;
     using Properties;
 
     /// <summary>
