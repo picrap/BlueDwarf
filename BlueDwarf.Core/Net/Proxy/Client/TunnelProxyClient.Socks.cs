@@ -4,11 +4,12 @@ namespace BlueDwarf.Net.Proxy.Client
 {
     using System;
     using System.Net;
+    using System.Net.Sockets;
     using Server;
 
     partial class TunnelProxyClient
     {
-        private SocketStream SocksProxyConnect(SocketStream stream, IPAddress target, int targetPort)
+        private Socket SocksProxyConnect(Socket socket, IPEndPoint target)
         {
             throw new NotImplementedException();
         }

@@ -113,6 +113,8 @@
     <Compile Include="Net\DownloaderExtensions.cs" />
     <Compile Include="Net\Proxy\IProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\ProxyConfiguration.cs" />
+    <Compile Include="Net\Proxy\ProxyProtocol.cs" />
+    <Compile Include="Net\Proxy\ProxyServer.cs" />
     <Compile Include="Net\Proxy\Scanner\HostPort.cs" />
     <Compile Include="Net\Proxy\Scanner\HostScanner.cs" />
     <Compile Include="Net\Proxy\Scanner\IProxyPageScanner.cs" />
@@ -145,7 +147,6 @@
     <Compile Include="Net\Proxy\Server\Mentalis\SocksClient.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksHandler.cs" />
     <Compile Include="Net\Proxy\Server\Mentalis\SocksListener.cs" />
-    <Compile Include="Net\Proxy\Server\SocketStream.cs" />
     <Compile Include="Net\Proxy\Server\SocksProxyServer.cs" />
     <Compile Include="Properties\ProductInfo.cs" />
     <Compile Include="Properties\Annotations.cs" />

@@ -4,6 +4,7 @@ namespace BlueDwarf.Net.Proxy.Client
 {
     using System.IO;
     using System.Net;
+    using System.Net.Sockets;
     using Http;
     using Server;
 
@@ -12,26 +13,28 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <summary>
         /// Proxy connection using HTTP.
         /// </summary>
-        /// <param name="stream">The stream.</param>
+        /// <param name="socket">The socket.</param>
         /// <param name="target">The target.</param>
-        /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
-        private SocketStream HttpProxyConnect(SocketStream stream, IPAddress target, int targetPort)
+        private Socket HttpProxyConnect(Socket socket, IPEndPoint target)
         {
             try
             {
-                HttpRequest.CreateConnect(target.ToString(), targetPort).Write(stream);
-                var httpResponse = HttpResponse.FromStream(stream);
-                if (httpResponse.StatusCode != 200)
+                using (var stream = new NetworkStream(socket, false))
                 {
+                    HttpRequest.CreateConnect(target.Address.ToString(), target.Port).Write(stream);
+                    var httpResponse = HttpResponse.FromStream(stream);
+                    if (httpResponse.StatusCode != 200)
+                    {
 #if DEBUG
-                    var content = httpResponse.ReadContentString(stream);
+                        var content = httpResponse.ReadContentString(stream);
 #endif
-                    //var bc = new BlueCoatHttpAuthentication();
-                    //bc.Handle(stream, httpResponse, content, networkCredential, routeUntilHere);
-                    return null;
+                        //var bc = new BlueCoatHttpAuthentication();
+                        //bc.Handle(stream, httpResponse, content, networkCredential, routeUntilHere);
+                        return null;
+                    }
+                    return socket;
                 }
-                return stream;
             }
             catch (IOException)
             { }

@@ -11,6 +11,6 @@ namespace BlueDwarf.Net.Proxy.Client
         /// </summary>
         /// <param name="proxyServers">The proxy servers.</param>
         /// <returns></returns>
-        Route CreateRoute(params Uri[] proxyServers);
+        Route CreateRoute(params ProxyServer[] proxyServers);
     }
 }

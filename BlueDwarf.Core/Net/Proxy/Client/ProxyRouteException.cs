@@ -12,7 +12,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <value>
         /// The proxy.
         /// </value>
-        public Uri Proxy { get; set; }
+        public ProxyServer Proxy { get; set; }
 
         /// <summary>
         /// If all proxy succeed but connection to target fails, the TargetHost is filled.
@@ -26,7 +26,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// Initializes a new instance of the <see cref="ProxyRouteException"/> class.
         /// </summary>
         /// <param name="proxy">The proxy.</param>
-        public ProxyRouteException(Uri proxy)
+        public ProxyRouteException(ProxyServer proxy)
         {
             Proxy = proxy;
         }

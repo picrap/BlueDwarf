@@ -70,7 +70,8 @@ namespace BlueDwarf.Net.Proxy.Client.Diagnostic
         {
             try
             {
-                using (var stream = Connect.To(route.Host, route.Port))
+                using (var socket = Connect.To(route.Host, route.Port))
+                using (var stream = new NetworkStream(socket, true))
                 {
                     if (connect)
                         new HttpRequest("CONNECT", string.Format("{0}:{1}", host, port)).Write(stream);

@@ -4,6 +4,7 @@ namespace BlueDwarf.ViewModel
 {
     using System;
     using System.ComponentModel;
+    using System.Net;
     using System.Threading;
     using Annotations;
     using ArxOne.MrAdvice.MVVM.Navigation;
@@ -13,6 +14,7 @@ namespace BlueDwarf.ViewModel
     using Controls;
     using Microsoft.Practices.Unity;
     using Net.Http;
+    using Net.Proxy;
     using Net.Proxy.Client;
     using Net.Proxy.Scanner;
     using Net.Proxy.Server;
@@ -350,7 +352,7 @@ namespace BlueDwarf.ViewModel
         /// <param name="proxyRouteException">The proxy route exception.</param>
         private void SetStatus(ProxyRouteException proxyRouteException)
         {
-            Func<Uri, bool> checkUri = u => proxyRouteException != null && proxyRouteException.Proxy == u;
+            Func<ProxyServer, bool> checkUri = u => proxyRouteException != null && proxyRouteException.Proxy == u;
             Func<string, bool> checkHost = h => proxyRouteException != null && proxyRouteException.TargetHost == h;
             var testTargetUri = TestTargetUri;
             SetStatusLines(

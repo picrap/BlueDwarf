@@ -4,6 +4,7 @@ namespace BlueDwarf.Net.Proxy.Client
 {
     using System;
     using System.Net;
+    using System.Net.Sockets;
     using Annotations;
     using Microsoft.Practices.Unity;
     using Name;
@@ -15,19 +16,12 @@ namespace BlueDwarf.Net.Proxy.Client
         [Dependency]
         public INameResolver NameResolver { get; set; }
 
-        private enum ProxyType
-        {
-            Direct,
-            HttpConnect,
-            Socks4
-        }
-
         /// <summary>
         /// Validates and creates a route.
         /// </summary>
         /// <param name="proxyServers">The proxy servers.</param>
         /// <returns></returns>
-        public Route CreateRoute(params Uri[] proxyServers)
+        public Route CreateRoute(params ProxyServer[] proxyServers)
         {
             return new Route(TunnelConnectHost, TunnelConnectAddress, proxyServers);
         }
@@ -40,14 +34,21 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="targetPort">The target port.</param>
         /// <param name="route">The route.</param>
         /// <returns></returns>
-        private SocketStream TunnelConnectHost(string targetHost, int targetPort, Route route)
+        private Socket TunnelConnectHost(string targetHost, int targetPort, Route route)
         {
-            var stream = TunnelConnect(route);
-            var newStream = Connect(stream, targetHost, targetPort, route);
-            if (newStream == null)
+            IPAddress target;
+            if (!IPAddress.TryParse(targetHost, out target))
+            {
+                target = NameResolver.Resolve(targetHost, route);
+                if (target == null)
+                    throw new ProxyRouteException(targetHost);
+            }
+
+            var newSocket = TunnelConnectAddress(target, targetPort, route);
+            if (newSocket == null)
                 throw new ProxyRouteException(targetHost);
 
-            return newStream;
+            return newSocket;
         }
 
         /// <summary>
@@ -60,14 +61,14 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         /// <exception cref="ProxyRouteException">
         /// </exception>
-        private SocketStream TunnelConnectAddress(IPAddress target, int targetPort, Route route)
+        private Socket TunnelConnectAddress(IPAddress target, int targetPort, Route route)
         {
-            var stream = TunnelConnect(route);
-            var newStream = Connect(stream, target, targetPort);
-            if (newStream == null)
+            var socket = TunnelConnect(route);
+            var newSocket = ConnectSocket(socket, new IPEndPoint(target, targetPort));
+            if (newSocket == null)
                 throw new ProxyRouteException(target.ToString());
 
-            return newStream;
+            return newSocket;
         }
 
         /// <summary>
@@ -76,94 +77,55 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="route">The route.</param>
         /// <returns></returns>
         /// <exception cref="ProxyRouteException"></exception>
-        private Tuple<SocketStream, ProxyType> TunnelConnect(Route route)
+        private Tuple<Socket, ProxyProtocol> TunnelConnect(Route route)
         {
-            Tuple<SocketStream, ProxyType> stream = null;
+            Tuple<Socket, ProxyProtocol> socket = null;
             var routeUntilHere = new Route(TunnelConnectHost, TunnelConnectAddress);
-            foreach (var uri in route.Relays)
+            foreach (var proxyServer in route.Relays)
             {
-                if (uri == null)
+                if (proxyServer == null)
                     continue;
 
-                IPAddress target;
-                if (!IPAddress.TryParse(uri.Host, out target))
-                {
-                    target = NameResolver.Resolve(uri.Host, routeUntilHere);
-                    if (target == null)
-                        throw new ProxyRouteException(uri);
-                }
-
-                stream = Connect(stream, uri.Scheme, target, uri.Port);
-                routeUntilHere += uri;
-                if (stream == null)
-                    throw new ProxyRouteException(uri);
+                socket = ConnectProxy(socket, proxyServer);
+                routeUntilHere += proxyServer;
+                if (socket == null)
+                    throw new ProxyRouteException(proxyServer);
             }
-            return stream;
+            return socket;
         }
 
         /// <summary>
         /// Connects to the specified server.
         /// </summary>
-        /// <param name="stream">The stream and proxy type pair.</param>
-        /// <param name="scheme">The scheme.</param>
-        /// <param name="target">The target.</param>
-        /// <param name="targetPort">The target port.</param>
+        /// <param name="socket">The socket.</param>
+        /// <param name="proxyServer">The proxy server.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentException">Unknown proxy type</exception>
-        private Tuple<SocketStream, ProxyType> Connect(Tuple<SocketStream, ProxyType> stream, string scheme, IPAddress target, int targetPort)
+        private Tuple<Socket, ProxyProtocol> ConnectProxy(Tuple<Socket, ProxyProtocol> socket, ProxyServer proxyServer)
         {
-            var newStream = Connect(stream, target, targetPort);
-            if (newStream == null)
+            var newSocket = ConnectSocket(socket, proxyServer);
+            if (newSocket == null)
                 return null;
-            if (scheme == Uri.UriSchemeHttp)
-                return Tuple.Create(newStream, ProxyType.HttpConnect);
-            if (scheme == "socks")
-                return Tuple.Create(newStream, ProxyType.Socks4);
-            throw new ArgumentException(@"Unknown proxy type", scheme);
-        }
-
-        /// <summary>
-        /// Connect to a given host using an already existing stream (coming from connection to other proxy servers).
-        /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="targetHost">The target host.</param>
-        /// <param name="targetPort">The target port.</param>
-        /// <param name="routeUntilHere">The route until here.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
-        private SocketStream Connect(Tuple<SocketStream, ProxyType> stream, string targetHost, int targetPort, Route routeUntilHere)
-        {
-            IPAddress target;
-            if (!IPAddress.TryParse(targetHost, out target))
-            {
-                target = NameResolver.Resolve(targetHost, routeUntilHere);
-                if (target == null)
-                    throw new ProxyRouteException(targetHost);
-            }
-
-            return Connect(stream, target, targetPort);
+            return new Tuple<Socket, ProxyProtocol>(newSocket, proxyServer.Protocol);
         }
 
         /// <summary>
         /// Single step connect, using a proxy type+target+port.
         /// </summary>
-        /// <param name="stream">The stream.</param>
+        /// <param name="socket">The stream.</param>
         /// <param name="target">The target.</param>
-        /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentOutOfRangeException"></exception>
-        private SocketStream Connect(Tuple<SocketStream, ProxyType> stream, IPAddress target, int targetPort)
+        private Socket ConnectSocket(Tuple<Socket, ProxyProtocol> socket, IPEndPoint target)
         {
-            if (stream == null)
-                return DirectConnect(null, target, targetPort);
-            switch (stream.Item2)
+            if (socket == null)
+                return DirectConnect(target);
+            switch (socket.Item2)
             {
-                case ProxyType.Direct:
-                    return DirectConnect(stream.Item1, target, targetPort);
-                case ProxyType.HttpConnect:
-                    return HttpProxyConnect(stream.Item1, target, targetPort);
-                case ProxyType.Socks4:
-                    return SocksProxyConnect(stream.Item1, target, targetPort);
+                case ProxyProtocol.HttpConnect:
+                    return HttpProxyConnect(socket.Item1, target);
+                case ProxyProtocol.Socks4:
+                    return SocksProxyConnect(socket.Item1, target);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -172,13 +134,11 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <summary>
         /// Direct connection to a given host.
         /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="target">The target.</param>
-        /// <param name="targetPort">The target port.</param>
+        /// <param name="target">The ip end point.</param>
         /// <returns></returns>
-        private SocketStream DirectConnect(SocketStream stream, IPAddress target, int targetPort)
+        private static Socket DirectConnect(IPEndPoint target)
         {
-            var newStream = Net.Connect.To(target, targetPort);
+            var newStream = Net.Connect.To(target.Address, target.Port);
             return newStream;
         }
     }

@@ -6,7 +6,7 @@ namespace BlueDwarf.Net.Proxy.Client
     using System.IO;
     using System.Linq;
     using System.Net;
-    using Server;
+    using System.Net.Sockets;
     using Utility;
 
     /// <summary>
@@ -15,8 +15,8 @@ namespace BlueDwarf.Net.Proxy.Client
     /// </summary>
     public class Route
     {
-        public delegate SocketStream ConnectHostDelegate(string targetHost, int targetPort, Route route);
-        public delegate SocketStream ConnectAddressDelegate(IPAddress address, int targetPort, Route route);
+        public delegate Socket ConnectHostDelegate(string targetHost, int targetPort, Route route);
+        public delegate Socket ConnectAddressDelegate(IPAddress address, int targetPort, Route route);
 
         /// <summary>
         /// Gets the relays (the proxy servers tunnel).
@@ -24,7 +24,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <value>
         /// The relays.
         /// </value>
-        internal Uri[] Relays { get; private set; }
+        internal ProxyServer[] Relays { get; private set; }
 
         private readonly ConnectHostDelegate _connectHost;
         private readonly ConnectAddressDelegate _connectAddress;
@@ -35,7 +35,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="connectHost">The connect host.</param>
         /// <param name="connectAddress">The connect address.</param>
         /// <param name="route">The route.</param>
-        public Route(ConnectHostDelegate connectHost, ConnectAddressDelegate connectAddress, params Uri[] route)
+        public Route(ConnectHostDelegate connectHost, ConnectAddressDelegate connectAddress, params ProxyServer[] route)
         {
             _connectHost = connectHost;
             _connectAddress = connectAddress;
@@ -46,13 +46,13 @@ namespace BlueDwarf.Net.Proxy.Client
         /// Adds an element to current route and returns a new route.
         /// </summary>
         /// <param name="route">The route.</param>
-        /// <param name="uri">The URI.</param>
+        /// <param name="proxyServer">The proxy server.</param>
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static Route operator +(Route route, Uri uri)
+        public static Route operator +(Route route, ProxyServer proxyServer)
         {
-            return new Route(route._connectHost, route._connectAddress, route.Relays.Concat(new[] { uri }).ToArray());
+            return new Route(route._connectHost, route._connectAddress, route.Relays.Concat(new[] { proxyServer }).ToArray());
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="targetHost">The target host.</param>
         /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
-        public SocketStream Connect(string targetHost, int targetPort)
+        public Socket Connect(string targetHost, int targetPort)
         {
             return _connectHost(targetHost, targetPort, this);
         }
@@ -72,7 +72,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <param name="target">The target.</param>
         /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
-        public SocketStream Connect(IPAddress target, int targetPort)
+        public Socket Connect(IPAddress target, int targetPort)
         {
             return _connectAddress(target, targetPort, this);
         }
@@ -84,8 +84,8 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         public Stream Connect(Uri uri)
         {
-            Stream stream = Connect(uri.Host, uri.Port);
-            if (string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase))
+            Stream stream = Connect(uri.Host, uri.Port).ToNetworkStream();
+            if (stream != null && string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase))
                 stream = stream.AsSsl(uri.Host);
             return stream;
         }
