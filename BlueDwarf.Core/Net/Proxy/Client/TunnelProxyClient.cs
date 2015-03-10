@@ -6,16 +6,10 @@ namespace BlueDwarf.Net.Proxy.Client
     using System.Net;
     using System.Net.Sockets;
     using Annotations;
-    using Microsoft.Practices.Unity;
-    using Name;
-    using Server;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal partial class TunnelProxyClient : IProxyClient
     {
-        [Dependency]
-        public INameResolver NameResolver { get; set; }
-
         /// <summary>
         /// Validates and creates a route.
         /// </summary>
@@ -23,32 +17,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         public Route CreateRoute(params ProxyServer[] proxyServers)
         {
-            return new Route(TunnelConnectHost, TunnelConnectAddress, proxyServers);
-        }
-
-        /// <summary>
-        /// Connects the specified target host+port.
-        /// No exception handling is done here
-        /// </summary>
-        /// <param name="targetHost">The target host.</param>
-        /// <param name="targetPort">The target port.</param>
-        /// <param name="route">The route.</param>
-        /// <returns></returns>
-        private Socket TunnelConnectHost(string targetHost, int targetPort, Route route)
-        {
-            IPAddress target;
-            if (!IPAddress.TryParse(targetHost, out target))
-            {
-                target = NameResolver.Resolve(targetHost, route);
-                if (target == null)
-                    throw new ProxyRouteException(targetHost);
-            }
-
-            var newSocket = TunnelConnectAddress(target, targetPort, route);
-            if (newSocket == null)
-                throw new ProxyRouteException(targetHost);
-
-            return newSocket;
+            return new Route(TunnelConnectAddress, proxyServers);
         }
 
         /// <summary>
@@ -80,7 +49,7 @@ namespace BlueDwarf.Net.Proxy.Client
         private Tuple<Socket, ProxyProtocol> TunnelConnect(Route route)
         {
             Tuple<Socket, ProxyProtocol> socket = null;
-            var routeUntilHere = new Route(TunnelConnectHost, TunnelConnectAddress);
+            var routeUntilHere = new Route(TunnelConnectAddress);
             foreach (var proxyServer in route.Relays)
             {
                 if (proxyServer == null)
@@ -138,7 +107,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         private static Socket DirectConnect(IPEndPoint target)
         {
-            var newStream = Net.Connect.To(target.Address, target.Port);
+            var newStream = Connect.To(target.Address, target.Port);
             return newStream;
         }
     }

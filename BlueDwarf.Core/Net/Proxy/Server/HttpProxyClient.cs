@@ -159,9 +159,11 @@ namespace BlueDwarf.Net.Proxy.Server
             }
             try
             {
-                //IPEndPoint DestinationEndPoint = new IPEndPoint(Dns.Resolve(Host).AddressList[0], Port);
+#pragma warning disable 0618
+                IPEndPoint DestinationEndPoint = new IPEndPoint(Dns.Resolve(Host).AddressList[0], Port);
+#pragma warning restore 0618
                 //DestinationSocket = new Socket(DestinationEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                var socket = Listener.Route.Connect(Host, Port);
+                var socket = Listener.Route.Connect(DestinationEndPoint);
                 DestinationSocket = socket;
                 if (HeaderFields.ContainsKey("Proxy-Connection") && HeaderFields["Proxy-Connection"].ToLower().Equals("keep-alive"))
                     DestinationSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, 1);

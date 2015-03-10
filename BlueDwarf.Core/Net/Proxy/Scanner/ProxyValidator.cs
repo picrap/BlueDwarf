@@ -7,10 +7,21 @@ namespace BlueDwarf.Net.Proxy.Scanner
     using Annotations;
     using Client;
     using Http;
+    using Microsoft.Practices.Unity;
+    using Name;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ProxyValidator : IProxyValidator
     {
+        /// <summary>
+        /// Gets or sets the name resolver.
+        /// </summary>
+        /// <value>
+        /// The name resolver.
+        /// </value>
+        [Dependency]
+        public INameResolver NameResolver { get; set; }
+
         /// <summary>
         /// Validates the specified proxy host port as a HTTP CONNECT proxy.
         /// </summary>
@@ -48,7 +59,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
             for (int tryIndex = 0; tryIndex < tryCount; tryIndex++)
             {
                 // result does not matter
-                using (var httpStream = route.Connect(testTarget))
+                using (var httpStream = route.Connect(testTarget, NameResolver))
                 {
                     HttpRequest.CreateGet(testTarget).Write(httpStream);
                     var httpResponse = HttpResponse.FromStream(httpStream);

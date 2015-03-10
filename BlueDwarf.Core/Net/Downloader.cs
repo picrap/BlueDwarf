@@ -9,6 +9,7 @@ namespace BlueDwarf.Net
     using Annotations;
     using Http;
     using Microsoft.Practices.Unity;
+    using Name;
     using Proxy.Client;
     using Proxy.Server;
     using Utility;
@@ -18,6 +19,15 @@ namespace BlueDwarf.Net
     {
         [Dependency]
         public IProxyServerFactory ProxyServerFactory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name resolver.
+        /// </summary>
+        /// <value>
+        /// The name resolver.
+        /// </value>
+        [Dependency]
+        public INameResolver NameResolver { get; set; }
 
         /// <summary>
         /// Downloads the page as text (extracts significant text from page) using the specified route.
@@ -52,7 +62,7 @@ namespace BlueDwarf.Net
         {
             for (; ; )
             {
-                using (var requestStream = route.Connect(uri.Host, uri.Port).ToNetworkStream())
+                using (var requestStream = route.Connect(uri, NameResolver))
                 {
                     HttpRequest.CreateGet(uri).Write(requestStream);
                     var response = HttpResponse.FromStream(requestStream);

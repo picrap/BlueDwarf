@@ -111,6 +111,7 @@
     <Compile Include="Net\Proxy\Client\Diagnostic\RouteStatus.cs" />
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />
     <Compile Include="Net\DownloaderExtensions.cs" />
+    <Compile Include="Net\Proxy\Client\RouteExtensions.cs" />
     <Compile Include="Net\Proxy\IProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\ProxyConfiguration.cs" />
     <Compile Include="Net\Proxy\ProxyProtocol.cs" />

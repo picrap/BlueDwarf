@@ -2,12 +2,9 @@
 // more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Net.Proxy.Client
 {
-    using System;
-    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
-    using Utility;
 
     /// <summary>
     /// Represents a route to target
@@ -15,7 +12,6 @@ namespace BlueDwarf.Net.Proxy.Client
     /// </summary>
     public class Route
     {
-        public delegate Socket ConnectHostDelegate(string targetHost, int targetPort, Route route);
         public delegate Socket ConnectAddressDelegate(IPAddress address, int targetPort, Route route);
 
         /// <summary>
@@ -26,18 +22,15 @@ namespace BlueDwarf.Net.Proxy.Client
         /// </value>
         internal ProxyServer[] Relays { get; private set; }
 
-        private readonly ConnectHostDelegate _connectHost;
         private readonly ConnectAddressDelegate _connectAddress;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Route" /> class.
         /// </summary>
-        /// <param name="connectHost">The connect host.</param>
         /// <param name="connectAddress">The connect address.</param>
         /// <param name="route">The route.</param>
-        public Route(ConnectHostDelegate connectHost, ConnectAddressDelegate connectAddress, params ProxyServer[] route)
+        public Route(ConnectAddressDelegate connectAddress, params ProxyServer[] route)
         {
-            _connectHost = connectHost;
             _connectAddress = connectAddress;
             Relays = route.Where(r => r != null).ToArray();
         }
@@ -52,42 +45,28 @@ namespace BlueDwarf.Net.Proxy.Client
         /// </returns>
         public static Route operator +(Route route, ProxyServer proxyServer)
         {
-            return new Route(route._connectHost, route._connectAddress, route.Relays.Concat(new[] { proxyServer }).ToArray());
+            return new Route(route._connectAddress, route.Relays.Concat(new[] { proxyServer }).ToArray());
         }
 
         /// <summary>
-        /// Connects to specified target host/port.
+        /// Connects to the specified target.
         /// </summary>
-        /// <param name="targetHost">The target host.</param>
+        /// <param name="targetAddress">The target.</param>
         /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
-        public Socket Connect(string targetHost, int targetPort)
+        public Socket Connect(IPAddress targetAddress, int targetPort)
         {
-            return _connectHost(targetHost, targetPort, this);
+            return _connectAddress(targetAddress, targetPort, this);
         }
 
         /// <summary>
-        /// Connects the specified target.
+        /// Connects to the specified target.
         /// </summary>
         /// <param name="target">The target.</param>
-        /// <param name="targetPort">The target port.</param>
         /// <returns></returns>
-        public Socket Connect(IPAddress target, int targetPort)
+        public Socket Connect(IPEndPoint target)
         {
-            return _connectAddress(target, targetPort, this);
-        }
-
-        /// <summary>
-        /// Connects the specified URI.
-        /// </summary>
-        /// <param name="uri">The URI.</param>
-        /// <returns></returns>
-        public Stream Connect(Uri uri)
-        {
-            Stream stream = Connect(uri.Host, uri.Port).ToNetworkStream();
-            if (stream != null && string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase))
-                stream = stream.AsSsl(uri.Host);
-            return stream;
+            return Connect(target.Address, target.Port);
         }
     }
 }

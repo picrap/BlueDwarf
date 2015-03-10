@@ -6,7 +6,6 @@ namespace BlueDwarf.Net.Proxy.Client
     using System.Net;
     using System.Net.Sockets;
     using Http;
-    using Server;
 
     partial class TunnelProxyClient
     {
