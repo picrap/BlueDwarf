@@ -13,6 +13,7 @@ namespace BlueDwarf.Net.Client
     using Http;
     using Name;
     using Proxy.Client;
+    using Proxy.Server;
     using Utility;
 
     /// <summary>
@@ -69,7 +70,7 @@ namespace BlueDwarf.Net.Client
                 hostAddress = new Uri(serviceContractAttribute.Namespace);
             }
             var target = DnsNameResolver.LocalResolve(hostAddress.Host);
-            using (var stream = _route.Connect(target, hostAddress.Port))
+            using (var stream = _route.Connect(target, hostAddress.Port).ToNetworkStream())
             {
                 var request = new HttpRequest(restCall.Verb, path)
                     .AddHeader("Host", hostAddress.GetHostAndPort())

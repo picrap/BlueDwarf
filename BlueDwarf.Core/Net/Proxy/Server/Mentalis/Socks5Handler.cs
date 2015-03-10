@@ -174,7 +174,7 @@ internal sealed class Socks5Handler : SocksHandler {
                     //RemoteConnection.BeginConnect(new IPEndPoint(RemoteIP, RemotePort), new AsyncCallback(this.OnConnected), RemoteConnection);
                     try
                     {
-                        RemoteConnection = Listener.Route.Connect(RemoteIP.ToString(), RemotePort).Socket;
+                        RemoteConnection = Listener.Route.Connect(RemoteIP, RemotePort);
                         Dispose(0);
                     }
                     catch

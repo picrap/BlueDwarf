@@ -52,7 +52,7 @@ namespace BlueDwarf.Net
         {
             for (; ; )
             {
-                using (var requestStream = route.Connect(uri.Host, uri.Port))
+                using (var requestStream = route.Connect(uri.Host, uri.Port).ToNetworkStream())
                 {
                     HttpRequest.CreateGet(uri).Write(requestStream);
                     var response = HttpResponse.FromStream(requestStream);

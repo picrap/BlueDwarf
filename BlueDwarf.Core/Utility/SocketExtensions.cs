@@ -62,5 +62,17 @@ namespace BlueDwarf.Utility
             {
             }
         }
+
+        /// <summary>
+        /// Safe converts Socket to Stream.
+        /// </summary>
+        /// <param name="socket">The socket.</param>
+        /// <returns>A stream or null if socket is null</returns>
+        public static NetworkStream ToNetworkStream(this Socket socket)
+        {
+            if (socket == null)
+                return null;
+            return new NetworkStream(socket, true);
+        }
     }
 }
