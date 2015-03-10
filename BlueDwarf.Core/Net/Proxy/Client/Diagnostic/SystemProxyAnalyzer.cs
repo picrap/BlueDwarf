@@ -113,12 +113,12 @@ namespace BlueDwarf.Net.Proxy.Client.Diagnostic
         }
 
 
-        private bool DiagnoseDns(string host)
+        private static bool DiagnoseDns(string host)
         {
             return ResolveDns(host) != null;
         }
 
-        private IPAddress ResolveDns(string host)
+        private static IPAddress ResolveDns(string host)
         {
             try
             {

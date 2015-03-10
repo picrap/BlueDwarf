@@ -419,6 +419,9 @@ namespace BlueDwarf.ViewModel
             Navigator.Exit(true);
         }
 
+        /// <summary>
+        /// Asks user to pick a remote proxy.
+        /// </summary>
         public void PickRemoteProxy()
         {
             var viewModel = Navigator.Show<ProxyPickerViewModel>();
