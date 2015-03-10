@@ -13,10 +13,8 @@ namespace BlueDwarf.ViewModel
     using Microsoft.Practices.Unity;
     using Net.Geolocation;
     using Net.Proxy.Client;
+    using Net.Proxy.Client.Diagnostic;
     using Net.Proxy.Scanner;
-    using Properties;
-    using Resources.Localization;
-    using Utility;
 
     public class ProxyPickerViewModel : ViewModel
     {
@@ -34,6 +32,9 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IProxyClient ProxyClient { get; set; }
+
+        [Dependency]
+        public IProxyAnalyzer ProxyAnalyzer { get; set; }
 
         [NotifyPropertyChanged]
         public IList<ProxyPage> ProxyPages { get; set; }
@@ -149,7 +150,10 @@ namespace BlueDwarf.ViewModel
                 foreach (var hostPort in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, route, testTargetUri))
                 {
                     var location = Geolocation.Locate(hostPort.Address, route);
-                    var proxy = new Proxy(hostPort, location);
+                    var p = ProxyAnalyzer.MeasurePerformance(route, testTargetUri);
+                    if (p == null)
+                        continue;
+                    var proxy = new Proxy(hostPort, location, (int)p.Ping.TotalMilliseconds, (int)(p.DownloadSpeed / 1024));
                     ProxyServers.Add(proxy);
                 }
             }

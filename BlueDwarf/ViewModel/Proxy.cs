@@ -37,14 +37,34 @@ namespace BlueDwarf.ViewModel
         public string CountryCode { get { return Geolocation.CountryCode; } }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Proxy"/> class.
+        /// Gets the ping (in ms).
+        /// </summary>
+        /// <value>
+        /// The ping ms.
+        /// </value>
+        public int PingMs { get; private set; }
+
+        /// <summary>
+        /// Gets the speed (in kB/s).
+        /// </summary>
+        /// <value>
+        /// The speed KBPS.
+        /// </value>
+        public int SpeedKbps { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Proxy" /> class.
         /// </summary>
         /// <param name="hostPort">The host port.</param>
         /// <param name="geolocation">The geolocation.</param>
-        public Proxy(HostPort hostPort, AddressGeolocation geolocation)
+        /// <param name="pingMs">The ping (in ms).</param>
+        /// <param name="speedKbps">The speed (in kB/s).</param>
+        public Proxy(HostPort hostPort, AddressGeolocation geolocation, int pingMs, int speedKbps)
         {
             HostPort = hostPort;
             Geolocation = geolocation;
+            PingMs = pingMs;
+            SpeedKbps = speedKbps;
         }
     }
 }

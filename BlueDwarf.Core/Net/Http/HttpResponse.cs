@@ -39,7 +39,7 @@ namespace BlueDwarf.Net.Http
             }
         }
 
-        private IDictionary<string, string> _headers;
+        private IDictionary<string, IList<string>> _headers;
 
         /// <summary>
         /// Gets the headers.
@@ -47,7 +47,7 @@ namespace BlueDwarf.Net.Http
         /// <value>
         /// The headers.
         /// </value>
-        public IDictionary<string, string> Headers
+        public IDictionary<string, IList<string>> Headers
         {
             get
             {
@@ -56,8 +56,10 @@ namespace BlueDwarf.Net.Http
                     _headers = (from line in Lines.Skip(1)
                                 let kvp = line.Split(new[] { ':' }, 2)
                                 where kvp.Length == 2
-                                let kv = Tuple.Create(kvp[0], kvp[1])
-                                select kv).ToDictionary(kv => kv.Item1.Trim(), kv => kv.Item2.Trim(), StringComparer.InvariantCultureIgnoreCase);
+                                let kv = Tuple.Create(kvp[0].Trim(), kvp[1].Trim())
+                                select kv)
+                                .GroupBy(kv => kv.Item1, kv => kv.Item2, StringComparer.InvariantCultureIgnoreCase)
+                                .ToDictionary(kv => kv.Key, kv => (IList<string>)kv.ToList());
                 }
                 return _headers;
             }
@@ -101,14 +103,19 @@ namespace BlueDwarf.Net.Http
             return new HttpResponse().Read(stream);
         }
 
+        /// <summary>
+        /// Reads the content.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
         public byte[] ReadContent(Stream stream)
         {
             int? contentLength = null;
-            string literalContentLength;
+            IList<string> literalContentLength;
             if (Headers.TryGetValue("Content-Length", out literalContentLength))
             {
                 int fContentLength;
-                if (int.TryParse(literalContentLength, out fContentLength))
+                if (int.TryParse(literalContentLength.First(), out fContentLength))
                     contentLength = fContentLength;
             }
 
@@ -126,6 +133,11 @@ namespace BlueDwarf.Net.Http
             return contentBytes;
         }
 
+        /// <summary>
+        /// Reads the content as string.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
         public string ReadContentString(Stream stream)
         {
             var content = ReadContent(stream);

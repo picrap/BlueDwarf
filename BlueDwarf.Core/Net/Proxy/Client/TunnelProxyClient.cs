@@ -11,7 +11,7 @@ namespace BlueDwarf.Net.Proxy.Client
     internal partial class TunnelProxyClient : IProxyClient
     {
         /// <summary>
-        /// Validates and creates a route.
+        /// Creates a new route.
         /// </summary>
         /// <param name="proxyServers">The proxy servers.</param>
         /// <returns></returns>

@@ -105,9 +105,12 @@
     <Compile Include="Net\Name\StatDns\Question.cs" />
     <Compile Include="Net\Name\StatDns\Response.cs" />
     <Compile Include="Net\Name\StatDns\StatDnsNameResolver.cs" />
-    <Compile Include="Net\Proxy\Client\Diagnostic\AnalysisParameters.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\ProxyPerformance.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\SystemAnalysisParameters.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\IProxyAnalyzer.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\ISystemProxyAnalyzer.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\ProxyAnalyzer.cs" />
+    <Compile Include="Net\Proxy\Client\Diagnostic\SystemProxyAnalyzer.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\ProxyDiagnostic.cs" />
     <Compile Include="Net\Proxy\Client\Diagnostic\RouteStatus.cs" />
     <Compile Include="Net\Proxy\Client\IProxyClient.cs" />

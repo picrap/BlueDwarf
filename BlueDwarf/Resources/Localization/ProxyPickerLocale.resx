@@ -126,6 +126,9 @@
   <data name="PickProxyLabel" xml:space="preserve">
     <value>Pick a proxy server:</value>
   </data>
+  <data name="PingColumnHeader" xml:space="preserve">
+    <value>Ping</value>
+  </data>
   <data name="ProxyColumnHeader" xml:space="preserve">
     <value>Proxy</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="ProxyPageUrlLabel" xml:space="preserve">
     <value>URL:</value>
+  </data>
+  <data name="SpeedColumnHeader" xml:space="preserve">
+    <value>Speed</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Proxy picker</value>

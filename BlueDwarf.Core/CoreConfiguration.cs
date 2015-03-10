@@ -34,7 +34,7 @@ namespace BlueDwarf
             container.RegisterType<IProxyClient, TunnelProxyClient>(AsSingleton());
             container.RegisterType<IProxyServerFactory, ProxyServerFactory>(AsSingleton());
             container.RegisterType<INameResolver, MultiNameResolver>(AsSingleton());
-            container.RegisterType<IProxyAnalyzer, ProxyAnalyzer>(AsSingleton());
+            container.RegisterType<ISystemProxyAnalyzer, SystemProxyAnalyzer>(AsSingleton());
             container.RegisterType<IPersistence, RegistryPersistence>(AsSingleton());
             container.RegisterType<IStartupConfiguration, MenuStartupConfiguration>(AsSingleton());
             container.RegisterType<IProxyConfiguration, ProxyConfiguration>(AsSingleton());
@@ -42,6 +42,7 @@ namespace BlueDwarf
             container.RegisterType<IHostScanner, HostScanner>(AsSingleton());
             container.RegisterType<IProxyValidator, ProxyValidator>(AsSingleton());
             container.RegisterType<IProxyPageScanner, ProxyPageScanner>(AsSingleton());
+            container.RegisterType<IProxyAnalyzer, ProxyAnalyzer>(AsSingleton());
             container.RegisterType<IGeolocation, TelizeGeolocation>(AsSingleton());
         }
     }

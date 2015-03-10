@@ -18,7 +18,7 @@ namespace BlueDwarf.ViewModel
         public INavigator Navigator { get; set; }
 
         [Dependency]
-        public IProxyAnalyzer ProxyAnalyzer { get; set; }
+        public ISystemProxyAnalyzer SystemProxyAnalyzer { get; set; }
 
         [NotifyPropertyChanged]
         public bool RequiresProxy { get; set; }
@@ -60,7 +60,7 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         private void LoadDiagnostic()
         {
-            var d = ProxyAnalyzer.Diagnose();
+            var d = SystemProxyAnalyzer.Diagnose();
             RequiresProxy = d.DefaultProxy != null;
             DoesNotRequireProxy = !RequiresProxy;
             DefaultProxy = d.DefaultProxy;

@@ -5,6 +5,7 @@ namespace BlueDwarf.Net
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using Annotations;
     using Http;
@@ -70,7 +71,7 @@ namespace BlueDwarf.Net
 
                     if (response.StatusCode == 301 || response.StatusCode == 302)
                     {
-                        var literalNewLocation = response.Headers["Location"];
+                        var literalNewLocation = response.Headers["Location"].Single();
                         var newLocation = new Uri(literalNewLocation);
                         if (newLocation.IsAbsoluteUri)
                             uri = newLocation;

@@ -1,107 +1,69 @@
 ﻿// This is the blue dwarf
 // more information at https://github.com/picrap/BlueDwarf
+
 namespace BlueDwarf.Net.Proxy.Client.Diagnostic
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
-    using System.Linq;
-    using System.Net;
     using System.Net.Sockets;
-    using Annotations;
     using Http;
+    using Microsoft.Practices.Unity;
+    using Name;
 
     /// <summary>
     /// Proxy analyzer implementation
-    /// This analyzes a single proxy (the system proxy)
     /// </summary>
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class ProxyAnalyzer : IProxyAnalyzer
     {
-        public ProxyDiagnostic Diagnose(AnalysisParameters parameters = null)
-        {
-            parameters = parameters ?? new AnalysisParameters();
-            return new ProxyDiagnostic
-            {
-                DefaultProxy = GetDefaultProxy(parameters.SafeHttpTarget),
-                SafeHttpGetRoute = DiagnoseRoute(parameters.SafeHttpTarget, false),
-                SafeHttpsConnectRoute = DiagnoseRoute(parameters.SafeHttpsTarget, true),
-                SafeHttpConnectRoute = DiagnoseRoute(parameters.SafeHttpTarget, true),
-                SensitiveHttpGetRoute = DiagnoseRoute(parameters.SensitiveHttpTarget, false),
-                SensitiveHttpsConnectRoute = DiagnoseRoute(parameters.SensitiveHttpsTarget, true),
-                SensitiveHttpConnectRoute = DiagnoseRoute(parameters.SensitiveHttpTarget, true),
-                SafeLocalDns = DiagnoseDns(parameters.SafeHttpTarget.Host),
-                SensitiveLocalDns = DiagnoseDns(parameters.SensitiveHttpTarget.Host),
-            };
-        }
+        /// <summary>
+        /// Gets or sets the name resolver.
+        /// </summary>
+        /// <value>
+        /// The name resolver.
+        /// </value>
+        [Dependency]
+        public INameResolver NameResolver { get; set; }
 
-        private Uri GetDefaultProxy(Uri uri)
-        {
-            var webProxy = WebRequest.DefaultWebProxy;
-            if (webProxy.IsBypassed(uri))
-                return null;
-            var route = webProxy.GetProxy(uri);
-            if (route == uri)
-                return null;
-
-            return route;
-        }
-
-        private RouteStatus DiagnoseRoute(Uri uri, bool connect)
-        {
-            var webProxy = WebRequest.DefaultWebProxy;
-            if (webProxy.IsBypassed(uri))
-                return 0;
-            var route = webProxy.GetProxy(uri);
-            if (route == uri)
-                return 0;
-
-            var status = RouteStatus.HasProxy;
-            var host = uri.Host;
-            if (DiagnoseRoute(connect, route, host, uri.Port))
-                status |= RouteStatus.ProxyAcceptsName;
-            var address = ResolveDns(host);
-            if (address != null && DiagnoseRoute(connect, route, address.ToString(), uri.Port))
-                status |= RouteStatus.ProxyAcceptsAddress;
-
-            return status;
-        }
-
-        private static bool DiagnoseRoute(bool connect, Uri route, string host, int port)
+        /// <summary>
+        /// Measures the performance.
+        /// </summary>
+        /// <param name="route">The route.</param>
+        /// <param name="testTarget">The test target.</param>
+        /// <param name="tests">The tests.</param>
+        /// <returns>A performance value or null if performance could not be measured</returns>
+        public ProxyPerformance MeasurePerformance(Route route, Uri testTarget, int tests = 3)
         {
             try
             {
-                using (var socket = Connect.To(route.Host, route.Port))
-                using (var stream = new NetworkStream(socket, true))
+                var ping = TimeSpan.Zero;
+                var downloadTime = TimeSpan.Zero;
+                var downloadSize = 0;
+                var timer = new Stopwatch();
+                timer.Start();
+                for (int test = 0; test < tests; test++)
                 {
-                    if (connect)
-                        new HttpRequest("CONNECT", string.Format("{0}:{1}", host, port)).Write(stream);
-                    else
-                        new HttpRequest("GET", "/").AddHeader("Host", string.Format("{0}:{1}", host, port)).Write(stream);
-
-                    var response = HttpResponse.FromStream(stream);
-                    if (response.StatusCode != 403)
-                        return true;
+                    var t0 = timer.Elapsed;
+                    using (var stream = route.Connect(testTarget, NameResolver))
+                    {
+                        var t1 = timer.Elapsed;
+                        ping += t1 - t0;
+                        HttpRequest.CreateGet(testTarget).Write(stream);
+                        var t2 = timer.Elapsed;
+                        var httpResponse = HttpResponse.FromStream(stream);
+                        downloadSize += httpResponse.ReadContent(stream).Length;
+                        var t3 = timer.Elapsed;
+                        downloadTime += t3 - t2;
+                    }
                 }
+                return new ProxyPerformance(TimeSpan.FromTicks(ping.Ticks / tests), downloadSize / downloadTime.TotalSeconds);
             }
-            catch (IOException) { }
-            catch (SocketException) { }
-            return false;
-        }
-
-
-        private bool DiagnoseDns(string host)
-        {
-            return ResolveDns(host) != null;
-        }
-
-        private IPAddress ResolveDns(string host)
-        {
-            try
-            {
-                var entry = Dns.GetHostEntry(host);
-                return entry.AddressList.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork || a.AddressFamily == AddressFamily.InterNetworkV6);
-            }
-            catch (SocketException) { }
+            catch (ProxyRouteException)
+            { }
+            catch (IOException)
+            { }
+            catch (SocketException)
+            { }
             return null;
         }
     }

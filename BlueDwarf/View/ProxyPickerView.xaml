@@ -14,7 +14,7 @@
                   mc:Ignorable="d" 
                   d:DataContext="{d:DesignInstance Type=vm:ProxyPickerViewModel, IsDesignTimeCreatable=false}" 
                   ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" >
-   
+
     <StackPanel Orientation="Vertical" Style="{DynamicResource DialogFrame}">
         <v:ModernUI.DialogButtons>
             <x:Array Type="Button">
@@ -39,14 +39,14 @@
                   util:GridViewSort.AutoSort="True">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{x:Static l:ProxyPickerLocale.ProxyColumnHeader}" util:GridViewSort.PropertyName="DisplayName" Width="200">
+                    <GridViewColumn Header="{x:Static l:ProxyPickerLocale.ProxyColumnHeader}" util:GridViewSort.PropertyName="DisplayName" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding DisplayName, Mode=OneTime}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{x:Static l:ProxyPickerLocale.CountryColumnHeader}" util:GridViewSort.PropertyName="CountryName" Width="200" >
+                    <GridViewColumn Header="{x:Static l:ProxyPickerLocale.CountryColumnHeader}" util:GridViewSort.PropertyName="CountryName" Width="150" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
@@ -54,6 +54,28 @@
                                            MinWidth="30" Height="16" RenderOptions.BitmapScalingMode="Fant" />
                                     <TextBlock Margin="{StaticResource LeftMargin}" Text="{Binding CountryName, Mode=OneTime}"/>
                                 </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static l:ProxyPickerLocale.PingColumnHeader}" util:GridViewSort.PropertyName="PingMs" Width="70" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock HorizontalAlignment="Right">
+                                    <Run Text="{Binding PingMs, Mode=OneTime}"/>
+                                    <Run Text=" "/>
+                                    <Run Text="{x:Static l:CommonLocale.ms}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="{x:Static l:ProxyPickerLocale.SpeedColumnHeader}" util:GridViewSort.PropertyName="SpeedKbps" Width="90" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock HorizontalAlignment="Right">
+                                    <Run Text="{Binding SpeedKbps, Mode=OneTime}"/>
+                                    <Run Text=" "/>
+                                    <Run Text="{x:Static l:CommonLocale.kpbs}"/>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
