@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B931890B
 		ci-build.bat = ci-build.bat
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Tunnel", "BlueDwarf.Tunnel\BlueDwarf.Tunnel.csproj", "{ABFD2F65-C917-4509-A1F5-B7353D117680}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{11A01D03-1CD1-495E-B9A0-C425C13959D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,9 +41,16 @@ Global
 		{4E026AAC-764E-4A65-80FD-C41371EB8D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E026AAC-764E-4A65-80FD-C41371EB8D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E026AAC-764E-4A65-80FD-C41371EB8D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABFD2F65-C917-4509-A1F5-B7353D117680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFD2F65-C917-4509-A1F5-B7353D117680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFD2F65-C917-4509-A1F5-B7353D117680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFD2F65-C917-4509-A1F5-B7353D117680}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E026AAC-764E-4A65-80FD-C41371EB8D8F} = {11A01D03-1CD1-495E-B9A0-C425C13959D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35

@@ -337,7 +337,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\app.manifest" />
+    <None Include="Properties\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\passe300.png" />
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +352,10 @@
     <ProjectReference Include="..\BlueDwarf.Core\BlueDwarf.Core.csproj">
       <Project>{BBD1E465-0350-44DA-9D4C-485DA9670703}</Project>
       <Name>BlueDwarf.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlueDwarf.Tunnel\BlueDwarf.Tunnel.csproj">
+      <Project>{ABFD2F65-C917-4509-A1F5-B7353D117680}</Project>
+      <Name>BlueDwarf.Tunnel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

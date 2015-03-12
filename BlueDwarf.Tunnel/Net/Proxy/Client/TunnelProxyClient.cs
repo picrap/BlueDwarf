@@ -5,10 +5,10 @@ namespace BlueDwarf.Net.Proxy.Client
     using System;
     using System.Net;
     using System.Net.Sockets;
-    using Annotations;
+    using Tunnel.Annotations;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    internal partial class TunnelProxyClient : IProxyClient
+    public partial class TunnelProxyClient : IProxyClient
     {
         /// <summary>
         /// Creates a new route.

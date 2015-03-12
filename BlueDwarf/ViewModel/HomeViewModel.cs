@@ -4,7 +4,6 @@ namespace BlueDwarf.ViewModel
 {
     using System;
     using System.ComponentModel;
-    using System.Net;
     using System.Threading;
     using Annotations;
     using ArxOne.MrAdvice.MVVM.Navigation;
@@ -13,7 +12,6 @@ namespace BlueDwarf.ViewModel
     using Configuration;
     using Controls;
     using Microsoft.Practices.Unity;
-    using Net.Http;
     using Net.Proxy;
     using Net.Proxy.Client;
     using Net.Proxy.Scanner;

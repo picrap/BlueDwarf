@@ -10,7 +10,7 @@ namespace BlueDwarf.Utility
         public static NetworkCredential GetNetworkCredential(this Uri uri)
         {
             var userPassword = uri.UserInfo;
-            if (userPassword.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(userPassword))
                 return null;
             var parts = userPassword.Split(new[] { ':' }, 2);
             return new NetworkCredential(parts[0], parts[1]);
