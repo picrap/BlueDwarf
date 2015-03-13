@@ -14,8 +14,14 @@
                   Title="{x:Static l:HomeLocale.Title}" IsTitleVisible="True"
                   d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
                   Width="600" Height="300" Icon="/Resources/key.ico"
-                  ContentSource="/View/HomeTunnelConfigurationView.xaml" ResizeMode="NoResize"  >
+                  x:Name="This"
+                  ContentSource="{Binding View, Mode=TwoWay, ElementName=This}" ResizeMode="NoResize"  >
     <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="{x:Static l:HomeLocale.WelcomeTitle}">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="{x:Static l:HomeLocale.AutoConfigurationTitle}" Source="/View/HomeWelcomeView.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
         <mui:LinkGroup DisplayName="{x:Static l:HomeLocale.ConfigurationTitle}">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="{x:Static l:HomeLocale.ProxyTunnelConfigurationTitle}" Source="/View/HomeTunnelConfigurationView.xaml" />

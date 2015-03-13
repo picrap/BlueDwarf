@@ -58,7 +58,7 @@ namespace BlueDwarf.Serialization
             }
             catch (InvalidCastException)
             { }
-            return ObjectTypeConverter.CreateDefault(targetType);
+            return targetType.Default();
         }
 
         /// <summary>

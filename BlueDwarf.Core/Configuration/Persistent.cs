@@ -8,6 +8,9 @@ namespace BlueDwarf.Configuration
     using ArxOne.MrAdvice.MVVM.Properties;
     using Aspects;
 
+    /// <summary>
+    /// Persistent properties are saved directly as preferences
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     [Priority(AspectPriority.DataHolder)]
     public class Persistent : Attribute, IPropertyAdvice

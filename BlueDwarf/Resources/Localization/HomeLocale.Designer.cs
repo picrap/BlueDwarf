@@ -61,6 +61,15 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;re been dwarfed!.
+        /// </summary>
+        public static string AutoConfigurationTitle {
+            get {
+                return ResourceManager.GetString("AutoConfigurationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
         public static string ConfigurationTitle {
@@ -273,6 +282,15 @@ namespace BlueDwarf.Resources.Localization {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string WelcomeTitle {
+            get {
+                return ResourceManager.GetString("WelcomeTitle", resourceCulture);
             }
         }
         
