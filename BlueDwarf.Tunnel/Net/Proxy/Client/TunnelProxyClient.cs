@@ -5,6 +5,7 @@ namespace BlueDwarf.Net.Proxy.Client
     using System;
     using System.Net;
     using System.Net.Sockets;
+    using Starksoft.Aspen.Proxy;
     using Tunnel.Annotations;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
