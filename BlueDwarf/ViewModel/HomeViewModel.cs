@@ -4,6 +4,7 @@ namespace BlueDwarf.ViewModel
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Threading;
     using Annotations;
     using ArxOne.MrAdvice.MVVM.Navigation;
@@ -14,6 +15,7 @@ namespace BlueDwarf.ViewModel
     using Microsoft.Practices.Unity;
     using Net.Proxy;
     using Net.Proxy.Client;
+    using Net.Proxy.Client.Diagnostic;
     using Net.Proxy.Scanner;
     using Net.Proxy.Server;
     using Properties;
@@ -37,6 +39,12 @@ namespace BlueDwarf.ViewModel
 
         [Dependency]
         public IProxyValidator ProxyValidator { get; set; }
+
+        [Dependency]
+        public ISystemProxyAnalyzer SystemProxyAnalyzer { get; set; }
+
+        [Dependency]
+        public IProxyPageScanner ProxyPageScanner { get; set; }
 
         /// <summary>
         /// Gets or sets the proxy server.
@@ -196,10 +204,23 @@ namespace BlueDwarf.ViewModel
         private readonly object _statisticsLock = new object();
 
         /// <summary>
+        /// Gets or sets the current view (right, this maybe shouldn't be here...).
+        /// </summary>
+        /// <value>
+        /// The current view.
+        /// </value>
+        [Persistent("CurrentView", AutoSave = true)]
+        [NotifyPropertyChanged]
+        public Uri CurrentView { get; set; }
+
+        /// <summary>
         /// Loads preferences and intializes proxy from them.
         /// </summary>
         public override void Load()
         {
+            if (CurrentView == null)
+                ShowAsyncLoad(FirstLoad);
+
             if (CanSetSocksListeningPort)
                 SocksListeningPort = PersistentSocksListeningPort;
             PropertyChanged += OnPropertyChanged;
@@ -209,6 +230,22 @@ namespace BlueDwarf.ViewModel
             SetupProxyServer();
             KeepAlive(() => KeepAlive1, () => KeepAlive1Interval, u => KeepAlive1FullUri = u);
             KeepAlive(() => KeepAlive2, () => KeepAlive2Interval, u => KeepAlive2FullUri = u);
+        }
+
+        private void FirstLoad()
+        {
+            var diagnostic = SystemProxyAnalyzer.Diagnose();
+            // if there is a local proxy, use it
+            LocalProxy = diagnostic.DefaultProxy;
+            // find a remote proxy
+            if (!diagnostic.SensitiveHttpConnectRoute.HasFlag(RouteStatus.ProxyAcceptsAddress))
+            {
+                var firstProxy = ProxyPageScanner.ScanPage(ProxyPage.Default.First(), ProxyClient.CreateRoute(LocalProxy), TestTargetUri).FirstOrDefault();
+                if (firstProxy != null)
+                    RemoteProxy = new Uri(string.Format("http://{0}:{1}", firstProxy.HostOrAddress, firstProxy.Port));
+            }
+            else
+                RemoteProxy = null;
         }
 
         /// <summary>

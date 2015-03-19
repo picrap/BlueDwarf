@@ -11,7 +11,7 @@
             <Style TargetType="{x:Type Rectangle}" />
             <!-- end of workaround -->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles.xaml"/>
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml"/>
             </ResourceDictionary.MergedDictionaries>

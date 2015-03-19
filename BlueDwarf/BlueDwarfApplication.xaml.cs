@@ -59,7 +59,7 @@ namespace BlueDwarf
         {
             StartupConfiguration.Register(GetType().Assembly, "-m");
             var proxyServer = ProxyServerFactory.CreateSocksProxyServer();
-            ShowHome(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized);
+            ShowHome(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized, applicationOptions.FirstStart);
         }
 
         /// <summary>
@@ -101,11 +101,14 @@ namespace BlueDwarf
         /// <param name="proxyServer">The proxy server.</param>
         /// <param name="socksListeningPort">The socks listening port.</param>
         /// <param name="minimized">if set to <c>true</c> [minimized].</param>
-        private static void ShowHome(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized)
+        /// <param name="firstStart">if set to <c>true</c> [first start].</param>
+        private static void ShowHome(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized, bool firstStart)
         {
             var viewModel = navigator.Show(
                 delegate(HomeViewModel vm)
                 {
+                    if (firstStart)
+                        vm.CurrentView = null;
                     vm.ProxyServer = proxyServer;
                     if (socksListeningPort > 0)
                     {

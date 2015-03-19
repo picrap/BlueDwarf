@@ -61,7 +61,7 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You&apos;re been dwarfed!.
+        ///   Looks up a localized string similar to You&apos;ve been dwarfed!.
         /// </summary>
         public static string AutoConfigurationTitle {
             get {

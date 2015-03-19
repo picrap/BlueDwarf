@@ -112,7 +112,11 @@ namespace BlueDwarf.Net.Proxy.Client.Diagnostic
             return false;
         }
 
-
+        /// <summary>
+        /// Diagnoses the DNS for the given host (DNS censorship).
+        /// </summary>
+        /// <param name="host">The host.</param>
+        /// <returns></returns>
         private static bool DiagnoseDns(string host)
         {
             return ResolveDns(host) != null;

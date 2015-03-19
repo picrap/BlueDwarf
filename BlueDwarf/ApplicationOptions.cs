@@ -20,5 +20,8 @@ namespace BlueDwarf
 
         [Option("proxy", Required = false, HelpText = "Sets proxy (for downloading URIs).")]
         public string Proxy { get; set; }
+
+        [Option('s', "first-start", Required = false, HelpText = "Simulates first start (debug feature).")]
+        public bool FirstStart { get; set; }
     }
 }

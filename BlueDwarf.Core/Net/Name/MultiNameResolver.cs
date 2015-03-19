@@ -25,7 +25,7 @@ namespace BlueDwarf.Net.Name
         /// <returns></returns>
         public IPAddress Resolve(string name, Route route)
         {
-            return Resolve(name, route, StatDnsNameResolver);
+            return Resolve(name, route, StatDnsNameResolver, DnsNameResolver);
         }
 
         /// <summary>

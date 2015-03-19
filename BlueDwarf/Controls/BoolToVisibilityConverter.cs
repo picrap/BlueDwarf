@@ -24,11 +24,18 @@ namespace BlueDwarf.Controls
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var boolValue = (bool)value;
+            var boolValue = GetValue(value);
             var stringParameter = parameter as string;
             if (stringParameter == "not")
                 boolValue = !boolValue;
             return boolValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private static bool GetValue(object value)
+        {
+            if (value is bool)
+                return (bool)value;
+            return value != null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

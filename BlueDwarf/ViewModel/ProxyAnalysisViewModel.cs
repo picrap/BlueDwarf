@@ -8,8 +8,6 @@ namespace BlueDwarf.ViewModel
     using ArxOne.MrAdvice.MVVM.Properties;
     using Microsoft.Practices.Unity;
     using Net.Proxy.Client.Diagnostic;
-    using Properties;
-    using Resources.Localization;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public class ProxyAnalysisViewModel : ViewModel
@@ -60,17 +58,17 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         private void LoadDiagnostic()
         {
-            var d = SystemProxyAnalyzer.Diagnose();
-            RequiresProxy = d.DefaultProxy != null;
+            var diagnostic = SystemProxyAnalyzer.Diagnose();
+            RequiresProxy = diagnostic.DefaultProxy != null;
             DoesNotRequireProxy = !RequiresProxy;
-            DefaultProxy = d.DefaultProxy;
-            ProxyAllowsSensitiveSites = d.SensitiveHttpGetRoute.HasFlag(RouteStatus.ProxyAcceptsName)
-                                        && d.SensitiveHttpsConnectRoute.HasFlag(RouteStatus.ProxyAcceptsName)
-                                        && d.SensitiveHttpConnectRoute.HasFlag(RouteStatus.ProxyAcceptsName);
-            DnsResolvesLocal = d.SafeLocalDns;
-            DnsResolvesSensitiveSites = d.SensitiveLocalDns;
-            ProxyConnectsToSensitiveIP = d.SensitiveHttpsConnectRoute.HasFlag(RouteStatus.ProxyAcceptsAddress)
-                                         && d.SensitiveHttpConnectRoute.HasFlag(RouteStatus.ProxyAcceptsAddress);
+            DefaultProxy = diagnostic.DefaultProxy;
+            ProxyAllowsSensitiveSites = diagnostic.SensitiveHttpGetRoute.HasFlag(RouteStatus.ProxyAcceptsName)
+                                        && diagnostic.SensitiveHttpsConnectRoute.HasFlag(RouteStatus.ProxyAcceptsName)
+                                        && diagnostic.SensitiveHttpConnectRoute.HasFlag(RouteStatus.ProxyAcceptsName);
+            DnsResolvesLocal = diagnostic.SafeLocalDns;
+            DnsResolvesSensitiveSites = diagnostic.SensitiveLocalDns;
+            ProxyConnectsToSensitiveIP = diagnostic.SensitiveHttpsConnectRoute.HasFlag(RouteStatus.ProxyAcceptsAddress)
+                                         && diagnostic.SensitiveHttpConnectRoute.HasFlag(RouteStatus.ProxyAcceptsAddress);
 
             if (DnsResolvesSensitiveSites && ProxyConnectsToSensitiveIP)
                 WorkWithLocalProxy = true;

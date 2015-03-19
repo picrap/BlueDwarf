@@ -3,46 +3,32 @@
 
 namespace BlueDwarf.View
 {
-    using System;
+    using System.Linq;
     using System.Windows;
-    using ArxOne.MrAdvice.MVVM.Properties;
-    using Configuration;
-    using Microsoft.Practices.Unity;
-    using DependencyProperty = ArxOne.MrAdvice.MVVM.Properties.DependencyProperty;
 
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
     public partial class HomeView
     {
-        [Dependency]
-        // ReSharper disable once UnusedMember.Global
-        public IPersistence Persistence { get; set; }
-
-        [DependencyProperty(Notification = DependencyPropertyNotification.OnPropertyNameChanged)]
-        public Uri View { get; set; }
-
-        [Persistent("View", AutoSave = true)]
-        public Uri CurrentView { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeView"/> class.
+        /// </summary>
         public HomeView()
         {
             InitializeComponent();
-            Loaded += OnLoad;
-        }
-
-        private void OnLoad(object sender, RoutedEventArgs e)
-        {
-            View = CurrentView;
+            Loaded += OnLoaded;
         }
 
         /// <summary>
-        /// Called when [view changed].
+        /// Called when page is loaded.
         /// </summary>
-        // ReSharper disable once UnusedMember.Global
-        public void OnViewChanged()
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            CurrentView = View;
+            if (ContentSource == null)
+                ContentSource = MenuLinkGroups.First().Links.First().Source;
         }
     }
 }

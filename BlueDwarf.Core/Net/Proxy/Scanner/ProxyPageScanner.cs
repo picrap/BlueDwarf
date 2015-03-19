@@ -33,7 +33,13 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <returns></returns>
         public IEnumerable<HostPort> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, Route route, Uri testTarget)
         {
-            var proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, route);
+            string proxyListingPageText = null;
+            try
+            {
+                proxyListingPageText = Downloader.Download(proxyListingPage, parseAsRawText, route);
+            }
+            catch (ProxyRouteException)
+            { }
             if (proxyListingPageText == null)
                 yield break;
 

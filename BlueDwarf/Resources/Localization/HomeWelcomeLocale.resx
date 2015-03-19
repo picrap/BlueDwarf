@@ -117,85 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LocalProxyKeepaliveRefreshIntervalLabel" xml:space="preserve">
-    <value>Refresh interval:</value>
-  </data>
-  <data name="LocalProxyKeepaliveTitle" xml:space="preserve">
-    <value>Local proxy keepalive</value>
-  </data>
-  <data name="LocalProxyKeepaliveURL1Label" xml:space="preserve">
-    <value>Keepalive URL 1:</value>
-  </data>
-  <data name="LocalProxyKeepaliveURL2Label" xml:space="preserve">
-    <value>Keepalive URL 2:</value>
+  <data name="LocalProxy" xml:space="preserve">
+    <value>Browser configuration: SOCKS proxy on</value>
   </data>
   <data name="LocalProxyLabel" xml:space="preserve">
-    <value>Local proxy:</value>
+    <value>Local proxy (to go out):</value>
   </data>
-  <data name="MenuConfigure" xml:space="preserve">
-    <value>Associate</value>
+  <data name="LocalProxyLegend" xml:space="preserve">
+    <value>Now, change your browser settings in order to use the Blue Dwarf (you can also download a proxy switcher such as SwitchySharp).</value>
   </data>
-  <data name="MenuExit" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="ProxyServerConfigurationLegend" xml:space="preserve">
-    <value>This is where you configure the local proxy for your browser and other applications</value>
-  </data>
-  <data name="ProxyServerConfigurationTitle" xml:space="preserve">
-    <value>Proxy</value>
-  </data>
-  <data name="ProxyTunnelConfigurationLegend" xml:space="preserve">
-    <value>This is where you go out</value>
-  </data>
-  <data name="ProxyTunnelConfigurationTitle" xml:space="preserve">
-    <value>Tunnel</value>
+  <data name="LocalProxySection" xml:space="preserve">
+    <value>LocalProxy</value>
   </data>
   <data name="RemoteProxyLabel" xml:space="preserve">
-    <value>Remote proxy:</value>
+    <value>Remote proxy (to bypass censorship):</value>
   </data>
-  <data name="RemoteProxySite" xml:space="preserve">
-    <value>Find happiness at</value>
+  <data name="TunnelConfigurationLegend" xml:space="preserve">
+    <value>A tunnel has been configured for you, based on system audit. You can change it in the configuration section.</value>
   </data>
-  <data name="s" xml:space="preserve">
-    <value>s</value>
+  <data name="TunnelLegend" xml:space="preserve">
+    <value>Here is the best solution for you to avoid any censorship.</value>
   </data>
-  <data name="Socks4ServerPort" xml:space="preserve">
-    <value>SOCKS 4 proxy server port:</value>
+  <data name="TunnelSection" xml:space="preserve">
+    <value>Tunnel</value>
   </data>
-  <data name="StatisticsBytesRead" xml:space="preserve">
-    <value>Bytes read:</value>
-  </data>
-  <data name="StatisticsBytesWritten" xml:space="preserve">
-    <value>Bytes written:</value>
-  </data>
-  <data name="StatisticsConnections" xml:space="preserve">
-    <value>Connections so far:</value>
-  </data>
-  <data name="StatisticsTitle" xml:space="preserve">
-    <value>Statistics</value>
-  </data>
-  <data name="TestURL" xml:space="preserve">
-    <value>Test URL:</value>
-  </data>
-  <data name="WizardInvoke" xml:space="preserve">
-    <value>Wizard...</value>
-  </data>
-  <data name="PickRemoteProxy" xml:space="preserve">
-    <value>Pick...</value>
-  </data>
-  <data name="ConfigurationTitle" xml:space="preserve">
-    <value>Configuration</value>
-  </data>
-  <data name="StatusTitle" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>The Blue Dwarf</value>
-  </data>
-  <data name="AutoConfigurationTitle" xml:space="preserve">
-    <value>You've been dwarfed!</value>
-  </data>
-  <data name="WelcomeTitle" xml:space="preserve">
-    <value>Welcome</value>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome to the Blue Dwarf. Since this is your first use, your system was evaluated and your configuration set up.</value>
   </data>
 </root>

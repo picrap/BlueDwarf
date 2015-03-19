@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" x:Name="This">
-    <Border Background="#C0FFFFFF" Visibility="{Binding Show, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}}">
+    <Border Background="#C0000000" Visibility="{Binding Show, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}}">
         <ProgressBar VerticalAlignment="Center" Height="12" Margin="16" IsIndeterminate="True" />
     </Border>
 </UserControl>

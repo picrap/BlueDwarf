@@ -14,8 +14,7 @@
                   Title="{x:Static l:HomeLocale.Title}" IsTitleVisible="True"
                   d:DataContext="{d:DesignInstance Type=vm:HomeViewModel, IsDesignTimeCreatable=true}" WindowStyle="ToolWindow"
                   Width="600" Height="300" Icon="/Resources/key.ico"
-                  x:Name="This"
-                  ContentSource="{Binding View, Mode=TwoWay, ElementName=This}" ResizeMode="NoResize"  >
+                  ContentSource="{Binding CurrentView, Mode=TwoWay}" ResizeMode="NoResize" >
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="{x:Static l:HomeLocale.WelcomeTitle}">
             <mui:LinkGroup.Links>
