@@ -18,7 +18,7 @@ namespace BlueDwarf.Net.Proxy.Server
         /// <returns></returns>
         public IProxyServer CreateSocksProxyServer()
         {
-            return new SocksProxyServer(NameResolver);
+            return new MSocksProxyServer();
         }
     }
 }

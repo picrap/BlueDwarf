@@ -23,9 +23,13 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <exception cref="System.IO.IOException"></exception>
         public static Socket Connect(this Route route, string hostOrAddress, int port)
         {
-            var entry = Dns.GetHostEntry(hostOrAddress);
-            var ipAddress = entry.AddressList.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork)
+            IPAddress ipAddress;
+            if (!IPAddress.TryParse(hostOrAddress, out ipAddress))
+            {
+                var entry = Dns.GetHostEntry(hostOrAddress);
+                ipAddress = entry.AddressList.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork)
                             ?? entry.AddressList.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetworkV6);
+            }
             if (ipAddress == null)
                 throw new IOException(string.Format("Impossible to resolve '{0}'", hostOrAddress));
             return route.Connect(ipAddress, port);

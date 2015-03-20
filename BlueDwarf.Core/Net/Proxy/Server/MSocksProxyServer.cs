@@ -5,19 +5,16 @@ namespace BlueDwarf.Net.Proxy.Server
     using System;
     using System.Net.Sockets;
     using Client;
-    using Name;
-    using Org.Mentalis.Proxy.Socks;
+    using MSocksServer.Socks4Server;
     using Utility;
 
     /// <summary>
     /// Socks proxy server
     /// Was from far the easiest to implement
     /// </summary>
-    internal class SocksProxyServer : IProxyServer
+    internal class MSocksProxyServer : IProxyServer
     {
-        private SocksListener _server;
-
-        private readonly INameResolver _nameResolver;
+        private Socks4 _socksServer;
 
         /// <summary>
         /// Occurs when a client connects.
@@ -42,11 +39,19 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
 
-        private Route _route;
+        /// <summary>
+        /// Gets or sets the proxy route.
+        /// </summary>
+        /// <value>
+        /// The proxy route.
+        /// </value>
+        public Route Route { get; set; }
 
-        public SocksProxyServer(INameResolver nameResolver)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MSocksProxyServer" /> class.
+        /// </summary>
+        public MSocksProxyServer()
         {
-            _nameResolver = nameResolver;
         }
 
         /// <summary>
@@ -58,35 +63,18 @@ namespace BlueDwarf.Net.Proxy.Server
             Port = null;
         }
 
-        /// <summary>
-        /// Gets or sets the proxy route.
-        /// </summary>
-        /// <value>
-        /// The proxy route.
-        /// </value>
-        public Route Route
-        {
-            get { return _route; }
-            set
-            {
-                if (_server != null)
-                    _server.Route = value;
-                _route = value;
-            }
-        }
-
         private void ConfigureServer()
         {
-            if (_server != null)
+            if (_socksServer != null)
             {
-                _server.Dispose();
-                _server = null;
+                _socksServer.Stop();
+                _socksServer = null;
             }
             if (Port.HasValue)
             {
                 if (Port.Value > 0)
                 {
-                    _server = CreateListener(Port.Value);
+                    _socksServer = CreateListener(Port.Value);
                 }
                 else
                 {
@@ -94,8 +82,8 @@ namespace BlueDwarf.Net.Proxy.Server
                     {
                         try
                         {
-                            _server = CreateListener(0);
-                            _port = _server.Port;
+                            _socksServer = CreateListener(0);
+                            _port = _socksServer.Port;
                             break;
                         }
                         catch (SocketException)
@@ -106,29 +94,35 @@ namespace BlueDwarf.Net.Proxy.Server
             }
         }
 
-        private SocksListener CreateListener(int port)
+        private Socks4 CreateListener(int listeningPort)
         {
-            var server = new SocksListener(port) { NameResolver = _nameResolver, Route = _route };
-            server.ClientConnected += OnClientConnected;
-            server.ClientReceived += OnClientReceived;
-            server.RemoteReceived += OnRemoteReceived;
+            var server = new Socks4(listeningPort, ClientConnect);
+            server.OnSendData += OnSendData;
+            server.OnReceiveData += OnReceiveData;
             server.Start();
             return server;
         }
 
-        private void OnClientConnected(object sender, EventArgs e)
+        /// <summary>
+        /// Connects to host+port, using the current route.
+        /// </summary>
+        /// <param name="host">The host.</param>
+        /// <param name="port">The port.</param>
+        /// <returns></returns>
+        private Socket ClientConnect(string host, int port)
         {
             Connect.Raise(this);
+            return Route.Connect(host, port);
         }
 
-        private void OnRemoteReceived(object sender, ClientReceivedEventArgs e)
+        private void OnReceiveData(ref byte[] data, ref bool blocked, Socks4ThreadInfo info)
         {
-            Transfer.Raise(this, new ProxyServerTransferEventArgs(e.Received, 0));
+            Transfer.Raise(this, new ProxyServerTransferEventArgs(data.Length, 0));
         }
 
-        private void OnClientReceived(object sender, ClientReceivedEventArgs e)
+        private void OnSendData(ref byte[] data, ref bool blocked, Socks4ThreadInfo info)
         {
-            Transfer.Raise(this, new ProxyServerTransferEventArgs(0, e.Received));
+            Transfer.Raise(this, new ProxyServerTransferEventArgs(0, data.Length));
         }
     }
 }
