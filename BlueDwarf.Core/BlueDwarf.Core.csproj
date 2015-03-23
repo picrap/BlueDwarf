@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -70,8 +71,8 @@
   <ItemGroup>
     <Compile Include="Aspects\PropertyImporter.cs" />
     <Compile Include="Configuration\IPersistence.cs" />
-    <Compile Include="Configuration\IStartupConfiguration.cs" />
-    <Compile Include="Configuration\MenuStartupConfiguration.cs" />
+    <Compile Include="Configuration\ISetupConfiguration.cs" />
+    <Compile Include="Configuration\SetupConfiguration.cs" />
     <Compile Include="Configuration\RegistryPersistence.cs" />
     <Compile Include="Configuration\PersistenceExtensions.cs" />
     <Compile Include="Configuration\Persistent.cs" />
@@ -153,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <Content Include="ReadMe.MrAdvice.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlueDwarf.Tunnel\BlueDwarf.Tunnel.csproj">

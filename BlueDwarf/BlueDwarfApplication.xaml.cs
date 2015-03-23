@@ -3,6 +3,7 @@
 namespace BlueDwarf
 {
     using System;
+    using System.Reflection;
     using System.Windows;
     using ArxOne.MrAdvice.MVVM.Navigation;
     using CommandLine;
@@ -20,7 +21,7 @@ namespace BlueDwarf
     public partial class BlueDwarfApplication
     {
         [Dependency]
-        public IStartupConfiguration StartupConfiguration { get; set; }
+        public ISetupConfiguration SetupConfiguration { get; set; }
 
         [Dependency]
         public INavigator Navigator { get; set; }
@@ -55,9 +56,15 @@ namespace BlueDwarf
                 StartMain(applicationOptions);
         }
 
+        /// <summary>
+        /// Starts the main application.
+        /// </summary>
+        /// <param name="applicationOptions">The application options.</param>
         private void StartMain(ApplicationOptions applicationOptions)
         {
-            StartupConfiguration.Register(GetType().Assembly, "-m");
+            var thisAssembly = GetType().Assembly;
+            SetupConfiguration.RegisterStartup(thisAssembly, "-m");
+            SetupConfiguration.SetUninstallIcon(thisAssembly);
             var proxyServer = ProxyServerFactory.CreateSocksProxyServer();
             ShowHome(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized, applicationOptions.FirstStart);
         }
@@ -128,7 +135,7 @@ namespace BlueDwarf
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnNavigatorExiting(object sender, EventArgs e)
         {
-            StartupConfiguration.Unregister(GetType().Assembly);
+            SetupConfiguration.UnregisterStartup(GetType().Assembly);
         }
     }
 }

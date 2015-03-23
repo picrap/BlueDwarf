@@ -36,7 +36,7 @@ namespace BlueDwarf
             container.RegisterType<INameResolver, MultiNameResolver>(AsSingleton());
             container.RegisterType<ISystemProxyAnalyzer, SystemProxyAnalyzer>(AsSingleton());
             container.RegisterType<IPersistence, RegistryPersistence>(AsSingleton());
-            container.RegisterType<IStartupConfiguration, MenuStartupConfiguration>(AsSingleton());
+            container.RegisterType<ISetupConfiguration, SetupConfiguration>(AsSingleton());
             container.RegisterType<IProxyConfiguration, ProxyConfiguration>(AsSingleton());
             container.RegisterType<IDownloader, Downloader>(AsSingleton());
             container.RegisterType<IHostScanner, HostScanner>(AsSingleton());

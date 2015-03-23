@@ -5,6 +5,7 @@ using System.Reflection;
 
 [assembly: AssemblyCompany("Proud dwarves corp.")]
 [assembly: AssemblyProduct("Blue Dwarf")]
+
 [assembly: AssemblyCopyright("Distributed under MIT license http://opensource.org/licenses/MIT")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
