@@ -4,6 +4,9 @@ using System.Net.Sockets;
 using System.Threading;
 namespace MSocksServer.Socks4Server
 {
+    using System.Linq;
+    using System.Text;
+
     public class Socks4
     {
         private class Socks4Thread
@@ -28,20 +31,20 @@ namespace MSocksServer.Socks4Server
             }
             private bool Authorization()
             {
-                byte[] array = new byte[300];
-                byte[] array2;
+                byte[] buffer = new byte[300];
+                byte[] request;
                 while (true)
                 {
                     if (this._serverStream.DataAvailable)
                     {
-                        int num = this._serverStream.Read(array, 0, 300);
-                        array2 = new byte[num];
-                        Array.Copy(array, array2, num);
-                        if (!array2[0].Equals(4))
+                        int num = this._serverStream.Read(buffer, 0, 300);
+                        request = new byte[num];
+                        Array.Copy(buffer, request, num);
+                        if (!request[0].Equals(4))
                         {
                             return false;
                         }
-                        switch (array2[1])
+                        switch (request[1])
                         {
                             case 1:
                                 goto IL_6A;
@@ -52,28 +55,51 @@ namespace MSocksServer.Socks4Server
                     Thread.Sleep(3);
                 }
             IL_6A:
-                byte[] array3 = new byte[2];
-                byte[] array4 = new byte[4];
-                Array.Copy(array2, 2, array3, 0, 2);
-                Array.Copy(array2, 4, array4, 0, 4);
-                Array.Reverse(array3);
-                int port = (int)BitConverter.ToInt16(array3, 0);
-                IPAddress iPAddress = new IPAddress(array4);
-                byte[] array5 = new byte[8];
-                array5[0] = 0;
+                byte[] portBytes = new byte[2];
+                byte[] rawIPv4 = new byte[4];
+                // port
+                Array.Copy(request, 2, portBytes, 0, 2);
+                Array.Reverse(portBytes);
+                int port = (int)BitConverter.ToInt16(portBytes, 0);
+                // address
+                Array.Copy(request, 4, rawIPv4, 0, 4);
+                IPAddress ipAddress;
+                if (rawIPv4[0] == 0 && rawIPv4[1] == 0 && rawIPv4[2] == 0 && rawIPv4[3] != 0)
+                {
+                    var endUserNameIndex = IndexOf(request, 0, 8);
+                    var endHostNameIndex = IndexOf(request, 0, endUserNameIndex + 1);
+                    var host = Encoding.ASCII.GetString(request, endUserNameIndex + 1, endHostNameIndex - endUserNameIndex - 1);
+                    ipAddress = Dns.GetHostAddresses(host).First();
+                }
+                else
+                    ipAddress = new IPAddress(rawIPv4);
+                byte[] response = new byte[8];
+                response[0] = 0;
                 try
                 {
                     //this._client = new TcpClient(iPAddress.ToString(), port);
-                    _client = new TcpClient { Client = _clientConnect(iPAddress.ToString(), port) };
-                    array5[1] = 90;
+                    _client = new TcpClient { Client = _clientConnect(ipAddress.ToString(), port) };
+                    response[1] = 90;
                 }
                 catch (Exception)
                 {
-                    array5[1] = 91;
+                    response[1] = 91;
                 }
-                this._serverStream.Write(array5, 0, array5.Length);
-                return array5[1].Equals(90);
+                this._serverStream.Write(response, 0, response.Length);
+                return response[1].Equals(90);
             }
+
+            private static int IndexOf(byte[] array, byte s, int offset)
+            {
+                while (offset < array.Length)
+                {
+                    if (array[offset] == s)
+                        return offset;
+                    offset++;
+                }
+                return -1;
+            }
+
             private void TransfererThread()
             {
                 bool flag = false;
@@ -182,7 +208,7 @@ namespace MSocksServer.Socks4Server
             this.Stop();
             this._listener = new TcpListener(this._port);
             if (_port == 0)
-                _port = ((IPEndPoint) _listener.LocalEndpoint).Port;
+                _port = ((IPEndPoint)_listener.LocalEndpoint).Port;
         }
         public bool Start()
         {
