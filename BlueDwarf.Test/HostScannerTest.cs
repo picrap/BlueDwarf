@@ -7,6 +7,7 @@ namespace BlueDwarf.Test
     using System.Net;
     using System.Text.RegularExpressions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Net.Proxy;
     using Net.Proxy.Scanner;
 
     [TestClass]
@@ -63,9 +64,9 @@ namespace BlueDwarf.Test
         {
             var hostScanner = new HostScanner();
             var hosts = hostScanner.Scan("here 123.45.67.89:3128 there 13.24.35.46 : 57 and everywhere 98.76.54.32  1").ToArray();
-            Assert.IsTrue(hosts.Contains(new HostPort(IPAddress.Parse("123.45.67.89"), 3128)));
-            Assert.IsTrue(hosts.Contains(new HostPort(IPAddress.Parse("13.24.35.46"), 57)));
-            Assert.IsTrue(hosts.Contains(new HostPort(IPAddress.Parse("98.76.54.32"), 1)));
+            Assert.IsTrue(hosts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("123.45.67.89"), 3128)));
+            Assert.IsTrue(hosts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("13.24.35.46"), 57)));
+            Assert.IsTrue(hosts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("98.76.54.32"), 1)));
         }
     }
 }

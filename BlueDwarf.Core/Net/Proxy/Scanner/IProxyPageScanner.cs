@@ -20,17 +20,17 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="route"></param>
         /// <param name="testTarget"></param>
         /// <returns></returns>
-        IEnumerable<HostPort> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, Route route, Uri testTarget);
+        IEnumerable<ProxyServer> ScanPage(Uri proxyListingPage, bool parseAsRawText, string hostPortEx, Route route, Uri testTarget);
 
         /// <summary>
         /// Scans a given page for proxy servers.
         /// </summary>
-        /// <param name="hostPorts">The host ports.</param>
+        /// <param name="proxyServers"></param>
         /// <param name="proxyListingPage">The proxy listing page.</param>
         /// <param name="parseAsRawText">if set to <c>true</c> [parse as raw text].</param>
         /// <param name="hostPortEx">The host port ex.</param>
         /// <param name="route"></param>
         /// <param name="testTarget"></param>
-        void ScanPage(IList<HostPort> hostPorts, Uri proxyListingPage, bool parseAsRawText, string hostPortEx, Route route, Uri testTarget);
+        void ScanPage(IList<ProxyServer> proxyServers, Uri proxyListingPage, bool parseAsRawText, string hostPortEx, Route route, Uri testTarget);
     }
 }

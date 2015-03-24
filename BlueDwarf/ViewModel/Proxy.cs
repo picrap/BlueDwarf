@@ -4,12 +4,24 @@
 namespace BlueDwarf.ViewModel
 {
     using Net.Geolocation;
-    using Net.Proxy.Scanner;
+    using Net.Proxy;
 
     public class Proxy
     {
-        public HostPort HostPort { get; private set; }
+        /// <summary>
+        /// Gets the proxy server.
+        /// </summary>
+        /// <value>
+        /// The proxy server.
+        /// </value>
+        public ProxyServer ProxyServer { get; private set; }
 
+        /// <summary>
+        /// Gets the geolocation.
+        /// </summary>
+        /// <value>
+        /// The geolocation.
+        /// </value>
         public AddressGeolocation Geolocation { get; private set; }
 
         /// <summary>
@@ -18,7 +30,7 @@ namespace BlueDwarf.ViewModel
         /// <value>
         /// The display name.
         /// </value>
-        public string DisplayName { get { return HostPort.HostOrAddress + ":" + HostPort.Port; } }
+        public string DisplayName { get { return ProxyServer.Host + ":" + ProxyServer.Port; } }
 
         /// <summary>
         /// Gets the name of the country.
@@ -55,13 +67,13 @@ namespace BlueDwarf.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="Proxy" /> class.
         /// </summary>
-        /// <param name="hostPort">The host port.</param>
+        /// <param name="proxyServer">The proxy server.</param>
         /// <param name="geolocation">The geolocation.</param>
         /// <param name="pingMs">The ping (in ms).</param>
         /// <param name="speedKbps">The speed (in kB/s).</param>
-        public Proxy(HostPort hostPort, AddressGeolocation geolocation, int pingMs, int speedKbps)
+        public Proxy(ProxyServer proxyServer, AddressGeolocation geolocation, int pingMs, int speedKbps)
         {
-            HostPort = hostPort;
+            ProxyServer = proxyServer;
             Geolocation = geolocation;
             PingMs = pingMs;
             SpeedKbps = speedKbps;

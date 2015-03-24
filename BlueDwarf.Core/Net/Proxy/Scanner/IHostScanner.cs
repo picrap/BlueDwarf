@@ -15,6 +15,6 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="pageText">The page text.</param>
         /// <param name="hostPortEx">The host port regular expression, or null to use internal capture.</param>
         /// <returns></returns>
-        IEnumerable<HostPort> Scan(string pageText, string hostPortEx = null);
+        IEnumerable<ProxyServer> Scan(string pageText, string hostPortEx = null);
     }
 }

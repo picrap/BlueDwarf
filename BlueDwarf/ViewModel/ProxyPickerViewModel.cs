@@ -150,13 +150,14 @@ namespace BlueDwarf.ViewModel
                 if (testTargetUri != null)
                 {
                     var route = ProxyClient.CreateRoute(LocalProxy);
-                    foreach (var hostPort in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, route, testTargetUri))
+                    foreach (var hostEndPoint in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, route, testTargetUri))
                     {
-                        var location = Geolocation.Locate(hostPort.Address, route);
+                        var ipEndPoint = hostEndPoint.IPEndPoint;
+                        var location = Geolocation.Locate(ipEndPoint.Address, route);
                         var p = ProxyAnalyzer.MeasurePerformance(route, testTargetUri);
                         if (p == null)
                             continue;
-                        var proxy = new Proxy(hostPort, location, (int)p.Ping.TotalMilliseconds, (int)(p.DownloadSpeed / 1024));
+                        var proxy = new Proxy(hostEndPoint, location, (int)p.Ping.TotalMilliseconds, (int)(p.DownloadSpeed / 1024));
                         ProxyServers.Add(proxy);
                     }
                 }

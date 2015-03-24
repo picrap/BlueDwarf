@@ -4,15 +4,13 @@ namespace BlueDwarf.Net.Proxy
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Net;
-    using System.Net.Sockets;
 
     /// <summary>
     /// Represents a proxy server
     /// </summary>
-    [DebuggerDisplay("{Protocol}=[{Address}]:{Port}")]
-    public class ProxyServer : IPEndPoint
+    [DebuggerDisplay("{Protocol}=[{Host}]:{Port}")]
+    public class ProxyServer : HostEndPoint
     {
         /// <summary>
         /// Gets the protocol.
@@ -21,6 +19,17 @@ namespace BlueDwarf.Net.Proxy
         /// The protocol.
         /// </value>
         public ProxyProtocol Protocol { get; private set; }
+
+        /// <summary>
+        /// Gets the URI.
+        /// </summary>
+        /// <value>
+        /// The URI.
+        /// </value>
+        public Uri Uri
+        {
+            get { return new Uri(string.Format("{0}://{1}:{2}", GetLiteralProtocol(Protocol), Host, Port)); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProxyServer"/> class.
@@ -37,27 +46,23 @@ namespace BlueDwarf.Net.Proxy
         /// <summary>
         /// Initializes a new instance of the <see cref="ProxyServer"/> class.
         /// </summary>
-        /// <param name="uri">The URI.</param>
-        public ProxyServer(Uri uri)
-            : base(GetIPAddress(uri), GetPort(uri))
+        /// <param name="protocol">The protocol.</param>
+        /// <param name="host">The host.</param>
+        /// <param name="port">The port.</param>
+        public ProxyServer(ProxyProtocol protocol, string host, int port)
+            : base(host, port)
         {
-            Protocol = GetProtocol(uri.Scheme);
+            Protocol = protocol;
         }
 
         /// <summary>
-        /// Gets the ip address.
+        /// Initializes a new instance of the <see cref="ProxyServer"/> class.
         /// </summary>
         /// <param name="uri">The URI.</param>
-        /// <returns></returns>
-        private static IPAddress GetIPAddress(Uri uri)
+        public ProxyServer(Uri uri)
+            : base(uri.Host, GetPort(uri))
         {
-            IPAddress ipAddress;
-            if (IPAddress.TryParse(uri.Host, out ipAddress))
-                return ipAddress;
-            // if it fails here, there's nothing we can do here
-            var entry = Dns.GetHostEntry(uri.Host);
-            return entry.AddressList.First(a => a.AddressFamily == AddressFamily.InterNetwork)
-                   ?? entry.AddressList.First(a => a.AddressFamily == AddressFamily.InterNetworkV6);
+            Protocol = GetProtocol(uri.Scheme);
         }
 
         /// <summary>
@@ -76,6 +81,24 @@ namespace BlueDwarf.Net.Proxy
         }
 
         /// <summary>
+        /// Gets the literal protocol.
+        /// </summary>
+        /// <param name="proxyProtocol">The proxy protocol.</param>
+        /// <returns></returns>
+        private static string GetLiteralProtocol(ProxyProtocol proxyProtocol)
+        {
+            switch (proxyProtocol)
+            {
+                case ProxyProtocol.HttpConnect:
+                    return "http";
+                case ProxyProtocol.Socks4A:
+                    return "socks";
+                default:
+                    throw new ArgumentOutOfRangeException("proxyProtocol");
+            }
+        }
+
+        /// <summary>
         /// Gets the protocol.
         /// </summary>
         /// <param name="scheme">The scheme.</param>
@@ -90,7 +113,7 @@ namespace BlueDwarf.Net.Proxy
                     return ProxyProtocol.HttpConnect;
                 case "socks":
                 case "socks4":
-                    return ProxyProtocol.Socks4;
+                    return ProxyProtocol.Socks4A;
                 default:
                     throw new ArgumentOutOfRangeException(scheme);
             }
@@ -108,6 +131,35 @@ namespace BlueDwarf.Net.Proxy
             if (uri == null)
                 return null;
             return new ProxyServer(uri);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="comparand">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object comparand)
+        {
+            var other = comparand as ProxyServer;
+            if (other == null)
+                return false;
+            return Host == other.Host && Port == other.Port && Protocol == other.Protocol;
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
+        /// <PermissionSet>
+        ///   <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        /// </PermissionSet>
+        public override int GetHashCode()
+        {
+            return Host.GetHashCode() ^ Port.GetHashCode() ^ Protocol.GetHashCode();
         }
     }
 }

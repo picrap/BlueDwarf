@@ -242,7 +242,7 @@ namespace BlueDwarf.ViewModel
             {
                 var firstProxy = ProxyPageScanner.ScanPage(ProxyPage.Default.First(), ProxyClient.CreateRoute(LocalProxy), TestTargetUri).FirstOrDefault();
                 if (firstProxy != null)
-                    RemoteProxy = new Uri(string.Format("http://{0}:{1}", firstProxy.HostOrAddress, firstProxy.Port));
+                    RemoteProxy = new Uri(string.Format("http://{0}:{1}", firstProxy.Host, firstProxy.Port));
             }
             else
                 RemoteProxy = null;
@@ -461,7 +461,7 @@ namespace BlueDwarf.ViewModel
         {
             var viewModel = Navigator.Show<ProxyPickerViewModel>();
             if (viewModel != null && viewModel.ProxyServer != null)
-                RemoteProxy = new Uri(string.Format("http://{0}:{1}", viewModel.ProxyServer.HostPort.HostOrAddress, viewModel.ProxyServer.HostPort.Port));
+                RemoteProxy = viewModel.ProxyServer.ProxyServer.Uri;
         }
     }
 }

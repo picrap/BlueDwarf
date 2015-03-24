@@ -16,7 +16,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="route">The route.</param>
         /// <param name="testTarget"></param>
         /// <returns></returns>
-        public static IEnumerable<HostPort> ScanPage(this IProxyPageScanner proxyPageScanner, ProxyPage proxyPage, Route route, Uri testTarget)
+        public static IEnumerable<ProxyServer> ScanPage(this IProxyPageScanner proxyPageScanner, ProxyPage proxyPage, Route route, Uri testTarget)
         {
             return proxyPageScanner.ScanPage(proxyPage.PageUri, proxyPage.ParseAsText, proxyPage.HostPortEx, route, testTarget);
         }

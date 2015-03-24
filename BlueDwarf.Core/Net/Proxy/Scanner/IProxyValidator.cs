@@ -14,12 +14,12 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// Validates the specified proxy host port as a HTTP CONNECT proxy.
         /// Given a route to get to the proxy and a test target to be reached after proxy
         /// </summary>
-        /// <param name="proxyHostPort">The proxy host port.</param>
+        /// <param name="proxyEndPoint"></param>
         /// <param name="testTarget"></param>
         /// <param name="routeToProxy"></param>
         /// <param name="tryCount">The try count to fully validate the route</param>
         /// <returns></returns>
-        bool ValidateHttpConnect(HostPort proxyHostPort, Uri testTarget, Route routeToProxy, int tryCount = 3);
+        bool ValidateHttpConnect(HostEndPoint proxyEndPoint, Uri testTarget, Route routeToProxy, int tryCount = 3);
 
         /// <summary>
         /// Validates the specified route, using the test target.

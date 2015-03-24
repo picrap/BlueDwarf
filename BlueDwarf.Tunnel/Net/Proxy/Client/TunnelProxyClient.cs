@@ -5,7 +5,6 @@ namespace BlueDwarf.Net.Proxy.Client
     using System;
     using System.Net;
     using System.Net.Sockets;
-    using Starksoft.Aspen.Proxy;
     using Tunnel.Annotations;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
@@ -73,7 +72,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <exception cref="System.ArgumentException">Unknown proxy type</exception>
         private Tuple<Socket, ProxyProtocol> ConnectProxy(Tuple<Socket, ProxyProtocol> socket, ProxyServer proxyServer)
         {
-            var newSocket = ConnectSocket(socket, proxyServer);
+            var newSocket = ConnectSocket(socket, proxyServer.IPEndPoint);
             if (newSocket == null)
                 return null;
             return new Tuple<Socket, ProxyProtocol>(newSocket, proxyServer.Protocol);
@@ -94,7 +93,7 @@ namespace BlueDwarf.Net.Proxy.Client
             {
                 case ProxyProtocol.HttpConnect:
                     return HttpProxyConnect(socket.Item1, target);
-                case ProxyProtocol.Socks4:
+                case ProxyProtocol.Socks4A:
                     return SocksProxyConnect(socket.Item1, target);
                 default:
                     throw new ArgumentOutOfRangeException();

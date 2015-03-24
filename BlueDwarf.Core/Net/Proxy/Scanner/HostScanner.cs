@@ -27,9 +27,9 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="pageText">The page text.</param>
         /// <param name="hostPortEx">The host port regular expression, or null to use internal capture.</param>
         /// <returns></returns>
-        public IEnumerable<HostPort> Scan(string pageText, string hostPortEx = null)
+        public IEnumerable<ProxyServer> Scan(string pageText, string hostPortEx = null)
         {
-            return CreateHostPorts(pageText, hostPortEx ?? AnyEx);
+            return CreateHostEndPoints(pageText, hostPortEx ?? AnyEx);
         }
 
         /// <summary>
@@ -38,10 +38,10 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="pageText">The page text.</param>
         /// <param name="hostPortEx">The host port ex.</param>
         /// <returns></returns>
-        internal static IEnumerable<HostPort> CreateHostPorts(string pageText, string hostPortEx)
+        internal static IEnumerable<ProxyServer> CreateHostEndPoints(string pageText, string hostPortEx)
         {
             var hostPortRegex = new Regex(hostPortEx, RegexOptions.Singleline);
-            return hostPortRegex.Matches(pageText).Cast<Match>().SelectNonNull(CreateHostPort);
+            return hostPortRegex.Matches(pageText).Cast<Match>().SelectNonNull(CreateProxyServer);
         }
 
         /// <summary>
@@ -49,8 +49,13 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// </summary>
         /// <param name="match">The match.</param>
         /// <returns></returns>
-        private static HostPort CreateHostPort(Match match)
+        private static ProxyServer CreateProxyServer(Match match)
         {
+            var literalProtocol = match.Groups["protocol"].Value;
+            if (literalProtocol.IsNullOrEmpty())
+                literalProtocol = "http";
+            var proxyProtocol = ProxyProtocolUtility.FromLiteral(literalProtocol);
+
             var literalPort = match.Groups["port"].Value;
             int port;
             // if port is not provided or invalid, no HostPort is created
@@ -58,12 +63,12 @@ namespace BlueDwarf.Net.Proxy.Scanner
                 return null;
             var host = match.Groups["host"].Value;
             if (!string.IsNullOrEmpty(host))
-                return new HostPort(host, port);
+                return new ProxyServer(proxyProtocol, host, port);
 
             var literalAddress = match.Groups["address"].Value;
             IPAddress address;
             if (IPAddress.TryParse(literalAddress, out address))
-                return new HostPort(address, port);
+                return new ProxyServer(proxyProtocol, address, port);
 
             // no host or address was captured
             return null;

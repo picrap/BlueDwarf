@@ -6,6 +6,7 @@ namespace BlueDwarf.Test
     using System.Linq;
     using System.Net;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Net.Proxy;
     using Net.Proxy.Scanner;
 
     [TestClass]
@@ -865,25 +866,25 @@ $(document).ready(function(){
         [TestMethod]
         public void ProxynovaTest()
         {
-            var hostPorts = HostScanner.CreateHostPorts(ProxynovaCountryES, ProxyPage.ProxynovaEx).ToArray();
+            var hostPorts = HostScanner.CreateHostEndPoints(ProxynovaCountryES, ProxyPage.ProxynovaEx).ToArray();
             Assert.AreEqual(6, hostPorts.Length);
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("62.82.58.99"), 8080)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("84.236.134.2"), 8080)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("212.231.208.224"), 80)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("88.3.200.223"), 8080)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("46.24.18.4"), 8080)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("91.223.32.9"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("62.82.58.99"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("84.236.134.2"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("212.231.208.224"), 80)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("88.3.200.223"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("46.24.18.4"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("91.223.32.9"), 8080)));
         }
 
         [TestMethod]
         public void XroxyTest()
         {
-            var hostPorts = HostScanner.CreateHostPorts(XroxyRSS, ProxyPage.XroxyRssEx).ToArray();
+            var hostPorts = HostScanner.CreateHostEndPoints(XroxyRSS, ProxyPage.XroxyRssEx).ToArray();
             Assert.AreEqual(4, hostPorts.Length);
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("1.234.23.22"), 8088)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.1.16.123"), 3128)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.255.28.38"), 8080)));
-            Assert.IsTrue(hostPorts.Contains(new HostPort(IPAddress.Parse("101.255.89.70"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("1.234.23.22"), 8088)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("101.1.16.123"), 3128)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("101.255.28.38"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("101.255.89.70"), 8080)));
         }
     }
 }

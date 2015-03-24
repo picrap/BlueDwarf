@@ -14,6 +14,6 @@ namespace BlueDwarf.Net.Proxy
         /// <summary>
         /// SOCKS4 (anonymous)
         /// </summary>
-        Socks4,
+        Socks4A,
     }
 }
