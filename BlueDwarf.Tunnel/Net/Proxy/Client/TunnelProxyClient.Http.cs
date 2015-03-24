@@ -18,9 +18,16 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         private Socket HttpProxyConnect(Socket socket, IPEndPoint target)
         {
-            var proxyClient = new HttpProxyClient(new TcpClient { Client = socket });
-            var tcpClient = proxyClient.CreateConnection(target.Address.ToString(), target.Port);
-            return tcpClient.Client;
+            //try
+            //{
+            //    var proxyClient = new HttpProxyClient(new TcpClient { Client = socket });
+            //    var tcpClient = proxyClient.CreateConnection(target.Address.ToString(), target.Port);
+            //    return tcpClient.Client;
+            //}
+            //catch (ProxyException)
+            //{
+            //    throw new ProxyRouteException(new ProxyServer(ProxyProtocol.HttpConnect, target.Address, target.Port));
+            //}
 
             try
             {

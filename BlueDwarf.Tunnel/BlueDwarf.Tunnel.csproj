@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="starksoft.aspen">
-      <HintPath>..\packages\starksoft.aspen.1.0.0.0\lib\net20\starksoft.aspen.dll</HintPath>
+      <HintPath>..\packages\starksoft.aspen.1.0.2.0\lib\net40\starksoft.aspen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
