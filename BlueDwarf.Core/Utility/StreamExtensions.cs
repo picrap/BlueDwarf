@@ -11,6 +11,12 @@ namespace BlueDwarf.Utility
     /// </summary>
     public static class StreamExtensions
     {
+        /// <summary>
+        /// Opens SSL channel.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="targetHost">The target host.</param>
+        /// <returns></returns>
         public static Stream AsSsl(this Stream stream, string targetHost)
         {
             if (stream is SslStream)

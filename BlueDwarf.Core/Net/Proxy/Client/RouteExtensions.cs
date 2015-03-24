@@ -25,6 +25,8 @@ namespace BlueDwarf.Net.Proxy.Client
         public static Socket Connect(this Route route, string targetHost, int targetPort, INameResolver nameResolver)
         {
             var targetAddress = nameResolver.Resolve(targetHost, route);
+            if (targetAddress == null)
+                throw new ProxyRouteException(targetHost);
             return route.Connect(targetAddress, targetPort);
         }
 
@@ -38,8 +40,15 @@ namespace BlueDwarf.Net.Proxy.Client
         public static Stream Connect(this Route route, Uri uri, INameResolver nameResolver)
         {
             Stream stream = Connect(route, uri.Host, uri.Port, nameResolver).ToNetworkStream();
-            if (stream != null && string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase))
-                stream = stream.AsSsl(uri.Host);
+            try
+            {
+                if (stream != null && string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.InvariantCultureIgnoreCase))
+                    stream = stream.AsSsl(uri.Host);
+            }
+            catch (IOException)
+            {
+                throw new ProxyRouteException(uri.Host);
+            }
             return stream;
         }
 

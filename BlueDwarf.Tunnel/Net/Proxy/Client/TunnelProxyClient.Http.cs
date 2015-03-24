@@ -6,6 +6,7 @@ namespace BlueDwarf.Net.Proxy.Client
     using System.Net;
     using System.Net.Sockets;
     using Http;
+    using Starksoft.Aspen.Proxy;
 
     partial class TunnelProxyClient
     {
@@ -17,6 +18,17 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <returns></returns>
         private Socket HttpProxyConnect(Socket socket, IPEndPoint target)
         {
+            //try
+            //{
+            //    var proxyClient = new HttpProxyClient(new TcpClient { Client = socket });
+            //    var tcpClient = proxyClient.CreateConnection(target.Address.ToString(), target.Port);
+            //    return tcpClient.Client;
+            //}
+            //catch (ProxyException)
+            //{
+            //    throw new ProxyRouteException(new ProxyServer(ProxyProtocol.HttpConnect, target.Address, target.Port));
+            //}
+
             try
             {
                 using (var stream = new NetworkStream(socket, false))
