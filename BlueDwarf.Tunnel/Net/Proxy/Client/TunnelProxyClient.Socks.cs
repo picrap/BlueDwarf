@@ -2,7 +2,6 @@
 // more information at https://github.com/picrap/BlueDwarf
 namespace BlueDwarf.Net.Proxy.Client
 {
-    using System;
     using System.Net;
     using System.Net.Sockets;
     using Starksoft.Aspen.Proxy;

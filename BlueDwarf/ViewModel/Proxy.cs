@@ -3,6 +3,7 @@
 
 namespace BlueDwarf.ViewModel
 {
+    using System;
     using Net.Geolocation;
     using Net.Proxy;
 
@@ -23,6 +24,22 @@ namespace BlueDwarf.ViewModel
         /// The geolocation.
         /// </value>
         public AddressGeolocation Geolocation { get; private set; }
+
+        public string DisplayType
+        {
+            get
+            {
+                switch(ProxyServer.Protocol)
+                {
+                    case ProxyProtocol.HttpConnect:
+                        return "HTTP";
+                    case ProxyProtocol.Socks4A:
+                        return "SOCKS";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the display name.

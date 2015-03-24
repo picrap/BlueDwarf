@@ -140,5 +140,14 @@ namespace BlueDwarf.Resources.Localization {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string TypeColumnHeader {
+            get {
+                return ResourceManager.GetString("TypeColumnHeader", resourceCulture);
+            }
+        }
     }
 }

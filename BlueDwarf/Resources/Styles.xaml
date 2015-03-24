@@ -18,6 +18,10 @@
         <Setter Property="FontStyle" Value="Italic"/>
     </Style>
 
+    <Style x:Key="SmallTextBlock" TargetType="TextBlock" BasedOn="{StaticResource DialogElement}">
+        <Setter Property="FontSize" Value="9"/>
+    </Style>
+
     <Style x:Key="DialogTextBox" TargetType="TextBox" BasedOn="{StaticResource DialogElement}" />
 
     <Style x:Key="DialogUrlBox" TargetType="v:UrlBox" BasedOn="{StaticResource DialogElement}" />
