@@ -33,7 +33,7 @@
                         <ColumnDefinition Width="95" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" />
+                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding LocalProxy, Mode=TwoWay}" AllowedSchemes="http;socks" />
                     <Button Grid.Column="1" Content="{x:Static l:HomeLocale.WizardInvoke}" Command="{mrAdvice:Command {Binding AnalyzeProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
@@ -45,7 +45,7 @@
                         <ColumnDefinition Width="95" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" />
+                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" AllowedSchemes="http;socks" />
                     <Button Grid.Column="1" Content="{x:Static l:HomeLocale.PickRemoteProxy}" Command="{mrAdvice:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
                     <controls:Status Grid.Column="2" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
