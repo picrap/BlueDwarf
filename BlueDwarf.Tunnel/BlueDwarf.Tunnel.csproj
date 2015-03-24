@@ -40,7 +40,7 @@
     <AssemblyOriginatorKeyFile>..\BlueDwarf.Core\Properties\BlueDwarf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="starksoft.aspen">
+    <Reference Include="starksoft.aspen, Version=1.0.2.0, Culture=neutral, PublicKeyToken=56b8923a24d03eb3, processorArchitecture=MSIL">
       <HintPath>..\packages\starksoft.aspen.1.0.2.0\lib\net40\starksoft.aspen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
