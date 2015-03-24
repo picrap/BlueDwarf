@@ -153,6 +153,8 @@ namespace BlueDwarf.ViewModel
                     foreach (var hostEndPoint in ProxyPageScanner.ScanPage(ProxyPage.PageUri, ProxyPage.ParseAsText, ProxyPage.HostPortEx, route, testTargetUri))
                     {
                         var ipEndPoint = hostEndPoint.IPEndPoint;
+                        if (ipEndPoint == null)
+                            continue;
                         var location = Geolocation.Locate(ipEndPoint.Address, route);
                         var p = ProxyAnalyzer.MeasurePerformance(route, testTargetUri);
                         if (p == null)

@@ -50,7 +50,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
                 HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63)
                     .ForAll(delegate(ProxyServer proxyServer)
                     {
-                        if (!ProxyValidator.ValidateHttpConnect(proxyServer, testTarget, route))
+                        if (!ProxyValidator.Validate(proxyServer, testTarget, route))
                             return;
                         lock (results)
                             results.Enqueue(proxyServer);
@@ -96,7 +96,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
                 HostScanner.Scan(proxyListingPageText, hostPortEx).AsParallel().WithDegreeOfParallelism(63).ForAll(
                        delegate(ProxyServer proxyServer)
                        {
-                           if (ProxyValidator.ValidateHttpConnect(proxyServer, testTarget, route))
+                           if (ProxyValidator.Validate(proxyServer, testTarget, route))
                            {
                                lock (proxyServers)
                                    proxyServers.Add(proxyServer);

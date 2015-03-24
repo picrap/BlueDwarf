@@ -860,7 +860,64 @@ $(document).ready(function(){
 <prx:latency>18734</prx:latency>
 <prx:reliability>2942</prx:reliability>
 </prx:proxy>
-";
+<item>
+<title>SOCKS ver 4 and 5 (Mar 24, 14:33 GMT)</title>
+<link>http://www.xroxy.com/proxy-type-All_socks.htm</link>
+<guid>http://www.xroxy.com/proxy-type-All_socks.htm</guid>
+<description>Proxylists contain 170 recently checked proxies</description>
+<prx:proxy>
+<prx:ip>1.85.17.82</prx:ip>
+<prx:port>1080</prx:port>
+<prx:type>Socks4</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1427194627</prx:check_timestamp>
+<prx:country_code>CN</prx:country_code>
+<prx:latency>30</prx:latency>
+<prx:reliability>8353</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>1.93.4.225</prx:ip>
+<prx:port>1080</prx:port>
+<prx:type>Socks4</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1400162917</prx:check_timestamp>
+<prx:country_code>CN</prx:country_code>
+<prx:latency>30</prx:latency>
+<prx:reliability>10000</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>101.44.3.50</prx:ip>
+<prx:port>1080</prx:port>
+<prx:type>Socks4</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1427206814</prx:check_timestamp>
+<prx:country_code>CN</prx:country_code>
+<prx:latency>30</prx:latency>
+<prx:reliability>9545</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>103.19.180.10</prx:ip>
+<prx:port>443</prx:port>
+<prx:type>Socks4</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1399344965</prx:check_timestamp>
+<prx:country_code>ID</prx:country_code>
+<prx:latency>30</prx:latency>
+<prx:reliability>9560</prx:reliability>
+</prx:proxy>
+<prx:proxy>
+<prx:ip>103.24.2.117</prx:ip>
+<prx:port>1080</prx:port>
+<prx:type>Socks5</prx:type>
+<prx:ssl>true</prx:ssl>
+<prx:check_timestamp>1417744873</prx:check_timestamp>
+<prx:country_code>HK</prx:country_code>
+<prx:latency>30</prx:latency>
+<prx:reliability>9371</prx:reliability>
+</prx:proxy>
+<pubDate>Fri, 05 Dec 2014 02:01:13 GMT</pubDate>
+</item>
+<item>";
         #endregion
 
         [TestMethod]
@@ -880,11 +937,16 @@ $(document).ready(function(){
         public void XroxyTest()
         {
             var hostPorts = HostScanner.CreateHostEndPoints(XroxyRSS, ProxyPage.XroxyRssEx).ToArray();
-            Assert.AreEqual(4, hostPorts.Length);
+            Assert.AreEqual(9, hostPorts.Length);
             Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("1.234.23.22"), 8088)));
             Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("101.1.16.123"), 3128)));
             Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("101.255.28.38"), 8080)));
             Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.HttpConnect, IPAddress.Parse("101.255.89.70"), 8080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.Socks4A, IPAddress.Parse("1.85.17.82"), 1080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.Socks4A, IPAddress.Parse("1.93.4.225"), 1080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.Socks4A, IPAddress.Parse("101.44.3.50"), 1080)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.Socks4A, IPAddress.Parse("103.19.180.10"), 443)));
+            Assert.IsTrue(hostPorts.Contains(new ProxyServer(ProxyProtocol.Socks4A, IPAddress.Parse("103.24.2.117"), 1080)));
         }
     }
 }

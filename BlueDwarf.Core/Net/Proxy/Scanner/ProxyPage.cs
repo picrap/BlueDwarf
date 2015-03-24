@@ -42,8 +42,12 @@ namespace BlueDwarf.Net.Proxy.Scanner
 
         internal static readonly string ProxynovaEx = TagEx("span", HostPort.IPv4Ex) + ".*?" + TagEx("a", HostPort.PortEx);
 
-        internal static readonly string XroxyRssEx = TagEx("prx:ip", HostPort.IPv4Ex) + @"\s*" + TagEx("prx:port", HostPort.PortEx)
+        internal static readonly string XroxyRssHttpEx = TagEx("prx:ip", HostPort.IPv4Ex) + @"\s*" + TagEx("prx:port", HostPort.PortEx)
                                                      + @"\s*" + TagEx("prx:type", "Transparent|Anonymous") + @"\s*" + TagEx("prx:ssl", "true");
+        internal static readonly string XroxyRssSocksEx = TagEx("prx:ip", HostPort.IPv4Ex) + @"\s*" + TagEx("prx:port", HostPort.PortEx)
+                                                      + @"\s*" + TagEx("prx:type", "(?<protocol>(Socks|socks))(4|4A|4a|5)") + @"\s*" + TagEx("prx:ssl", "true");
+
+        internal static readonly string XroxyRssEx = @"((" + XroxyRssHttpEx + @")|(" + XroxyRssSocksEx + @"))";
 
         private const string ProxynovaPage = "Proxynova: ";
 
