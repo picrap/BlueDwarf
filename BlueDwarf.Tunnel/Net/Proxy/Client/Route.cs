@@ -5,6 +5,7 @@ namespace BlueDwarf.Net.Proxy.Client
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
+    using Utility;
 
     /// <summary>
     /// Represents a route to target
@@ -64,9 +65,10 @@ namespace BlueDwarf.Net.Proxy.Client
         /// </summary>
         /// <param name="target">The target.</param>
         /// <returns></returns>
-        public Socket Connect(IPEndPoint target)
+        public Socket Connect(EndPoint target)
         {
-            return Connect(target.Address, target.Port);
+            var ipTarget = target.ToIPEndPoint();
+            return Connect(ipTarget.Address, ipTarget.Port);
         }
     }
 }

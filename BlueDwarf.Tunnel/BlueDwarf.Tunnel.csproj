@@ -68,6 +68,7 @@
     <Compile Include="Net\HostEndPoint.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\EndPointExtensions.cs" />
     <Compile Include="Utility\SocketExtensions.cs" />
     <Compile Include="Utility\UriExtensions.cs" />
   </ItemGroup>
