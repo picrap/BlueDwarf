@@ -5,6 +5,9 @@ namespace BlueDwarf.Utility
     using System;
     using System.Net;
 
+    /// <summary>
+    /// Extensions to <see cref="Uri"/>
+    /// </summary>
     public static class UriExtensions
     {
         /// <summary>

@@ -8,6 +8,9 @@ namespace BlueDwarf.Net
     using System.Net.Sockets;
     using Utility;
 
+    /// <summary>
+    /// Socket connection helper
+    /// </summary>
     public static class Connect
     {
         /// <summary>

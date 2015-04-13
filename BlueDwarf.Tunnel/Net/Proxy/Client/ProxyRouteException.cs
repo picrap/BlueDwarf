@@ -4,6 +4,10 @@ namespace BlueDwarf.Net.Proxy.Client
 {
     using System;
 
+    /// <summary>
+    /// Exception for proxy route.
+    /// Can be thrown when a connection to intermediate proxy server or target fails.
+    /// </summary>
     public class ProxyRouteException : Exception
     {
         /// <summary>

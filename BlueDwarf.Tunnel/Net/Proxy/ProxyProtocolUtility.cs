@@ -5,6 +5,9 @@ namespace BlueDwarf.Net.Proxy
 {
     using System;
 
+    /// <summary>
+    /// Utility class (utility and extensions) for <see cref="ProxyProtocol"/>
+    /// </summary>
     public static class ProxyProtocolUtility
     {
         /// <summary>

@@ -7,6 +7,9 @@ namespace BlueDwarf.Net.Proxy.Client
     using System.Net.Sockets;
     using Tunnel.Annotations;
 
+    /// <summary>
+    /// Proxy client for tunneling proxy servers (HTTP CONNECT and SOCKS)
+    /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public partial class TunnelProxyClient : IProxyClient
     {

@@ -13,6 +13,13 @@ namespace BlueDwarf.Net.Proxy.Client
     /// </summary>
     public class Route
     {
+        /// <summary>
+        /// Method prototype to connect to given target (IP+port) and using given route
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <param name="targetPort">The target port.</param>
+        /// <param name="route">The route.</param>
+        /// <returns></returns>
         public delegate Socket ConnectAddressDelegate(IPAddress address, int targetPort, Route route);
 
         /// <summary>

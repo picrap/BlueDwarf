@@ -14,10 +14,34 @@ namespace BlueDwarf.Net.Http
     /// </summary>
     public class HttpRequest
     {
+        /// <summary>
+        /// Gets or sets the verb.
+        /// </summary>
+        /// <value>
+        /// The verb.
+        /// </value>
         public string Verb { get; set; }
+        /// <summary>
+        /// Gets or sets the target path.
+        /// </summary>
+        /// <value>
+        /// The target path.
+        /// </value>
         public string TargetPath { get; set; }
+        /// <summary>
+        /// Gets or sets the target port.
+        /// </summary>
+        /// <value>
+        /// The target port.
+        /// </value>
         public int? TargetPort { get; set; }
 
+        /// <summary>
+        /// Gets the target.
+        /// </summary>
+        /// <value>
+        /// The target.
+        /// </value>
         public string Target
         {
             get
@@ -28,16 +52,31 @@ namespace BlueDwarf.Net.Http
             }
         }
 
+        /// <summary>
+        /// Gets or sets the headers.
+        /// </summary>
+        /// <value>
+        /// The headers.
+        /// </value>
         public IList<KeyValuePair<string, string>> Headers { get; set; }
 
         private const string NewLine = "\r\n";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpRequest"/> class.
+        /// </summary>
         public HttpRequest()
         {
             Headers = new List<KeyValuePair<string, string>>();
             Verb = "GET";
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpRequest"/> class.
+        /// </summary>
+        /// <param name="verb">The verb.</param>
+        /// <param name="targetPath">The target path.</param>
+        /// <param name="targetPort">The target port.</param>
         public HttpRequest(string verb, string targetPath, int? targetPort = null)
         {
             Headers = new List<KeyValuePair<string, string>>();
@@ -67,12 +106,23 @@ namespace BlueDwarf.Net.Http
             return new HttpRequest("CONNECT", host, port).AddHeader("Proxy-Connection", "Keep-Alive");
         }
 
+        /// <summary>
+        /// Appends the header.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public HttpRequest AddHeader(string key, string value)
         {
             Headers.Add(new KeyValuePair<string, string>(key, value));
             return this;
         }
 
+        /// <summary>
+        /// Writes the request to a given stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="postContent">Content of the post.</param>
         public void Write(Stream stream, string postContent = null)
         {
             var requestBuilder = new StringBuilder();

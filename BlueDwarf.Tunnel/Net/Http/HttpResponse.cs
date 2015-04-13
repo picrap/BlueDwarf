@@ -27,6 +27,12 @@ namespace BlueDwarf.Net.Http
             }
         }
 
+        /// <summary>
+        /// Gets the status code.
+        /// </summary>
+        /// <value>
+        /// The status code.
+        /// </value>
         public int StatusCode
         {
             get
@@ -65,8 +71,17 @@ namespace BlueDwarf.Net.Http
             }
         }
 
+        /// <summary>
+        /// Gets or sets the raw response lines.
+        /// </summary>
+        /// <value>
+        /// The lines.
+        /// </value>
         public IList<string> Lines { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpResponse"/> class.
+        /// </summary>
         public HttpResponse()
         {
             Lines = new List<string>();
