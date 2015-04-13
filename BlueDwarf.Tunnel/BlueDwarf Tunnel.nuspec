@@ -21,6 +21,6 @@
     <developmentDependency>false</developmentDependency>
   </metadata>
   <files>
-    <file src="$ProjectDir$\bin\$ConfigurationName$\BlueDwarf.Tunnel.xml" target="lib\net40-Client"/>
+    <file src="$ProjectDir$bin\$ConfigurationName$\BlueDwarf.Tunnel.XML" target="lib\net40-Client"/>
   </files>
 </package>
