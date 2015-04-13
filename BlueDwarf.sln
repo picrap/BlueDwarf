@@ -16,12 +16,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Test", "BlueDwarf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B931890B-6776-4A3B-B5EC-CD6D7B4088A7}"
 	ProjectSection(SolutionItems) = preProject
-		ci-build.bat = ci-build.bat
+		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Tunnel", "BlueDwarf.Tunnel\BlueDwarf.Tunnel.csproj", "{ABFD2F65-C917-4509-A1F5-B7353D117680}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{11A01D03-1CD1-495E-B9A0-C425C13959D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icon", "Icon", "{A2F51918-39AC-4769-A6DB-A05873695B6E}"
+	ProjectSection(SolutionItems) = preProject
+		Icon\BlueDwarf.png = Icon\BlueDwarf.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

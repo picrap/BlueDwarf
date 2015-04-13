@@ -4,4 +4,4 @@
 using System.Reflection;
 
 [assembly: AssemblyTitle("BlueDwarf Tunnel")]
-[assembly: AssemblyDescription("Tunnel clieant features for Blue Dwarf")]
+[assembly: AssemblyDescription("Tunnel client features for Blue Dwarf")]
