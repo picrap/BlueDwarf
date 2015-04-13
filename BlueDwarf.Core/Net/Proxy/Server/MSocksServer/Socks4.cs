@@ -206,7 +206,7 @@ namespace MSocksServer.Socks4Server
         public void Clean()
         {
             this.Stop();
-            this._listener = new TcpListener(this._port);
+            this._listener = new TcpListener(IPAddress.Any, this._port);
             if (_port == 0)
                 _port = ((IPEndPoint)_listener.LocalEndpoint).Port;
         }

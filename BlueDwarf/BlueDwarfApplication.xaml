@@ -4,7 +4,8 @@
              xmlns:controls="clr-namespace:BlueDwarf.Controls">
     <Application.Resources>
         <ResourceDictionary>
-            <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <controls:VisibilityConverter x:Key="VisibilityConverter"/>
+            <controls:BoolConverter x:Key="BoolConverter"/>
             <controls:LowerCaseConverter x:Key="LowerCaseConverter"/>
             <controls:UnitConverter x:Key="UnitConverter"/>
             <!-- WPF 4.0 workaround -->

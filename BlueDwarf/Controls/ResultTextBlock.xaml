@@ -6,8 +6,8 @@
              mc:Ignorable="d" 
              x:Name="This">
     <StackPanel Orientation="Horizontal">
-        <TextBlock Text="OK" FontWeight="Black" Foreground="#FF008000" Visibility="{Binding Success, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}}"/>
-        <TextBlock Text="KO" FontWeight="Black" Foreground="#FFD00000" Visibility="{Binding Success, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='not'}"/>
+        <TextBlock Text="OK" FontWeight="Black" Foreground="#FF008000" Visibility="{Binding Success, ElementName=This, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="KO" FontWeight="Black" Foreground="#FFD00000" Visibility="{Binding Success, ElementName=This, Converter={StaticResource VisibilityConverter}, ConverterParameter='not'}"/>
         <TextBlock Text="{Binding Text, ElementName=This}" Margin="8,0,0,0"/>
     </StackPanel>
 </UserControl>

@@ -9,5 +9,6 @@
     <Grid>
         <Ellipse x:Name="OK" Fill="#FF009000" Visibility="Collapsed" />
         <Ellipse x:Name="Error" Fill="#FFD00000" Visibility="Collapsed" />
+        <Ellipse x:Name="Pending" Stroke="#FF808080"  Visibility="Collapsed" />
     </Grid>
 </UserControl>

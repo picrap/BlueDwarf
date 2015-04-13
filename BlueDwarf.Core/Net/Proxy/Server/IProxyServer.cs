@@ -31,11 +31,12 @@ namespace BlueDwarf.Net.Proxy.Server
         int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets the proxy outgoing route.
+        /// Gets or sets the proxy outgoing routes.
+        /// If first route fails, then second is tried, etc.
         /// </summary>
         /// <value>
-        /// The proxy route.
+        /// The proxy routes.
         /// </value>
-        Route Route { get; set; }
+        Route[] Routes { get; set; }
     }
 }

@@ -198,4 +198,7 @@
   <data name="WelcomeTitle" xml:space="preserve">
     <value>Welcome</value>
   </data>
+  <data name="OptionalRemoteProxyLabel" xml:space="preserve">
+    <value>Make it optional (use it only if needed)</value>
+  </data>
 </root>

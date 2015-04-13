@@ -3,6 +3,7 @@
 namespace BlueDwarf.ViewModel
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Threading;
@@ -91,6 +92,10 @@ namespace BlueDwarf.ViewModel
 
         [NotifyPropertyChanged]
         public StatusCode RemoteProxyStatus { get; set; }
+
+        [Persistent("Proxy2Optional", DefaultValue = true)]
+        [CategoryNotifyPropertyChanged(Category = Category.ProxyTunnel)]
+        public bool OptionalRemoteProxy { get; set; }
 
         /// <summary>
         /// Gets or sets the test target.
@@ -320,18 +325,19 @@ namespace BlueDwarf.ViewModel
                 try
                 {
                     SetStatusPending();
-                    var testTargetUri = TestTargetUri;
-                    var route = ProxyClient.CreateRoute(LocalProxy, RemoteProxy);
-                    if (testTargetUri != null)
-                        ProxyValidator.Validate(route, testTargetUri);
-                    ProxyServer.Route = route;
-
-                    SetStatus(null);
+                    var routes = new List<Route>();
+                    // iterative process, in order to have a quick working route
+                    foreach (var route in GetRoutes())
+                    {
+                        routes.Add(route);
+                        SetStatus(route);
+                        ProxyServer.Routes = routes.ToArray();
+                    }
                     Thread.Sleep(validTunnelSleep);
                 }
                 catch (ProxyRouteException pre)
                 {
-                    ProxyServer.Route = null;
+                    ProxyServer.Routes = null;
                     SetStatus(pre);
                     Thread.Sleep(invalidTunnelSleep);
                 }
@@ -340,6 +346,34 @@ namespace BlueDwarf.ViewModel
 
         private readonly object _keepAliveSerialLock = new object();
         private int _keepAliveSerial;
+
+        /// <summary>
+        /// Gets the available routes.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<Route> GetRoutes()
+        {
+            var testTargetUri = TestTargetUri;
+            // if remote is optional, whenever we have a remote proxy configured or not,
+            // the short route (local only) is returned
+            if (OptionalRemoteProxy)
+            {
+                var shortRoute = ProxyClient.CreateRoute(LocalProxy);
+                if (testTargetUri != null)
+                    ProxyValidator.Validate(shortRoute, testTargetUri);
+                yield return shortRoute;
+            }
+            // then, if there is a remote proxy or it is not optional 
+            // (in which case we skipped the first step above)
+            // the full route is returned
+            if (!OptionalRemoteProxy || RemoteProxy != null)
+            {
+                var fullRoute = ProxyClient.CreateRoute(LocalProxy, RemoteProxy);
+                if (testTargetUri != null)
+                    ProxyValidator.Validate(fullRoute, testTargetUri);
+                yield return fullRoute;
+            }
+        }
 
         /// <summary>
         /// Keeps the connection alive by refreshing the web browser at specified interval.
@@ -375,9 +409,24 @@ namespace BlueDwarf.ViewModel
         /// </summary>
         private void SetStatusPending()
         {
-            LocalProxyStatus = StatusCode.None;
-            RemoteProxyStatus = StatusCode.None;
-            TestTargetStatus = StatusCode.None;
+            LocalProxyStatus = StatusCode.Pending;
+            RemoteProxyStatus = RemoteProxy != null ? StatusCode.Pending : StatusCode.None;
+            TestTargetStatus = StatusCode.Pending;
+        }
+
+        /// <summary>
+        /// Sets the status given an established route.
+        /// </summary>
+        /// <param name="route">The route.</param>
+        private void SetStatus(Route route)
+        {
+            Func<ProxyServer, bool> checkUri = p => p == null || !route.Relays.Any(r => r.Host == p.Host && r.Port == p.Port);
+            Func<StatusCode, StatusCode> translateCode = c => c == StatusCode.Error ? StatusCode.Pending : StatusCode.OK;
+            SetStatusLines(
+                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(LocalProxy), v => LocalProxyStatus = translateCode(v)),
+            Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(RemoteProxy), v => RemoteProxyStatus = translateCode(v)),
+            Tuple.Create<Func<bool>, Action<StatusCode>>(() => false, v => TestTargetStatus = translateCode(v))
+            );
         }
 
         /// <summary>

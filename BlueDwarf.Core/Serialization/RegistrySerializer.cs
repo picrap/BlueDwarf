@@ -94,6 +94,11 @@ namespace BlueDwarf.Serialization
             return r.GetValue(n);
         }
 
+        /// <summary>
+        /// Gets a pair value/registry kind.
+        /// </summary>
+        /// <param name="o">The o.</param>
+        /// <returns></returns>
         private static Tuple<object, RegistryValueKind> GetValue(object o)
         {
             if (o == null)
@@ -102,6 +107,13 @@ namespace BlueDwarf.Serialization
             return GetValue(o, t);
         }
 
+        /// <summary>
+        /// Gets a pair value/registry kind.
+        /// </summary>
+        /// <param name="o">The o.</param>
+        /// <param name="t">The t.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">@Unsupported type;t</exception>
         private static Tuple<object, RegistryValueKind> GetValue(object o, Type t)
         {
             if (t.IsNullable())
@@ -117,6 +129,9 @@ namespace BlueDwarf.Serialization
 
             if (t == typeof(long))
                 return Tuple.Create(o, RegistryValueKind.QWord);
+
+            if (t == typeof (bool))
+                return Tuple.Create(o, RegistryValueKind.DWord);
 
             throw new ArgumentException(@"Unsupported type", "t");
         }

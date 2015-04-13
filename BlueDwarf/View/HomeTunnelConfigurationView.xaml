@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:controls="clr-namespace:BlueDwarf.Controls"
              xmlns:viewModel="clr-namespace:BlueDwarf.ViewModel"
              xmlns:l="clr-namespace:BlueDwarf.Resources.Localization"
@@ -26,6 +25,8 @@
                     <RowDefinition Height="{StaticResource EmptyRowHeight}"/>
                     <RowDefinition SharedSizeGroup="Fields"/>
                 </Grid.RowDefinitions>
+
+                <!-- Local proxy -->
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:HomeLocale.LocalProxyLabel}" />
                 <Grid Grid.Column="1" Grid.Row="0" >
                     <Grid.ColumnDefinitions>
@@ -38,6 +39,7 @@
                     <controls:Status Grid.Column="2" Code="{Binding LocalProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
                 </Grid>
 
+                <!-- Remote proxy -->
                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:HomeLocale.RemoteProxyLabel}" />
                 <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
@@ -45,11 +47,18 @@
                         <ColumnDefinition Width="95" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <controls:UrlBox Grid.Column="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" AllowedSchemes="http;socks" />
-                    <Button Grid.Column="1" Content="{x:Static l:HomeLocale.PickRemoteProxy}" Command="{mrAdvice:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
-                    <controls:Status Grid.Column="2" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <controls:UrlBox Grid.Column="0" Grid.Row="0" Style="{DynamicResource DialogUrlBox}" Uri="{Binding RemoteProxy, Mode=TwoWay}" AllowedSchemes="http;socks" />
+                    <Button Grid.Column="1" Grid.Row="0" Content="{x:Static l:HomeLocale.PickRemoteProxy}" Command="{mrAdvice:Command {Binding PickRemoteProxy}}" Margin="{StaticResource LeftMargin}" />
+                    <controls:Status Grid.Column="2" Grid.Row="0" Code="{Binding RemoteProxyStatus, Mode=OneWay}" Margin="8,0,0,0"/>
+                    <CheckBox Grid.Column="0" Grid.Row="1" Content="{x:Static l:HomeLocale.OptionalRemoteProxyLabel}" 
+                              IsEnabled="{Binding RemoteProxy, Converter={StaticResource BoolConverter}}" IsChecked="{Binding OptionalRemoteProxy}" />
                 </Grid>
 
+                <!-- Test URL -->
                 <TextBlock Grid.Column="0" Grid.Row="4" Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:HomeLocale.TestURL}" />
                 <Grid Grid.Column="1" Grid.Row="4" >
                     <Grid.ColumnDefinitions>

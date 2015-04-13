@@ -3,6 +3,7 @@
 namespace BlueDwarf.Net.Proxy.Server
 {
     using System;
+    using System.IO;
     using System.Net.Sockets;
     using Client;
     using MSocksServer.Socks4Server;
@@ -40,12 +41,13 @@ namespace BlueDwarf.Net.Proxy.Server
         }
 
         /// <summary>
-        /// Gets or sets the proxy route.
+        /// Gets or sets the proxy outgoing routes.
+        /// If first route fails, then second is tried, etc.
         /// </summary>
         /// <value>
-        /// The proxy route.
+        /// The proxy routes.
         /// </value>
-        public Route Route { get; set; }
+        public Route[] Routes { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MSocksProxyServer" /> class.
@@ -112,7 +114,18 @@ namespace BlueDwarf.Net.Proxy.Server
         private Socket ClientConnect(string host, int port)
         {
             Connect.Raise(this);
-            return Route.Connect(host, port);
+            if (Routes == null)
+                throw new IOException(string.Format("No route to {0}:{1} specified", host, port));
+            foreach (var route in Routes)
+            {
+                try
+                {
+                    return route.Connect(host, port);
+                }
+                catch (ProxyRouteException)
+                { }
+            }
+            throw new IOException(string.Format("Can't find route to {0}:{1}", host, port));
         }
 
         private void OnReceiveData(ref byte[] data, ref bool blocked, Socks4ThreadInfo info)

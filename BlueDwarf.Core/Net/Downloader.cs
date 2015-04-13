@@ -41,7 +41,7 @@ namespace BlueDwarf.Net
             using (var proxyServer = ProxyServerFactory.CreateSocksProxyServer())
             {
                 proxyServer.Port = 0; // auto-select
-                proxyServer.Route = route;
+                proxyServer.Routes = new[] { route };
                 var textFilePath = Path.GetTempFileName();
                 var path = Assembly.GetEntryAssembly().Location;
                 var arguments = string.Format("--download={0} --save-text={1} --proxy=socks://localhost:{2}", uri, textFilePath, proxyServer.Port);

@@ -154,6 +154,7 @@
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationOptions.cs" />
+    <Compile Include="Controls\BoolConverter.cs" />
     <Compile Include="Controls\LowerCaseConverter.cs" />
     <Compile Include="Controls\ModernUI.cs" />
     <Compile Include="Controls\UnitConverter.cs" />
@@ -229,7 +230,7 @@
     <Compile Include="View\ProxyAnalysisView.xaml.cs">
       <DependentUpon>ProxyAnalysisView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BoolToVisibilityConverter.cs" />
+    <Compile Include="Controls\VisibilityConverter.cs" />
     <Compile Include="View\HomeProxyConfigurationView.xaml.cs">
       <DependentUpon>HomeProxyConfigurationView.xaml</DependentUpon>
     </Compile>

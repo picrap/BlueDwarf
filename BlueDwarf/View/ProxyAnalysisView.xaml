@@ -31,9 +31,9 @@
             </x:Array>
         </controls:ModernUI.DialogButtons>
         <StackPanel Orientation="Vertical" Margin="8">
-            <TextBlock Visibility="{Binding DoesNotRequireProxy, Converter={StaticResource BoolToVisibilityConverter}}"
+            <TextBlock Visibility="{Binding DoesNotRequireProxy, Converter={StaticResource VisibilityConverter}}"
                    Text="{x:Static l:ProxyAnalysisLocale.DoesNotRequireProxy}"/>
-            <StackPanel Orientation="Vertical" Visibility="{Binding RequiresProxy, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel Orientation="Vertical" Visibility="{Binding RequiresProxy, Converter={StaticResource VisibilityConverter}}">
                 <TextBlock>
                 <TextBlock>
                     <Run Text="{x:Static l:ProxyAnalysisLocale.DefaultProxyPrefix}"/>
@@ -43,25 +43,25 @@
                 </TextBlock>
             </TextBlock>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyAllowsSensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
-                       Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource VisibilityConverter}}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyDoesNotAllowSensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
-                       Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+                       Visibility="{Binding ProxyAllowsSensitiveSites, Converter={StaticResource VisibilityConverter}, ConverterParameter=not}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsResolvesLocally}" Style="{DynamicResource ValidResultTextBlock}"
-                       Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding DnsResolvesLocal, Converter={StaticResource VisibilityConverter}}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsDoesNotResolveLocally}" Style="{DynamicResource InvalidResultTextBlock}" 
-                       Visibility="{Binding DnsResolvesLocal, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+                       Visibility="{Binding DnsResolvesLocal, Converter={StaticResource VisibilityConverter}, ConverterParameter=not}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsResolvesLocallySensitiveSites}" Style="{DynamicResource ValidResultTextBlock}"
-                       Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource VisibilityConverter}}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.DnsDoesNotResolveLocallySensitiveSites}" Style="{DynamicResource InvalidResultTextBlock}" 
-                       Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+                       Visibility="{Binding DnsResolvesSensitiveSites, Converter={StaticResource VisibilityConverter}, ConverterParameter=not}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyConnectsToSensitiveIPs}" Style="{DynamicResource ValidResultTextBlock}"
-                       Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource VisibilityConverter}}"/>
                 <TextBlock Text="{x:Static l:ProxyAnalysisLocale.ProxyDoesNotConnectToSensitiveIPs}" Style="{DynamicResource InvalidResultTextBlock}" 
-                       Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=not}"/>
+                       Visibility="{Binding ProxyConnectsToSensitiveIP, Converter={StaticResource VisibilityConverter}, ConverterParameter=not}"/>
 
-                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithLocalProxy}" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithTwoProxy}" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithSomethingElse}" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithLocalProxy}" Visibility="{Binding WorkWithLocalProxy, Converter={StaticResource VisibilityConverter}}" />
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithTwoProxy}" Visibility="{Binding WorkWithTwoProxy, Converter={StaticResource VisibilityConverter}}" />
+                <TextBlock Text="{x:Static l:ProxyAnalysisLocale.WorkWithSomethingElse}" Visibility="{Binding WorkWithSomethingElse, Converter={StaticResource VisibilityConverter}}" />
             </StackPanel>
         </StackPanel>
         <controls:Loading Show="{Binding Loading}" />

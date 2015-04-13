@@ -37,7 +37,7 @@
                     <TextBlock Text="{Binding ProxyPage.PageUri, Mode=OneWay}"/>
                 </Hyperlink>
             </TextBlock>
-            <ProgressBar Grid.Column="1" VerticalAlignment="Center" Height="12" Margin="16" IsIndeterminate="True" Visibility="{Binding Loading, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <ProgressBar Grid.Column="1" VerticalAlignment="Center" Height="12" Margin="16" IsIndeterminate="True" Visibility="{Binding Loading, Converter={StaticResource VisibilityConverter}}" />
         </Grid>
         <TextBlock Style="{DynamicResource DialogTextBlock}" Text="{x:Static l:ProxyPickerLocale.PickProxyLabel}"/>
         <ListView ItemsSource="{Binding ProxyServers}" Height="200" SelectedItem="{Binding ProxyServer}"

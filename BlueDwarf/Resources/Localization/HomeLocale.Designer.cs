@@ -142,6 +142,15 @@ namespace BlueDwarf.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make it optional (use it only if needed).
+        /// </summary>
+        public static string OptionalRemoteProxyLabel {
+            get {
+                return ResourceManager.GetString("OptionalRemoteProxyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pick....
         /// </summary>
         public static string PickRemoteProxy {

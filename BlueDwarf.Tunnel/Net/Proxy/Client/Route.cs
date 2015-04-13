@@ -28,7 +28,7 @@ namespace BlueDwarf.Net.Proxy.Client
         /// <value>
         /// The relays.
         /// </value>
-        internal ProxyServer[] Relays { get; private set; }
+        public ProxyServer[] Relays { get; private set; }
 
         private readonly ConnectAddressDelegate _connectAddress;
 

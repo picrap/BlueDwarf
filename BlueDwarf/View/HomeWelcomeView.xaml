@@ -22,12 +22,12 @@
                 <TextBlock Text="{x:Static l:HomeWelcomeLocale.Welcome}" TextWrapping="Wrap" />
                 <TextBlock Text="{x:Static l:HomeWelcomeLocale.TunnelSection}" Style="{DynamicResource Heading2}"/>
                 <TextBlock Text="{x:Static l:HomeWelcomeLocale.TunnelLegend}"/>
-                <TextBlock Visibility="{Binding LocalProxy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Visibility="{Binding LocalProxy, Converter={StaticResource VisibilityConverter}}">
                 <Run Text="{x:Static l:HomeWelcomeLocale.LocalProxyLabel}"/>
                 <Run Text=" "/>
                 <Run Text="{Binding LocalProxy, Mode=OneWay}"/>
                 </TextBlock>
-                <TextBlock Visibility="{Binding RemoteProxy, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Visibility="{Binding RemoteProxy, Converter={StaticResource VisibilityConverter}}">
                 <Run Text="{x:Static l:HomeWelcomeLocale.RemoteProxyLabel}"/>
                 <Run Text=" "/>
                 <Run Text="{Binding LocalProxy, Mode=TwoWay}"/>
