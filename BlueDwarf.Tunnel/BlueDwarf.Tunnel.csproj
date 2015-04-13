@@ -66,6 +66,7 @@
     <Compile Include="Net\Proxy\ProxyProtocolUtility.cs" />
     <Compile Include="Net\Proxy\ProxyServer.cs" />
     <Compile Include="Net\HostEndPoint.cs" />
+    <Compile Include="Net\Proxy\ProxyServer.Literal.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\EndPointExtensions.cs" />

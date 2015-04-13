@@ -9,8 +9,8 @@ namespace BlueDwarf.Net.Proxy
     /// <summary>
     /// Represents a proxy server
     /// </summary>
-    [DebuggerDisplay("{Protocol}=[{Host}]:{Port}")]
-    public class ProxyServer : HostEndPoint
+    [DebuggerDisplay("{Literal}")]
+    public partial class ProxyServer : HostEndPoint
     {
         /// <summary>
         /// Gets the protocol.
@@ -29,6 +29,17 @@ namespace BlueDwarf.Net.Proxy
         public Uri Uri
         {
             get { return new Uri(string.Format("{0}://{1}:{2}", GetLiteralProtocol(Protocol), Host, Port)); }
+        }
+
+        /// <summary>
+        /// Gets the literal in form protocol=host:port
+        /// </summary>
+        /// <value>
+        /// The literal.
+        /// </value>
+        public string Literal
+        {
+            get { return string.Format("{0}={1}:{2}", Protocol, Host, Port); }
         }
 
         /// <summary>
@@ -63,6 +74,16 @@ namespace BlueDwarf.Net.Proxy
             : base(uri.Host, GetPort(uri))
         {
             Protocol = GetProtocol(uri.Scheme);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProxyServer"/> class.
+        /// </summary>
+        /// <param name="literalValue">The literal value.</param>
+        public ProxyServer(string literalValue)
+            : base(GetHostFromLiteral(literalValue), GetPortFromLiteral(literalValue))
+        {
+            Protocol = GetProtocolFromLiteral(literalValue);
         }
 
         /// <summary>
@@ -131,6 +152,20 @@ namespace BlueDwarf.Net.Proxy
             if (uri == null)
                 return null;
             return new ProxyServer(uri);
+        }
+
+        /// <summary>
+        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="ProxyServer"/>.
+        /// </summary>
+        /// <param name="literal">The literal.</param>
+        /// <returns>
+        /// The result of the conversion.
+        /// </returns>
+        public static implicit operator ProxyServer(string literal)
+        {
+            if (literal == null)
+                return null;
+            return new ProxyServer(literal);
         }
 
         /// <summary>

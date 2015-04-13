@@ -14,6 +14,7 @@ namespace BlueDwarf.Test
     public class HostScannerTest
     {
         [TestMethod]
+        [TestCategory("Host Parsing")]
         public void ParsePortsTest()
         {
             var portRegex = new Regex(@"^" + HostPort.PortEx + HostScanner.AfterDigitEx);
@@ -34,6 +35,7 @@ namespace BlueDwarf.Test
         }
 
         [TestMethod]
+        [TestCategory("Host Parsing")]
         public void ParseIP_0_0_0_0_Test()
         {
             var ipV4Regex = new Regex(@"^" + HostPort.IPv4Ex + HostScanner.AfterDigitEx);
@@ -42,6 +44,7 @@ namespace BlueDwarf.Test
         }
 
         [TestMethod]
+        [TestCategory("Host Parsing")]
         public void ParseIP_255_255_255_255_Test()
         {
             var ipV4Regex = new Regex(@"^" + HostPort.IPv4Ex + HostScanner.AfterDigitEx);
@@ -50,6 +53,7 @@ namespace BlueDwarf.Test
         }
 
         [TestMethod]
+        [TestCategory("Host Parsing")]
         public void ParseHostPort_123_45_67_89_7654_Test()
         {
             var ipV4Regex = new Regex(HostScanner.IPColonPortEx);
@@ -60,6 +64,7 @@ namespace BlueDwarf.Test
         }
 
         [TestMethod]
+        [TestCategory("Host Parsing")]
         public void ParsePageTest()
         {
             var hostScanner = new HostScanner();

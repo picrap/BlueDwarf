@@ -921,6 +921,7 @@ $(document).ready(function(){
         #endregion
 
         [TestMethod]
+        [TestCategory("Page Parsing")]
         public void ProxynovaTest()
         {
             var hostPorts = HostScanner.CreateHostEndPoints(ProxynovaCountryES, ProxyPage.ProxynovaEx).ToArray();
@@ -934,6 +935,7 @@ $(document).ready(function(){
         }
 
         [TestMethod]
+        [TestCategory("Page Parsing")]
         public void XroxyTest()
         {
             var hostPorts = HostScanner.CreateHostEndPoints(XroxyRSS, ProxyPage.XroxyRssEx).ToArray();
