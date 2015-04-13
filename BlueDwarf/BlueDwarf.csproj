@@ -90,7 +90,7 @@
     <ManifestTimestampUrl>http://tsa.starfieldtech.com</ManifestTimestampUrl>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Custom</TargetZone>
