@@ -16,6 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Test", "BlueDwarf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B931890B-6776-4A3B-B5EC-CD6D7B4088A7}"
 	ProjectSection(SolutionItems) = preProject
+		Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx = Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject

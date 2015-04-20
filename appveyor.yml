@@ -23,6 +23,10 @@ build:
   publish_nuget_symbols: true
   verbosity: minimal
 
+environment:
+  pfxKey:
+    secure: +H5MaK46FfHA/rjqbg1hSA==
+
 deploy:
   provider: NuGet
   api_key:
@@ -30,6 +34,7 @@ deploy:
   skip_symbols: false
 
 after_test:
+  ps: Import-PfxCertificate –FilePath .\Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx cert:\localMachine\my -Password pfxKey
   msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationVersion="$env:APPVEYOR_BUILD_VERSION" /property:PublishUrl=.\Publish
 
 artifacts:
