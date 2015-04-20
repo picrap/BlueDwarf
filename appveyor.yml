@@ -28,3 +28,9 @@ deploy:
   api_key:
     secure: rEYnR9JThbc6x8DdCo1K8+fgsGKzjNKzTZsldXFLYMm/tFPC7JWWvuKpVTrDBd+g
   skip_symbols: false
+
+after_test:
+  msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationVersion="$env:APPVEYOR_BUILD_VERSION" /property:PublishUrl=.\Publish
+
+artifacts:
+  - path: '.\Publish\**\*.*'
