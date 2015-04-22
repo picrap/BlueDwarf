@@ -25,7 +25,7 @@ build:
 
 environment:
   pfxKey:
-    secure: Hsqip29o34bngMSg6CWzSVejHiqcoxFs9tZRyVUHZPU=
+    secure: 7kj0HlKk9INPLkabdbsdKp6R2i8BvgBzj03hzqUbLuU=
 
 deploy:
   provider: NuGet
@@ -35,9 +35,8 @@ deploy:
 
 after_test:
   - ps: $pfxKeyS = ConvertTo-SecureString $env:pfxKey -AsPlainText -Force
-  - ps: Import-PfxCertificate -FilePath Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx cert:\CurrentUser\My -Password $pfxKeyS
+  - ps: Import-PfxCertificate -FilePath Tools\490fc8e027f9320a04d00960ce799809.pfx cert:\CurrentUser\My -Password $pfxKeyS
   - msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationRevision=%APPVEYOR_BUILD_NUMBER%
-  - tools\mage.exe -sign BlueDwarf\bin\Release\app.publish\BlueDwarf.application -CertHash 86AE72BF9DBBDEAD628EF7FF722DDE98D616FA59
 
 artifacts:
   - path: '.\BlueDwarf\bin\Release\app.publish\**\*.*'

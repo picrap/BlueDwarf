@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf", "BlueDwarf\BlueDwarf.csproj", "{AEA3BA3F-2974-466C-BE49-17AD34CF9F5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A7DB477-41AA-40D9-80C3-FC9BF20D9286}"
@@ -16,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueDwarf.Test", "BlueDwarf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B931890B-6776-4A3B-B5EC-CD6D7B4088A7}"
 	ProjectSection(SolutionItems) = preProject
-		Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx = Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx
+		Tools\490fc8e027f9320a04d00960ce799809.pfx = Tools\490fc8e027f9320a04d00960ce799809.pfx
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
