@@ -9,6 +9,7 @@ namespace BlueDwarf.Utility
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
+    using Net;
 
     /// <summary>
     /// Extensions to <see cref="EndPoint"/>
@@ -33,6 +34,9 @@ namespace BlueDwarf.Utility
                 if (ipAddress != null)
                     return new IPEndPoint(ipAddress, dnsEndPoint.Port);
             }
+            var hostEndPoint = endPoint as HostEndPoint;
+            if (hostEndPoint != null)
+                return hostEndPoint.IPEndPoint;
             throw new IOException(string.Format("Can't handle type '{0}'", endPoint.GetType().FullName));
         }
 
