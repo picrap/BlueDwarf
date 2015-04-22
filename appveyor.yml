@@ -49,5 +49,5 @@ deploy:
     username: openstore
     password:
       secure: /Yr9Wtf5W7SfwBuz/LYLPN+aaxzjPjtIpfzLloth97U=
-    folder: ~/openstore.arxone.com
-    artifact: ClickOnce exe
+    folder: openstore.arxone.com
+    artifact: ClickOnce
