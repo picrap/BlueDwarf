@@ -77,7 +77,7 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>86AE72BF9DBBDEAD628EF7FF722DDE98D616FA59</ManifestCertificateThumbprint>
