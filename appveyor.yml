@@ -35,7 +35,7 @@ deploy:
 
 after_test:
   - ps: $pfxKeyS = ConvertTo-SecureString $env:pfxKey -AsPlainText -Force
-  - ps: Import-PfxCertificate -FilePath Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx cert:\CurrentUser\root -Password $pfxKeyS
+  - ps: Import-PfxCertificate -FilePath Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx cert:\CurrentUser\My -Password $pfxKeyS
   - msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationRevision=%APPVEYOR_BUILD_NUMBER% /property:PublishUrl=.\Publish
 
 artifacts:
