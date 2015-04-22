@@ -31,10 +31,9 @@ after_test:
   - ps: $pfxKeyS = ConvertTo-SecureString $env:pfxKey -AsPlainText -Force
   - ps: Import-PfxCertificate -FilePath Tools\490fc8e027f9320a04d00960ce799809.pfx cert:\CurrentUser\My -Password $pfxKeyS
   - msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationRevision=%APPVEYOR_BUILD_NUMBER%
+  - ps: $root = Resolve-Path .\BlueDwarf\bin\Release\app.publish; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName ClickOnce }
 
 artifacts:
-  - path: '.\BlueDwarf\bin\Release\app.publish\**\*.*'
-    name: ClickOnce
   - path: '.\BlueDwarf\bin\Release\BlueDwarf.exe'
     name: exe
 
