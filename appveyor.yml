@@ -45,7 +45,7 @@ deploy:
 
   - provider: FTP
     protocol: sftp
-    host: openstore.craponne.fr:2304
+    host: openstore.craponne.fr
     username: openstore
     password:
       secure: /Yr9Wtf5W7SfwBuz/LYLPN+aaxzjPjtIpfzLloth97U=
