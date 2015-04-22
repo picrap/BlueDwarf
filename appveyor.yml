@@ -35,7 +35,12 @@ deploy:
 
 after_test:
   - ps: $pfxKeyS = ConvertTo-SecureString $env:pfxKey -AsPlainText -Force
-  - ps: Import-PfxCertificate -FilePath Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx -Password $pfxKeyS
+  - ps: $pfx = new-object System.Security.Cryptography.X509Certificates.X509Certificate2
+  - ps: $pfx.import("Tools\2d2fb0f6778ab96c5b484171e22b4f08.pfx", $pfxKeyS, "Exportable,PersistKeySet")
+  - ps: $store = new-object System.Security.Cryptography.X509Certificates.X509Store("CurrentUser", "Me")
+  - ps: $store.open("MaxAllowed")
+  - ps: $store.add($pfx)
+  - ps: $store.close()
   - msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationRevision=%APPVEYOR_BUILD_NUMBER% /property:PublishUrl=.\Publish
 
 artifacts:
