@@ -40,3 +40,16 @@ after_test:
 
 artifacts:
   - path: '.\BlueDwarf\bin\Release\app.publish\**\*.*'
+    name: ClickOnce
+  - path: '.\BlueDwarf\bin\Release\BlueDwarf.exe'
+    name: exe
+
+deploy:
+  provider: FTP
+  protocol: sftp
+  host: openstore.craponne.fr:2304
+  username: openstore
+  password:
+    secure: /Yr9Wtf5W7SfwBuz/LYLPN+aaxzjPjtIpfzLloth97U=
+  folder: ~/openstore.arxone.com
+  artifact: ClickOnce exe
