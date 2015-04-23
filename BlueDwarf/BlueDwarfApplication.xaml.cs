@@ -3,7 +3,6 @@
 namespace BlueDwarf
 {
     using System;
-    using System.Reflection;
     using System.Windows;
     using ArxOne.MrAdvice.MVVM.Navigation;
     using CommandLine;

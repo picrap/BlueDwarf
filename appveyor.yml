@@ -33,10 +33,6 @@ after_test:
   - msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /t:Publish /property:ApplicationRevision=%APPVEYOR_BUILD_NUMBER%
   - ps: $root = Resolve-Path .\BlueDwarf\bin\Release\app.publish; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName ClickOnce }
 
-artifacts:
-  - path: '.\BlueDwarf\bin\Release\BlueDwarf.exe'
-    name: exe
-
 deploy:
   - provider: NuGet
     api_key:
