@@ -129,8 +129,8 @@
       <HintPath>..\packages\MrAdvice.Fody.0.9.4\lib\portable-net40+sl5+wp8\MrAdvice.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MrAdvice.MVVM, Version=0.9.4.0, Culture=neutral, PublicKeyToken=fb2e9b0afc30ed24, processorArchitecture=MSIL">
-      <HintPath>..\packages\MrAdvice.MVVM.0.9.4.0\lib\net40-Client\MrAdvice.MVVM.dll</HintPath>
+    <Reference Include="MrAdvice.MVVM, Version=0.9.5.0, Culture=neutral, PublicKeyToken=fb2e9b0afc30ed24, processorArchitecture=MSIL">
+      <HintPath>..\packages\MrAdvice.MVVM.0.9.5.0\lib\net40-Client\MrAdvice.MVVM.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -494,16 +494,6 @@
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="MrAdvice">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="MrAdvice.MVVM">
       <Visible>False</Visible>
       <Group>
       </Group>
