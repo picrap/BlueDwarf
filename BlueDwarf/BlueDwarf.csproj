@@ -35,7 +35,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>0.7.0.%2a</ApplicationVersion>
+    <ApplicationVersion>0.7.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>false</BootstrapperEnabled>
