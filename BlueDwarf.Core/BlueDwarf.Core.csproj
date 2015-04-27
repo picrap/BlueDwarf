@@ -138,15 +138,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ObjectReader.cs" />
     <Compile Include="Serialization\RegistrySerializer.cs" />
-    <Compile Include="Utility\CustomAttributeProviderExtensions.cs" />
+    <Compile Include="Reflection\CustomAttributeProviderExtensions.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\EventHandlerExtensions.cs" />
-    <Compile Include="Utility\MemberInfoExtensions.cs" />
-    <Compile Include="Utility\MethodBaseExtensions.cs" />
     <Compile Include="Utility\ObjectExtensions.cs" />
     <Compile Include="Utility\ObjectTypeConverter.cs" />
-    <Compile Include="Utility\PropertyAccessor.cs" />
-    <Compile Include="Utility\PropertyInfoExtensions.cs" />
+    <Compile Include="Reflection\PropertyAccessor.cs" />
     <Compile Include="Utility\StreamExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\TypeExtensions.cs" />

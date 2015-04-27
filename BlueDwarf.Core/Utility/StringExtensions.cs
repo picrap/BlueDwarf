@@ -4,6 +4,9 @@ namespace BlueDwarf.Utility
 {
     using System;
 
+    /// <summary>
+    /// Extensions to <see cref="string"/>
+    /// </summary>
     public static class StringExtensions
     {
         public static bool IsNullOrEmpty(this string s)
@@ -11,6 +14,11 @@ namespace BlueDwarf.Utility
             return string.IsNullOrEmpty(s);
         }
 
+        /// <summary>
+        /// Converts to URI, or null if it is no valid URI.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
         public static Uri ToSafeUri(this string s)
         {
             try

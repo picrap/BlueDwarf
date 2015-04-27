@@ -8,6 +8,7 @@ namespace BlueDwarf.Configuration
     using System.Reflection;
     using Annotations;
     using Microsoft.Win32;
+    using Reflection;
     using Utility;
     using vbAccelerator.Components.Shell;
 

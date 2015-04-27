@@ -4,6 +4,7 @@
 namespace BlueDwarf.Net.Client
 {
     using System.Reflection;
+    using Reflection;
     using Utility;
 
     /// <summary>

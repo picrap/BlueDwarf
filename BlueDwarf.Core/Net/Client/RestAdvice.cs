@@ -13,6 +13,7 @@ namespace BlueDwarf.Net.Client
     using Http;
     using Name;
     using Proxy.Client;
+    using Reflection;
     using Utility;
 
     /// <summary>

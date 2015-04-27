@@ -3,7 +3,7 @@
 // more information at https://github.com/picrap/BlueDwarf
 #endregion
 
-namespace BlueDwarf.Utility
+namespace BlueDwarf.Reflection
 {
     using System;
 

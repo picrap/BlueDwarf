@@ -1,6 +1,6 @@
 ﻿// This is the blue dwarf
 // more information at https://github.com/picrap/BlueDwarf
-namespace BlueDwarf.Utility
+namespace BlueDwarf.Reflection
 {
     using System;
     using System.Linq;

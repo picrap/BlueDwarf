@@ -9,6 +9,7 @@ namespace BlueDwarf.ViewModel
     using System.Linq;
     using Controls;
     using Net.Proxy.Client;
+    using Reflection;
     using Utility;
 
     partial class HomeViewModel
