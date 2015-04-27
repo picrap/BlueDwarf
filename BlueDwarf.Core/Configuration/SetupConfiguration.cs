@@ -9,12 +9,22 @@ namespace BlueDwarf.Configuration
     using Annotations;
     using Microsoft.Win32;
     using Reflection;
-    using Utility;
     using vbAccelerator.Components.Shell;
 
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     internal class SetupConfiguration : ISetupConfiguration
     {
+        /// <summary>
+        /// Gets a value indicating whether this instance is installed using click once.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is click once; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsClickOnce
+        {
+            get { return ApplicationDeployment.IsNetworkDeployed; }
+        }
+
         /// <summary>
         /// Registers the specified assembly to be launched at startup.
         /// </summary>

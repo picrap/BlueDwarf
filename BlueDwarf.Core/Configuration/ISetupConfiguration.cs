@@ -7,6 +7,14 @@ namespace BlueDwarf.Configuration
     public interface ISetupConfiguration
     {
         /// <summary>
+        /// Gets a value indicating whether this instance is installed using click once.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is click once; otherwise, <c>false</c>.
+        /// </value>
+        bool IsClickOnce { get; }
+
+        /// <summary>
         /// Registers the specified assembly to be launched at startup.
         /// </summary>
         /// <param name="assembly">The assembly.</param>

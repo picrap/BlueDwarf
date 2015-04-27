@@ -65,7 +65,7 @@ namespace BlueDwarf.Net.Http
                                 let kv = Tuple.Create(kvp[0].Trim(), kvp[1].Trim())
                                 select kv)
                                 .GroupBy(kv => kv.Item1, kv => kv.Item2, StringComparer.InvariantCultureIgnoreCase)
-                                .ToDictionary(kv => kv.Key, kv => (IList<string>)kv.ToList());
+                                .ToDictionary(kv => kv.Key, kv => (IList<string>)kv.ToList(), StringComparer.InvariantCultureIgnoreCase);
                 }
                 return _headers;
             }

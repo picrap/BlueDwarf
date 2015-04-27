@@ -3,13 +3,20 @@
 namespace BlueDwarf
 {
     using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
     using System.Windows;
     using ArxOne.MrAdvice.MVVM.Navigation;
     using CommandLine;
     using Configuration;
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
+    using Net.Http;
+    using Net.Name;
     using Net.Proxy;
+    using Net.Proxy.Client;
     using Net.Proxy.Server;
     using Utility;
     using ViewModel;
@@ -30,6 +37,9 @@ namespace BlueDwarf
 
         [Dependency]
         public IProxyServerFactory ProxyServerFactory { get; set; }
+
+        [Dependency]
+        public INameResolver NameResolver { get; set; }
 
         /// <summary>
         /// Application startup code.
@@ -61,11 +71,98 @@ namespace BlueDwarf
         /// <param name="applicationOptions">The application options.</param>
         private void StartMain(ApplicationOptions applicationOptions)
         {
-            var thisAssembly = GetType().Assembly;
-            SetupConfiguration.RegisterStartup(thisAssembly, "-m");
-            SetupConfiguration.SetUninstallIcon(thisAssembly);
+            SetupApplication();
             var proxyServer = ProxyServerFactory.CreateSocksProxyServer();
             ShowHome(Navigator, proxyServer, applicationOptions.ProxyPort, applicationOptions.Minimized, applicationOptions.FirstStart);
+        }
+
+        /// <summary>
+        /// Setups the application.
+        /// </summary>
+        private void SetupApplication()
+        {
+            var thisAssembly = GetType().Assembly;
+            SetupConfiguration.RegisterStartup(thisAssembly, "-m");
+            if (SetupConfiguration.IsClickOnce)
+                SetupConfiguration.SetUninstallIcon(thisAssembly);
+        }
+
+        private bool _updateChecked;
+        private readonly Uri _applicationUri = new Uri("http://openstore.craponne.fr/BlueDwarf.exe");
+
+        /// <summary>
+        /// Checks if there is an update available.
+        /// </summary>
+        /// <param name="route">The route.</param>
+        private void CheckUpdate(Route route)
+        {
+            if (SetupConfiguration.IsClickOnce)
+                return;
+
+            if (_updateChecked)
+                return;
+
+            try
+            {
+                using (var stream = route.Connect(_applicationUri, NameResolver))
+                {
+                    _updateChecked = true;
+
+                    var request = HttpRequest.CreateGet(_applicationUri);
+                    request.Verb = "HEAD";
+                    request.Write(stream);
+                    var response = HttpResponse.FromStream(stream);
+                    var lastModified = response.Headers["last-modified"].FirstOrDefault();
+                    DateTime lastModifiedDate;
+                    if (lastModified == null || !DateTime.TryParse(lastModified, out lastModifiedDate))
+                        return;
+
+                    var thisAssemblyPath = GetType().Assembly.Location;
+
+                    var oldVersions = Directory.GetFiles(Path.GetDirectoryName(thisAssemblyPath), Path.GetFileName(thisAssemblyPath) + ".old.*");
+                    foreach (var oldVersion in oldVersions)
+                    {
+                        try
+                        {
+                            File.Delete(oldVersion);
+                        }
+                        catch (IOException)
+                        { }
+                    }
+
+                    var thisAssemblyDate = File.GetLastWriteTime(thisAssemblyPath);
+                    if (thisAssemblyDate < lastModifiedDate)
+                        LoadUpdate(route);
+                }
+            }
+            catch (ProxyRouteException)
+            { }
+        }
+
+        /// <summary>
+        /// Loads the update.
+        /// </summary>
+        /// <param name="route">The route.</param>
+        private void LoadUpdate(Route route)
+        {
+            try
+            {
+                using (var stream = route.Connect(_applicationUri, NameResolver))
+                {
+                    HttpRequest.CreateGet(_applicationUri).Write(stream);
+                    var response = HttpResponse.FromStream(stream);
+                    var applicationBytes = response.ReadContent(stream);
+                    var thisAssemblyPath = GetType().Assembly.Location;
+                    var oldPath = thisAssemblyPath + ".old." + Guid.NewGuid();
+                    File.Move(thisAssemblyPath, oldPath);
+                    File.Delete(thisAssemblyPath);
+                    File.WriteAllBytes(thisAssemblyPath, applicationBytes);
+                    Process.Start(thisAssemblyPath, Environment.CommandLine);
+                    Environment.Exit(0);
+                }
+            }
+            catch (IOException)
+            { }
         }
 
         /// <summary>
@@ -108,7 +205,7 @@ namespace BlueDwarf
         /// <param name="socksListeningPort">The socks listening port.</param>
         /// <param name="minimized">if set to <c>true</c> [minimized].</param>
         /// <param name="firstStart">if set to <c>true</c> [first start].</param>
-        private static void ShowHome(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized, bool firstStart)
+        private void ShowHome(INavigator navigator, IProxyServer proxyServer, int socksListeningPort, bool minimized, bool firstStart)
         {
             var viewModel = navigator.Show(
                 delegate(HomeViewModel vm)
@@ -121,6 +218,7 @@ namespace BlueDwarf
                         vm.CanSetSocksListeningPort = false;
                         vm.SocksListeningPort = socksListeningPort;
                     }
+                    vm.RouteUpdated += delegate { CheckUpdate(proxyServer.Routes.FirstOrDefault()); };
                 });
 
             if (!minimized)

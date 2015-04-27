@@ -48,6 +48,11 @@ namespace BlueDwarf.ViewModel
         public IProxyPageScanner ProxyPageScanner { get; set; }
 
         /// <summary>
+        /// Occurs when route is updated.
+        /// </summary>
+        public event EventHandler RouteUpdated;
+
+        /// <summary>
         /// Gets or sets the proxy server.
         /// This property is injected directly by the caller (the application)
         /// </summary>
@@ -333,6 +338,7 @@ namespace BlueDwarf.ViewModel
                         routes.Add(route);
                         SetSuccessStatus(route);
                         ProxyServer.Routes = routes.ToArray();
+                        RouteUpdated.Raise(this);
                     }
                     Thread.Sleep(validTunnelSleep);
                 }
