@@ -27,7 +27,7 @@ namespace BlueDwarf.ViewModel
     /// This is the main view
     /// </summary>
     [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
-    public class HomeViewModel : ViewModel
+    public partial class HomeViewModel : ViewModel
     {
         [Dependency]
         public IProxyClient ProxyClient { get; set; }
@@ -331,14 +331,14 @@ namespace BlueDwarf.ViewModel
                     foreach (var route in GetRoutes())
                     {
                         routes.Add(route);
-                        SetStatus(route);
+                        SetSuccessStatus(route);
                         ProxyServer.Routes = routes.ToArray();
                     }
                     Thread.Sleep(validTunnelSleep);
                 }
                 catch (ProxyRouteException pre)
                 {
-                    SetStatus(pre);
+                    SetFailureStatus(pre);
                     Thread.Sleep(invalidTunnelSleep);
                 }
             }
@@ -403,64 +403,6 @@ namespace BlueDwarf.ViewModel
                 Thread.Sleep(interval * 1000);
             }
         }
-
-        /// <summary>
-        /// Sets the status as pending (hides all statuses).
-        /// </summary>
-        private void SetStatusPending()
-        {
-            LocalProxyStatus = StatusCode.Pending;
-            RemoteProxyStatus = RemoteProxy != null ? StatusCode.Pending : StatusCode.None;
-            TestTargetStatus = StatusCode.Pending;
-        }
-
-        /// <summary>
-        /// Sets the status given an established route.
-        /// </summary>
-        /// <param name="route">The route.</param>
-        private void SetStatus(Route route)
-        {
-            Func<ProxyServer, bool> checkUri = p => p == null || !route.Relays.Any(r => r.Host == p.Host && r.Port == p.Port);
-            Func<StatusCode, StatusCode> translateCode = c => c == StatusCode.Error ? StatusCode.Pending : StatusCode.OK;
-            SetStatusLines(
-                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(LocalProxy), v => LocalProxyStatus = translateCode(v)),
-            Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(RemoteProxy), v => RemoteProxyStatus = translateCode(v)),
-            Tuple.Create<Func<bool>, Action<StatusCode>>(() => false, v => TestTargetStatus = translateCode(v))
-            );
-        }
-
-        /// <summary>
-        /// Sets the status, given a ProxyRouteException. If no ProxyRouteException, then we consider it's all OK
-        /// (right, this is not very nice)
-        /// </summary>
-        /// <param name="proxyRouteException">The proxy route exception.</param>
-        private void SetStatus(ProxyRouteException proxyRouteException)
-        {
-            Func<ProxyServer, bool> checkUri = u => proxyRouteException != null && proxyRouteException.Proxy == u;
-            Func<string, bool> checkHost = h => proxyRouteException != null && proxyRouteException.TargetHost == h;
-            var testTargetUri = TestTargetUri;
-            SetStatusLines(
-                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(LocalProxy), v => LocalProxyStatus = LocalProxy != null ? v : StatusCode.None),
-                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkUri(RemoteProxy), v => RemoteProxyStatus = RemoteProxy != null ? v : StatusCode.None),
-                Tuple.Create<Func<bool>, Action<StatusCode>>(() => checkHost(testTargetUri != null ? TestTargetUri.Host : null), v => TestTargetStatus = v)
-                );
-        }
-
-        private static void SetStatusLines(params Tuple<Func<bool>, Action<StatusCode>>[] failurePointsAndSetters)
-        {
-            var code = StatusCode.OK;
-            foreach (var failurePointAndSetter in failurePointsAndSetters)
-            {
-                if (failurePointAndSetter.Item1())
-                {
-                    failurePointAndSetter.Item2(StatusCode.Error);
-                    code = StatusCode.None;
-                }
-                else
-                    failurePointAndSetter.Item2(code);
-            }
-        }
-
         /// <summary>
         /// Setups the proxy server.
         /// </summary>

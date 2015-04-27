@@ -187,6 +187,7 @@
     </Compile>
     <Compile Include="Utility\BindingExtensions.cs" />
     <Compile Include="Utility\ExclusiveUpdate.cs" />
+    <Compile Include="ViewModel\HomeViewModel.ProxyStatus.cs" />
     <Compile Include="ViewModel\Properties\CategoryNotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\Proxy.cs" />
     <Compile Include="ViewModel\ProxyPickerViewModel.cs" />

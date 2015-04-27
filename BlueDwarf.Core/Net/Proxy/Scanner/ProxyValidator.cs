@@ -53,6 +53,7 @@ namespace BlueDwarf.Net.Proxy.Scanner
         /// <param name="testTarget">The test target.</param>
         /// <param name="tryCount"></param>
         /// <returns></returns>
+        /// <exception cref="ProxyRouteException">If proxy connection fails.</exception>
         public void Validate(Route route, Uri testTarget, int tryCount)
         {
             for (int tryIndex = 0; tryIndex < tryCount; tryIndex++)
@@ -63,13 +64,13 @@ namespace BlueDwarf.Net.Proxy.Scanner
                     HttpRequest.CreateGet(testTarget).Write(httpStream);
                     var httpResponse = HttpResponse.FromStream(httpStream);
                     if (httpResponse.StatusCode > 0 && httpResponse.StatusCode < 400)
-                        continue;
+                        return;
 #if DEBUG
                     var content = httpResponse.ReadContentString(httpStream);
 #endif
-                    throw new ProxyRouteException(testTarget.Host);
                 }
             }
+            throw new ProxyRouteException(testTarget.Host);
         }
     }
 }

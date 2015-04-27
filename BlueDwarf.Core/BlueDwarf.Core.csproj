@@ -145,6 +145,7 @@
     <Compile Include="Utility\MethodBaseExtensions.cs" />
     <Compile Include="Utility\ObjectExtensions.cs" />
     <Compile Include="Utility\ObjectTypeConverter.cs" />
+    <Compile Include="Utility\PropertyAccessor.cs" />
     <Compile Include="Utility\PropertyInfoExtensions.cs" />
     <Compile Include="Utility\StreamExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
