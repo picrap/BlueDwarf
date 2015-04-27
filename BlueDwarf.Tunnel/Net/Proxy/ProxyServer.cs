@@ -196,5 +196,33 @@ namespace BlueDwarf.Net.Proxy
         {
             return Host.GetHashCode() ^ Port.GetHashCode() ^ Protocol.GetHashCode();
         }
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="a">a.</param>
+        /// <param name="b">The b.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator ==(ProxyServer a, ProxyServer b)
+        {
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                return (ReferenceEquals(a, null) == ReferenceEquals(b, null));
+            return a.Equals(b);
+        }
+
+        /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="a">a.</param>
+        /// <param name="b">The b.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator !=(ProxyServer a, ProxyServer b)
+        {
+            return !(a == b);
+        }
     }
 }

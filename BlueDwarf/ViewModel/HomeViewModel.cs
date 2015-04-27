@@ -325,6 +325,7 @@ namespace BlueDwarf.ViewModel
                 try
                 {
                     SetStatusPending();
+                    ProxyServer.Routes = null;
                     var routes = new List<Route>();
                     // iterative process, in order to have a quick working route
                     foreach (var route in GetRoutes())
@@ -337,7 +338,6 @@ namespace BlueDwarf.ViewModel
                 }
                 catch (ProxyRouteException pre)
                 {
-                    ProxyServer.Routes = null;
                     SetStatus(pre);
                     Thread.Sleep(invalidTunnelSleep);
                 }
